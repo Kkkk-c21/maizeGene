@@ -1,0 +1,1639 @@
+{
+  "rule_version": "plantkg-maize-pilot-v1.0",
+  "project_root": "D:\\cyq\\maizeGene\\maize_literature",
+  "output_dir": "D:\\cyq\\maizeGene\\maize_literature\\04_运行状态\\pilot_v1_2026-10-28",
+  "safety": {
+    "full_corpus_processed": false,
+    "max_rows_per_csv": 5000,
+    "blocked_full_corpus_filenames": [
+      "maize_papers.csv",
+      "maize_papers_cleaned_v1.csv"
+    ]
+  },
+  "label_semantics_note": "A/B/C/D/E/R describe evidence types, while X/U describe screening state. The pilot therefore outputs candidate_label and screening_status separately.",
+  "source_integrity": {
+    "files_checked": 11,
+    "all_unchanged": true,
+    "files": {
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_review_first30.csv": {
+        "sha256_before": "9a3d6fab2f5e727b0d1e90e4e287ab47d7b5da49e455b6821fdce398e783c151",
+        "sha256_after": "9a3d6fab2f5e727b0d1e90e4e287ab47d7b5da49e455b6821fdce398e783c151",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_sample_500.csv": {
+        "sha256_before": "5abcce98d4e845edfc7eab46b3b26b5cf79aa3313f639f540ec4dfed332091d4",
+        "sha256_after": "5abcce98d4e845edfc7eab46b3b26b5cf79aa3313f639f540ec4dfed332091d4",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_sample_500_prelabelled.csv": {
+        "sha256_before": "27f46186d976ce6774c715c36f933ec9fff27dff5c4066c5d645e8ddb11adcec",
+        "sha256_after": "27f46186d976ce6774c715c36f933ec9fff27dff5c4066c5d645e8ddb11adcec",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\02_当前复核工作簿\\玉米功能文献小批测试_v1_20篇_中文翻译版.xlsx": {
+        "sha256_before": "98e15adafc268c2ac4138cac1ecb635991a19379ee5bc83c6060ef071fa12240",
+        "sha256_after": "98e15adafc268c2ac4138cac1ecb635991a19379ee5bc83c6060ef071fa12240",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米功能文献小批测试_v1_20篇.xlsx": {
+        "sha256_before": "d231981d38a765ecf216aa287a248071825bc7b1a9223b88754abe0f7ebdca68",
+        "sha256_after": "d231981d38a765ecf216aa287a248071825bc7b1a9223b88754abe0f7ebdca68",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献30篇_学校全文复核版.xlsx": {
+        "sha256_before": "f3726fa16503593445d888cd58e06f221be0e65f8b870f895313b4c34712247f",
+        "sha256_after": "f3726fa16503593445d888cd58e06f221be0e65f8b870f895313b4c34712247f",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献30篇_联网核查版.xlsx": {
+        "sha256_before": "e1f537aff1d392988811f6cfad2c357b1365d7d1d98958dd24c3dc5a9cab6dee",
+        "sha256_after": "e1f537aff1d392988811f6cfad2c357b1365d7d1d98958dd24c3dc5a9cab6dee",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献36篇_S0450-v5映射版.xlsx": {
+        "sha256_before": "f12eb831c77eb29b3a7e955df45a165668343fbe9f4f4128013703bf7e99a726",
+        "sha256_after": "f12eb831c77eb29b3a7e955df45a165668343fbe9f4f4128013703bf7e99a726",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献36篇_复核汇总与证据示范.xlsx": {
+        "sha256_before": "eb04765dcbc8c479b7222643fe90bf41f5c1cb356cfbb455860ad2a3ffc6862b",
+        "sha256_after": "eb04765dcbc8c479b7222643fe90bf41f5c1cb356cfbb455860ad2a3ffc6862b",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献6篇_功能实验优先候选.xlsx": {
+        "sha256_before": "7225749b666ae9631abd244e350c326de2eff8c2ba7fdd65c5b78727f4b01511",
+        "sha256_after": "7225749b666ae9631abd244e350c326de2eff8c2ba7fdd65c5b78727f4b01511",
+        "unchanged": true
+      },
+      "D:\\cyq\\maizeGene\\maize_literature\\00_项目说明与规则\\玉米功能文献筛选规则_v1_草案.md": {
+        "sha256_before": "4722cd85f60833f1736aa841338c3f0db379ffd5fe60ad1c100e31c4b747adf7",
+        "sha256_after": "4722cd85f60833f1736aa841338c3f0db379ffd5fe60ad1c100e31c4b747adf7",
+        "unchanged": true
+      }
+    }
+  },
+  "csv_runs": [
+    {
+      "input": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_review_first30.csv",
+      "output": "D:\\cyq\\maizeGene\\maize_literature\\04_运行状态\\pilot_v1_2026-10-28\\screening_review_first30_pilot_v1.csv",
+      "rows": 30,
+      "input_columns": [
+        "sample_id",
+        "sampling_bucket",
+        "year_bucket",
+        "abstract_present",
+        "source_record_key",
+        "doi",
+        "title",
+        "abstract",
+        "pmid",
+        "year",
+        "source",
+        "record_id",
+        "retrieved_at",
+        "primary_label",
+        "secondary_labels",
+        "maize_gene_or_locus",
+        "evidence_type",
+        "evidence_sentence_or_note",
+        "decision_reason",
+        "reviewer",
+        "review_date",
+        "computer_suggested_label",
+        "computer_secondary_labels",
+        "computer_confidence",
+        "computer_evidence_signals",
+        "computer_reason"
+      ],
+      "label_counts": {
+        "A": 0,
+        "B": 1,
+        "C": 3,
+        "D": 1,
+        "E": 1,
+        "R": 1,
+        "X": 14,
+        "U": 9
+      }
+    },
+    {
+      "input": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_sample_500.csv",
+      "output": "D:\\cyq\\maizeGene\\maize_literature\\04_运行状态\\pilot_v1_2026-10-28\\screening_sample_500_pilot_v1.csv",
+      "rows": 500,
+      "input_columns": [
+        "sample_id",
+        "sampling_bucket",
+        "year_bucket",
+        "abstract_present",
+        "source_record_key",
+        "doi",
+        "title",
+        "abstract",
+        "pmid",
+        "year",
+        "source",
+        "record_id",
+        "retrieved_at",
+        "primary_label",
+        "secondary_labels",
+        "maize_gene_or_locus",
+        "evidence_type",
+        "evidence_sentence_or_note",
+        "decision_reason",
+        "reviewer",
+        "review_date"
+      ],
+      "label_counts": {
+        "A": 10,
+        "B": 19,
+        "C": 11,
+        "D": 5,
+        "E": 3,
+        "R": 1,
+        "X": 167,
+        "U": 284
+      }
+    },
+    {
+      "input": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\01_抽样CSV\\screening_sample_500_prelabelled.csv",
+      "output": "D:\\cyq\\maizeGene\\maize_literature\\04_运行状态\\pilot_v1_2026-10-28\\screening_sample_500_prelabelled_pilot_v1.csv",
+      "rows": 500,
+      "input_columns": [
+        "sample_id",
+        "sampling_bucket",
+        "year_bucket",
+        "abstract_present",
+        "source_record_key",
+        "doi",
+        "title",
+        "abstract",
+        "pmid",
+        "year",
+        "source",
+        "record_id",
+        "retrieved_at",
+        "primary_label",
+        "secondary_labels",
+        "maize_gene_or_locus",
+        "evidence_type",
+        "evidence_sentence_or_note",
+        "decision_reason",
+        "reviewer",
+        "review_date",
+        "computer_suggested_label",
+        "computer_secondary_labels",
+        "computer_confidence",
+        "computer_evidence_signals",
+        "computer_reason"
+      ],
+      "label_counts": {
+        "A": 10,
+        "B": 19,
+        "C": 11,
+        "D": 5,
+        "E": 3,
+        "R": 1,
+        "X": 167,
+        "U": 284
+      }
+    }
+  ],
+  "workbook_inventory": [
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\02_当前复核工作簿\\玉米功能文献小批测试_v1_20篇_中文翻译版.xlsx",
+      "sheets": [
+        {
+          "name": "说明与汇总",
+          "rows": 30,
+          "columns": 10,
+          "detected_header_row": 11,
+          "detected_headers": [
+            "已填人工标签",
+            "=COUNTA(人工复核!$F$7:$F$26)",
+            "",
+            "4",
+            "全部填完后，再打开“自动对照”页查看旧标签与v1建议。"
+          ]
+        },
+        {
+          "name": "人工复核",
+          "rows": 26,
+          "columns": 10,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "测试ID",
+            "批次类型",
+            "样本ID",
+            "中文题名",
+            "中文摘要",
+            "人工确认标签",
+            "人工意见/待核缺口",
+            "来源",
+            "年份",
+            "来源记录键"
+          ]
+        },
+        {
+          "name": "自动对照",
+          "rows": 26,
+          "columns": 11,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "测试ID",
+            "样本ID",
+            "中文题名",
+            "旧电脑预标",
+            "v1自动建议",
+            "v1自动理由",
+            "AI逐篇复核建议",
+            "AI复核理由",
+            "人工确认标签",
+            "v1与人工",
+            "选择原因"
+          ]
+        },
+        {
+          "name": "英文原文",
+          "rows": 26,
+          "columns": 7,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "测试ID",
+            "样本ID",
+            "英文题名",
+            "英文摘要",
+            "来源",
+            "年份",
+            "来源记录键"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米功能文献小批测试_v1_20篇.xlsx",
+      "sheets": [
+        {
+          "name": "说明与汇总",
+          "rows": 30,
+          "columns": 10,
+          "detected_header_row": 11,
+          "detected_headers": [
+            "已填人工标签",
+            "=COUNTA('人工复核'!$F$7:$F$26)",
+            "",
+            "4",
+            "全部填完后，再打开“自动对照”页查看旧标签与v1建议。"
+          ]
+        },
+        {
+          "name": "人工复核",
+          "rows": 26,
+          "columns": 10,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "测试ID",
+            "批次类型",
+            "样本ID",
+            "题名",
+            "摘要",
+            "人工确认标签",
+            "人工意见/待核缺口",
+            "来源",
+            "年份",
+            "来源记录键"
+          ]
+        },
+        {
+          "name": "自动对照",
+          "rows": 26,
+          "columns": 11,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "测试ID",
+            "样本ID",
+            "题名",
+            "旧电脑预标",
+            "v1自动建议",
+            "v1自动理由",
+            "AI逐篇复核建议",
+            "AI复核理由",
+            "人工确认标签",
+            "v1与人工",
+            "选择原因"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献30篇_学校全文复核版.xlsx",
+      "sheets": [
+        {
+          "name": "逐篇判断",
+          "rows": 36,
+          "columns": 12,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "处理建议",
+            "AI建议标签",
+            "中文判断理由",
+            "人工确认标签",
+            "全文核查重点",
+            "基因/蛋白/位点线索",
+            "原文依据摘录",
+            "辅助证据类型",
+            "旧关键词标签",
+            "文献类型/状态"
+          ]
+        },
+        {
+          "name": "判读说明",
+          "rows": 30,
+          "columns": 2,
+          "detected_header_row": 18,
+          "detected_headers": [
+            "原文依据",
+            "证据摘录来自本行标题或摘要，未声称完成全文审查。主标签是本批AI筛选建议，不是专家金标准。"
+          ]
+        },
+        {
+          "name": "原始记录",
+          "rows": 31,
+          "columns": 26,
+          "detected_header_row": 1,
+          "detected_headers": [
+            "sample_id",
+            "sampling_bucket",
+            "year_bucket",
+            "abstract_present",
+            "source_record_key",
+            "doi",
+            "title",
+            "abstract",
+            "pmid",
+            "year",
+            "source",
+            "record_id",
+            "retrieved_at",
+            "primary_label",
+            "secondary_labels",
+            "maize_gene_or_locus",
+            "evidence_type",
+            "evidence_sentence_or_note",
+            "decision_reason",
+            "reviewer",
+            "review_date",
+            "computer_suggested_label",
+            "computer_secondary_labels",
+            "computer_confidence",
+            "computer_evidence_signals",
+            "computer_reason"
+          ]
+        },
+        {
+          "name": "联网核查8篇",
+          "rows": 14,
+          "columns": 17,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "核查状态",
+            "处理建议",
+            "AI主标签",
+            "查到并核实的内容",
+            "需要你判断或补齐",
+            "建议处理方式",
+            "实际阅读范围",
+            "原文摘录/定位词",
+            "原文位置",
+            "来源链接",
+            "补充来源/追溯线索",
+            "仍有的限制",
+            "核实/补回DOI",
+            "你的意见",
+            "核查日期"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献30篇_联网核查版.xlsx",
+      "sheets": [
+        {
+          "name": "逐篇判断",
+          "rows": 36,
+          "columns": 12,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "处理建议",
+            "AI建议标签",
+            "中文判断理由",
+            "人工确认标签",
+            "全文核查重点",
+            "基因/蛋白/位点线索",
+            "原文依据摘录",
+            "辅助证据类型",
+            "旧关键词标签",
+            "文献类型/状态"
+          ]
+        },
+        {
+          "name": "判读说明",
+          "rows": 30,
+          "columns": 2,
+          "detected_header_row": 18,
+          "detected_headers": [
+            "原文依据",
+            "证据摘录来自本行标题或摘要，未声称完成全文审查。主标签是本批AI筛选建议，不是专家金标准。"
+          ]
+        },
+        {
+          "name": "原始记录",
+          "rows": 31,
+          "columns": 26,
+          "detected_header_row": 1,
+          "detected_headers": [
+            "sample_id",
+            "sampling_bucket",
+            "year_bucket",
+            "abstract_present",
+            "source_record_key",
+            "doi",
+            "title",
+            "abstract",
+            "pmid",
+            "year",
+            "source",
+            "record_id",
+            "retrieved_at",
+            "primary_label",
+            "secondary_labels",
+            "maize_gene_or_locus",
+            "evidence_type",
+            "evidence_sentence_or_note",
+            "decision_reason",
+            "reviewer",
+            "review_date",
+            "computer_suggested_label",
+            "computer_secondary_labels",
+            "computer_confidence",
+            "computer_evidence_signals",
+            "computer_reason"
+          ]
+        },
+        {
+          "name": "联网核查8篇",
+          "rows": 14,
+          "columns": 17,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "核查状态",
+            "处理建议",
+            "AI主标签",
+            "查到并核实的内容",
+            "需要你判断或补齐",
+            "建议处理方式",
+            "实际阅读范围",
+            "原文摘录/定位词",
+            "原文位置",
+            "来源链接",
+            "补充来源/追溯线索",
+            "仍有的限制",
+            "核实/补回DOI",
+            "你的意见",
+            "核查日期"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献36篇_S0450-v5映射版.xlsx",
+      "sheets": [
+        {
+          "name": "36篇复核汇总",
+          "rows": 54,
+          "columns": 15,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "后续处理",
+            "整理后AI主标签",
+            "判读依据",
+            "人工确认标签",
+            "人工原意见",
+            "会话补充说明",
+            "基因/蛋白/位点线索",
+            "原辅助线索/补充标签",
+            "当前阅读范围",
+            "文献核查链接",
+            "原AI主标签",
+            "人工填写来源",
+            "来源记录键"
+          ]
+        },
+        {
+          "name": "S0450证据示范",
+          "rows": 20,
+          "columns": 18,
+          "detected_header_row": 3,
+          "detected_headers": [
+            "主标签A；补充B/C。先看B–E列的具体关系，再核对G–J列实验内容。"
+          ]
+        },
+        {
+          "name": "原始样本记录",
+          "rows": 37,
+          "columns": 21,
+          "detected_header_row": 1,
+          "detected_headers": [
+            "sample_id",
+            "sampling_bucket",
+            "year_bucket",
+            "abstract_present",
+            "source_record_key",
+            "doi",
+            "title",
+            "abstract",
+            "pmid",
+            "year",
+            "source",
+            "record_id",
+            "retrieved_at",
+            "primary_label",
+            "secondary_labels",
+            "maize_gene_or_locus",
+            "evidence_type",
+            "evidence_sentence_or_note",
+            "decision_reason",
+            "reviewer",
+            "review_date"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献36篇_复核汇总与证据示范.xlsx",
+      "sheets": [
+        {
+          "name": "36篇复核汇总",
+          "rows": 54,
+          "columns": 15,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "后续处理",
+            "整理后AI主标签",
+            "判读依据",
+            "人工确认标签",
+            "人工原意见",
+            "会话补充说明",
+            "基因/蛋白/位点线索",
+            "原辅助线索/补充标签",
+            "当前阅读范围",
+            "文献核查链接",
+            "原AI主标签",
+            "人工填写来源",
+            "来源记录键"
+          ]
+        },
+        {
+          "name": "S0450证据示范",
+          "rows": 16,
+          "columns": 18,
+          "detected_header_row": 3,
+          "detected_headers": [
+            "主标签A；补充B/C。先看B–E列的具体关系，再核对G–J列实验内容。"
+          ]
+        },
+        {
+          "name": "原始样本记录",
+          "rows": 37,
+          "columns": 21,
+          "detected_header_row": 1,
+          "detected_headers": [
+            "sample_id",
+            "sampling_bucket",
+            "year_bucket",
+            "abstract_present",
+            "source_record_key",
+            "doi",
+            "title",
+            "abstract",
+            "pmid",
+            "year",
+            "source",
+            "record_id",
+            "retrieved_at",
+            "primary_label",
+            "secondary_labels",
+            "maize_gene_or_locus",
+            "evidence_type",
+            "evidence_sentence_or_note",
+            "decision_reason",
+            "reviewer",
+            "review_date"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "D:\\cyq\\maizeGene\\maize_literature\\02_抽样与复核\\03_历史复核版本\\玉米文献6篇_功能实验优先候选.xlsx",
+      "sheets": [
+        {
+          "name": "候选判读",
+          "rows": 12,
+          "columns": 15,
+          "detected_header_row": 6,
+          "detected_headers": [
+            "样本ID",
+            "中文题意",
+            "处理建议",
+            "AI主标签",
+            "为什么入选",
+            "人工确认标签",
+            "你的意见（待填写）",
+            "基因/蛋白与实验类型",
+            "关键英文证据",
+            "请重点核对",
+            "实际阅读范围",
+            "核查来源链接",
+            "补充标签",
+            "证据位置",
+            "仍有的限制"
+          ]
+        },
+        {
+          "name": "原始记录",
+          "rows": 7,
+          "columns": 21,
+          "detected_header_row": 1,
+          "detected_headers": [
+            "sample_id",
+            "sampling_bucket",
+            "year_bucket",
+            "abstract_present",
+            "source_record_key",
+            "doi",
+            "title",
+            "abstract",
+            "pmid",
+            "year",
+            "source",
+            "record_id",
+            "retrieved_at",
+            "primary_label",
+            "secondary_labels",
+            "maize_gene_or_locus",
+            "evidence_type",
+            "evidence_sentence_or_note",
+            "decision_reason",
+            "reviewer",
+            "review_date"
+          ]
+        }
+      ]
+    }
+  ],
+  "overlap": {
+    "manual_20_count": 20,
+    "manual_30_count": 30,
+    "manual_6_count": 6,
+    "manual_36_count": 36,
+    "manual_36_equals_30_union_6": true,
+    "manual_30_6_overlap_count": 0,
+    "manual_20_36_overlap_count": 0,
+    "two_36_workbooks_identical": true
+  },
+  "metrics": {
+    "manual_30_final": {
+      "records": 30,
+      "exact_matches": 21,
+      "exact_match_rate": 0.7,
+      "screening_status_matches": 21,
+      "screening_status_match_rate": 0.7,
+      "manual_distribution": {
+        "C": 3,
+        "X": 20,
+        "U": 3,
+        "R": 1,
+        "D": 1,
+        "E": 2
+      },
+      "prediction_distribution": {
+        "C": 3,
+        "U": 9,
+        "X": 14,
+        "R": 1,
+        "D": 1,
+        "B": 1,
+        "E": 1
+      },
+      "confusion_manual_by_prediction": {
+        "A": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "B": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "C": {
+          "A": 0,
+          "B": 0,
+          "C": 3,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "D": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 1,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "E": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 1,
+          "R": 0,
+          "X": 0,
+          "U": 1
+        },
+        "R": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 1,
+          "X": 0,
+          "U": 0
+        },
+        "X": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 13,
+          "U": 6
+        },
+        "U": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 1,
+          "U": 2
+        }
+      },
+      "errors": [
+        {
+          "sample_id": "S0221",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Protein quality and quantity of quality protein maize (QPM) and non‐QPM hybrids under optimal and low nitrogen conditions",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only"
+        },
+        {
+          "sample_id": "S0244",
+          "manual": "U",
+          "predicted": "X",
+          "title": "Effect of low temperature stress on the expression of sucrose synthetase in spring and winter wheat plants. Development of a monoclonal antibody against wheat germ sucrose synthetase.",
+          "reason": "The title's study subject is non-maize; maize is absent or only contextual, with no maize molecular evidence.",
+          "flags": "generic_gene_term_only;maize_only_outside_title;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0411",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Recurrent and niche-specific functional bacteriome of maize hybrid revealed by integrated metabarcoding and culturomics.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0117",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Identification of Compounds Which Account for Variation in P Concentration in Corn Hybrids",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0316",
+          "manual": "X",
+          "predicted": "B",
+          "title": "Chemical structures of corn stover and its residue after dilute acid prehydrolysis and enzymatic hydrolysis: insight into factors limiting enzymatic hydrolysis.",
+          "reason": "A recognizable maize genetic object is linked to a phenotype, but direct molecular function is not established.",
+          "flags": "gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0301",
+          "manual": "E",
+          "predicted": "U",
+          "title": "Combining Partially Overlapping Multi-Omics Data in Databases Using Relationship Matrices.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0175",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Review of the existing maximum residue levels for glyphosate according to Article 12 of Regulation (EC) No 396/2005 - revised version to take into account omitted data.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit;review_title"
+        },
+        {
+          "sample_id": "S0240",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Pathways to deeper roots : anatomical phenes of maize under impedance",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0141",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Effects of diets containing gossypol on reproductive capacity of rainbow trout (Oncorhynchus mykiss).",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only;maize_not_explicit"
+        }
+      ]
+    },
+    "manual_6_targeted": {
+      "records": 6,
+      "exact_matches": 6,
+      "exact_match_rate": 1.0,
+      "screening_status_matches": 6,
+      "screening_status_match_rate": 1.0,
+      "manual_distribution": {
+        "A": 5,
+        "B": 1
+      },
+      "prediction_distribution": {
+        "A": 5,
+        "B": 1
+      },
+      "confusion_manual_by_prediction": {
+        "A": {
+          "A": 5,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "B": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "C": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "D": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "E": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "R": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "X": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "U": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        }
+      },
+      "errors": []
+    },
+    "manual_36_union": {
+      "records": 36,
+      "exact_matches": 27,
+      "exact_match_rate": 0.75,
+      "screening_status_matches": 27,
+      "screening_status_match_rate": 0.75,
+      "manual_distribution": {
+        "C": 3,
+        "X": 20,
+        "U": 3,
+        "R": 1,
+        "D": 1,
+        "E": 2,
+        "A": 5,
+        "B": 1
+      },
+      "prediction_distribution": {
+        "C": 3,
+        "U": 9,
+        "X": 14,
+        "R": 1,
+        "D": 1,
+        "B": 2,
+        "E": 1,
+        "A": 5
+      },
+      "confusion_manual_by_prediction": {
+        "A": {
+          "A": 5,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "B": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "C": {
+          "A": 0,
+          "B": 0,
+          "C": 3,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "D": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 1,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "E": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 1,
+          "R": 0,
+          "X": 0,
+          "U": 1
+        },
+        "R": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 1,
+          "X": 0,
+          "U": 0
+        },
+        "X": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 13,
+          "U": 6
+        },
+        "U": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 1,
+          "U": 2
+        }
+      },
+      "errors": [
+        {
+          "sample_id": "S0221",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Protein quality and quantity of quality protein maize (QPM) and non‐QPM hybrids under optimal and low nitrogen conditions",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only"
+        },
+        {
+          "sample_id": "S0244",
+          "manual": "U",
+          "predicted": "X",
+          "title": "Effect of low temperature stress on the expression of sucrose synthetase in spring and winter wheat plants. Development of a monoclonal antibody against wheat germ sucrose synthetase.",
+          "reason": "The title's study subject is non-maize; maize is absent or only contextual, with no maize molecular evidence.",
+          "flags": "generic_gene_term_only;maize_only_outside_title;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0411",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Recurrent and niche-specific functional bacteriome of maize hybrid revealed by integrated metabarcoding and culturomics.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0117",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Identification of Compounds Which Account for Variation in P Concentration in Corn Hybrids",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0316",
+          "manual": "X",
+          "predicted": "B",
+          "title": "Chemical structures of corn stover and its residue after dilute acid prehydrolysis and enzymatic hydrolysis: insight into factors limiting enzymatic hydrolysis.",
+          "reason": "A recognizable maize genetic object is linked to a phenotype, but direct molecular function is not established.",
+          "flags": "gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0301",
+          "manual": "E",
+          "predicted": "U",
+          "title": "Combining Partially Overlapping Multi-Omics Data in Databases Using Relationship Matrices.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0175",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Review of the existing maximum residue levels for glyphosate according to Article 12 of Regulation (EC) No 396/2005 - revised version to take into account omitted data.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit;review_title"
+        },
+        {
+          "sample_id": "S0240",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Pathways to deeper roots : anatomical phenes of maize under impedance",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0141",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Effects of diets containing gossypol on reproductive capacity of rainbow trout (Oncorhynchus mykiss).",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only;maize_not_explicit"
+        }
+      ]
+    },
+    "manual_20_separate": {
+      "records": 20,
+      "exact_matches": 9,
+      "exact_match_rate": 0.45,
+      "screening_status_matches": 9,
+      "screening_status_match_rate": 0.45,
+      "manual_distribution": {
+        "X": 16,
+        "U": 3,
+        "C": 1
+      },
+      "prediction_distribution": {
+        "U": 12,
+        "X": 6,
+        "B": 1,
+        "C": 1
+      },
+      "confusion_manual_by_prediction": {
+        "A": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "B": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "C": {
+          "A": 0,
+          "B": 0,
+          "C": 1,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "D": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "E": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "R": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "X": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 6,
+          "U": 10
+        },
+        "U": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 2
+        }
+      },
+      "errors": [
+        {
+          "sample_id": "S0295",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Coupling self-sustaining air flotation screening with conventional CSTR enhances anaerobic biodegradability of corn stover.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0207",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Mycorrhizae and grapevines: the known unknowns of their interaction for wine growers' challenges.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0259",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Cottonseed Density: Associated Physical and Chemical Properties of 10 Cultivars",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0434",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Chemical and Physical Architecture of Macromolecular Gels for Fracturing Fluid Applications in the Oil and Gas Industry; Current Status, Challenges, and Prospects.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit;review_title"
+        },
+        {
+          "sample_id": "S0200",
+          "manual": "U",
+          "predicted": "B",
+          "title": "Lipid peroxidation damage to leaves of Zea mays L. seedlings under calcium deficiency.",
+          "reason": "A recognizable maize genetic object is linked to a phenotype, but direct molecular function is not established.",
+          "flags": "gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0394",
+          "manual": "X",
+          "predicted": "U",
+          "title": "SARS-CoV-2's closest relative, RaTG13, was generated from a bat transcriptome not a fecal swab: implications for the origin of COVID-19",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "association_signal;computational_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;resource_signal"
+        },
+        {
+          "sample_id": "S0033",
+          "manual": "X",
+          "predicted": "U",
+          "title": "The FAST technique: a simplified Agrobacterium-based transformation method for transient gene expression analysis in seedlings of Arabidopsis and other plant species.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "direct_assay_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;patent_or_claim_only_risk;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0480",
+          "manual": "X",
+          "predicted": "U",
+          "title": "A Co-Expression Network in Hexaploid Wheat Reveals Mostly Balanced Expression and Lack of Significant Gene Loss of Homeologous Meiotic Genes Upon Polyploidization.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "association_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0378",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Physical structure and genetic organisation of the genome of maize streak virus (Kenyan isolate).",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only"
+        },
+        {
+          "sample_id": "S0150",
+          "manual": "X",
+          "predicted": "U",
+          "title": "The Putative Mesoamerican Domestication Center of Phaseolus vulgaris Is Located in the Lerma–Santiago Basin of Mexico",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only;maize_only_outside_title"
+        },
+        {
+          "sample_id": "S0262",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Estimation of the nuclear DNA content of gossypium species.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_only_outside_title"
+        }
+      ]
+    },
+    "unique_56": {
+      "records": 56,
+      "exact_matches": 36,
+      "exact_match_rate": 0.6428571428571429,
+      "screening_status_matches": 36,
+      "screening_status_match_rate": 0.6428571428571429,
+      "manual_distribution": {
+        "X": 36,
+        "U": 6,
+        "C": 4,
+        "R": 1,
+        "D": 1,
+        "E": 2,
+        "A": 5,
+        "B": 1
+      },
+      "prediction_distribution": {
+        "U": 21,
+        "X": 20,
+        "B": 3,
+        "C": 4,
+        "R": 1,
+        "D": 1,
+        "E": 1,
+        "A": 5
+      },
+      "confusion_manual_by_prediction": {
+        "A": {
+          "A": 5,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "B": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "C": {
+          "A": 0,
+          "B": 0,
+          "C": 4,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "D": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 1,
+          "E": 0,
+          "R": 0,
+          "X": 0,
+          "U": 0
+        },
+        "E": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 1,
+          "R": 0,
+          "X": 0,
+          "U": 1
+        },
+        "R": {
+          "A": 0,
+          "B": 0,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 1,
+          "X": 0,
+          "U": 0
+        },
+        "X": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 19,
+          "U": 16
+        },
+        "U": {
+          "A": 0,
+          "B": 1,
+          "C": 0,
+          "D": 0,
+          "E": 0,
+          "R": 0,
+          "X": 1,
+          "U": 4
+        }
+      },
+      "errors": [
+        {
+          "sample_id": "S0295",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Coupling self-sustaining air flotation screening with conventional CSTR enhances anaerobic biodegradability of corn stover.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0207",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Mycorrhizae and grapevines: the known unknowns of their interaction for wine growers' challenges.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0259",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Cottonseed Density: Associated Physical and Chemical Properties of 10 Cultivars",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0434",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Chemical and Physical Architecture of Macromolecular Gels for Fracturing Fluid Applications in the Oil and Gas Industry; Current Status, Challenges, and Prospects.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit;review_title"
+        },
+        {
+          "sample_id": "S0200",
+          "manual": "U",
+          "predicted": "B",
+          "title": "Lipid peroxidation damage to leaves of Zea mays L. seedlings under calcium deficiency.",
+          "reason": "A recognizable maize genetic object is linked to a phenotype, but direct molecular function is not established.",
+          "flags": "gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0394",
+          "manual": "X",
+          "predicted": "U",
+          "title": "SARS-CoV-2's closest relative, RaTG13, was generated from a bat transcriptome not a fecal swab: implications for the origin of COVID-19",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "association_signal;computational_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;resource_signal"
+        },
+        {
+          "sample_id": "S0033",
+          "manual": "X",
+          "predicted": "U",
+          "title": "The FAST technique: a simplified Agrobacterium-based transformation method for transient gene expression analysis in seedlings of Arabidopsis and other plant species.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "direct_assay_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;patent_or_claim_only_risk;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0480",
+          "manual": "X",
+          "predicted": "U",
+          "title": "A Co-Expression Network in Hexaploid Wheat Reveals Mostly Balanced Expression and Lack of Significant Gene Loss of Homeologous Meiotic Genes Upon Polyploidization.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "association_signal;full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0378",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Physical structure and genetic organisation of the genome of maize streak virus (Kenyan isolate).",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only"
+        },
+        {
+          "sample_id": "S0150",
+          "manual": "X",
+          "predicted": "U",
+          "title": "The Putative Mesoamerican Domestication Center of Phaseolus vulgaris Is Located in the Lerma–Santiago Basin of Mexico",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only;maize_only_outside_title"
+        },
+        {
+          "sample_id": "S0262",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Estimation of the nuclear DNA content of gossypium species.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_only_outside_title"
+        },
+        {
+          "sample_id": "S0221",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Protein quality and quantity of quality protein maize (QPM) and non‐QPM hybrids under optimal and low nitrogen conditions",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only"
+        },
+        {
+          "sample_id": "S0244",
+          "manual": "U",
+          "predicted": "X",
+          "title": "Effect of low temperature stress on the expression of sucrose synthetase in spring and winter wheat plants. Development of a monoclonal antibody against wheat germ sucrose synthetase.",
+          "reason": "The title's study subject is non-maize; maize is absent or only contextual, with no maize molecular evidence.",
+          "flags": "generic_gene_term_only;maize_only_outside_title;possible_non_maize_subject"
+        },
+        {
+          "sample_id": "S0411",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Recurrent and niche-specific functional bacteriome of maize hybrid revealed by integrated metabarcoding and culturomics.",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0117",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Identification of Compounds Which Account for Variation in P Concentration in Corn Hybrids",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0316",
+          "manual": "X",
+          "predicted": "B",
+          "title": "Chemical structures of corn stover and its residue after dilute acid prehydrolysis and enzymatic hydrolysis: insight into factors limiting enzymatic hydrolysis.",
+          "reason": "A recognizable maize genetic object is linked to a phenotype, but direct molecular function is not established.",
+          "flags": "gene_or_molecule_identity_signal"
+        },
+        {
+          "sample_id": "S0301",
+          "manual": "E",
+          "predicted": "U",
+          "title": "Combining Partially Overlapping Multi-Omics Data in Databases Using Relationship Matrices.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;gene_or_molecule_identity_signal;maize_not_explicit"
+        },
+        {
+          "sample_id": "S0175",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Review of the existing maximum residue levels for glyphosate according to Article 12 of Regulation (EC) No 396/2005 - revised version to take into account omitted data.",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;maize_not_explicit;review_title"
+        },
+        {
+          "sample_id": "S0240",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Pathways to deeper roots : anatomical phenes of maize under impedance",
+          "reason": "The record is maize-related, but the abstract does not establish a traceable gene-level evidence relation.",
+          "flags": "full_text_or_identity_check_required"
+        },
+        {
+          "sample_id": "S0141",
+          "manual": "X",
+          "predicted": "U",
+          "title": "Effects of diets containing gossypol on reproductive capacity of rainbow trout (Oncorhynchus mykiss).",
+          "reason": "Maize is not explicit in the title or abstract, so the retrieval hit and study object require manual verification.",
+          "flags": "full_text_or_identity_check_required;generic_gene_term_only;maize_not_explicit"
+        }
+      ]
+    }
+  }
+}

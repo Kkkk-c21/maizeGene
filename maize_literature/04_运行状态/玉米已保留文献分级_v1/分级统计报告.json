@@ -1,0 +1,30 @@
+{
+  "version": "plantkg_literature_grade_v1.0",
+  "mode": "pilot",
+  "input": "D:\\cyq\\maizeGene\\maize_literature\\01_数据\\02_清洗数据\\玉米文献_全库初筛_v1_完整结果\\玉米相关文献_全库初筛_v1.csv",
+  "source_rows_scanned": 5000,
+  "total_assigned": 5000,
+  "decision_counts": {
+    "辅助候选": 3046,
+    "核心候选": 1379,
+    "暂缓复核": 575
+  },
+  "tier_counts": {
+    "P6_玉米相关辅助": 3003,
+    "P3_遗传关联组学": 547,
+    "U_跨物种边界": 490,
+    "P1_直接功能实验候选": 440,
+    "P5_综述背景": 18,
+    "P4_计算同源注释": 154,
+    "U_缺失摘要": 60,
+    "P2_基因性状候选": 238,
+    "P5_数据资源": 25,
+    "U_关联待核": 25
+  },
+  "pilot_scan_limit": 5000,
+  "pilot_sampling_scope": "只在输入CSV前N条中随机抽样，若源文件按日期排序则不代表全库随机样本。",
+  "pilot_random_rows": 240,
+  "pilot_targeted_core_rows": 40,
+  "sample_seed": 20261029,
+  "method_limitation": "启发式题名/摘要分级，不是逐篇全文审查；A?/B?/C?/D?等不是已核实的功能真值；任何自动排除均只从候选集排除，源文件不修改。"
+}
