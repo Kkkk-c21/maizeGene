@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文献检索 - MaizeGene</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f5f8f4;
+      color: #26382b;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    header {
+      background: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px #0000000d;
+    }
+
+    a { color: #287a48; text-decoration: none; }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 45px auto;
+      padding: 0 20px;
+    }
+
+    h1 { font-size: 34px; }
+
+    .subtitle {
+      color: #718077;
+      line-height: 1.8;
+    }
+
+    .panel, .paper {
+      background: white;
+      border-radius: 14px;
+      padding: 26px;
+      margin-top: 20px;
+      box-shadow: 0 4px 16px #00000009;
+    }
+
+    .upload {
+      background: #edf6ee;
+      border: 1px dashed #82b895;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin-top: 12px;
+      max-width: 100%;
+    }
+
+    .search {
+      display: flex;
+      gap: 10px;
+    }
+
+    #keyword {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid #dce8df;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      border: none;
+      background: #287a48;
+      color: white;
+      padding: 0 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover { background: #1d6037; }
+
+    .status {
+      color: #718077;
+      margin: 22px 0;
+      line-height: 1.8;
+    }
+
+    .paper h2 {
+      margin: 12px 0;
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #287a48;
+      background: #e5f3e8;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+    }
+
+    .meta {
+      color: #7b8a80;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .abstract {
+      color: #536358;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .link {
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .note {
+      margin-top: 20px;
+      color: #80632d;
+      background: #fff6df;
+      padding: 15px;
+      border-radius: 8px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 18px; }
+      h1 { font-size: 27px; }
+      .panel, .paper { padding: 18px; }
+      .search { flex-direction: column; }
+      button { padding: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">🌽 MaizeGene</a>
+  <a href="index.html">返回首页</a>
+</header>
+
+<main>
+
+  <h1>📚 玉米科研文献检索</h1>
+  <p class="subtitle">
+    检索玉米相关科研文献，查看标题、摘要与原始论文来源。
+  </p>
+
+  <section class="panel">
+
+    <div class="upload">
+      <strong>第一步：导入项目文献</strong>
+      <p>请选择 website 文件夹里的 literature.csv</p>
+      <input type="file" id="csvFile" accept=".csv,text/csv">
+    </div>
+
+    <strong>第二步：搜索文献</strong>
+
+    <div class="search" style="margin-top:15px">
+      <input
+        id="keyword"
+        placeholder="输入 drought、root、gene 等关键词"
+      >
+      <button id="searchButton">搜索</button>
+    </div>
+
+    <p class="note">
+      本页面展示 CSV 中的真实文献记录。
+      文献出现某个基因名称，不代表已证实该基因的功能。
+      具体科研结论仍需核查原文与证据。
+    </p>
+
+  </section>
+
+  <p id="status" class="status">
+    尚未导入 CSV 文件。
+  </p>
+
+  <div id="results"></div>
+
+</main>
+
+<script>
+  let papers = [];
+
+  const fileInput = document.getElementById("csvFile");
+  const keywordInput = document.getElementById("keyword");
+  const searchButton = document.getElementById("searchButton");
+  const status = document.getElementById("status");
+  const results = document.getElementById("results");
+
+  // 支持英文逗号、双引号和多行摘要的 CSV 解析
+  function parseCSV(text) {
+    text = text.replace(/^\uFEFF/, "");
+
+    const rows = [];
+    let row = [];
+    let field = "";
+    let quoted = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+
+      if (c === '"') {
+        if (quoted && text[i + 1] === '"') {
+          field += '"';
+          i++;
+        } else {
+          quoted = !quoted;
+        }
+      } else if (c === "," && !quoted) {
+        row.push(field);
+        field = "";
+      } else if ((c === "\n" || c === "\r") && !quoted) {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(field);
+        if (row.some(value => value.trim() !== "")) {
+          rows.push(row);
+        }
+        row = [];
+        field = "";
+      } else {
+        field += c;
+      }
+    }
+
+    row.push(field);
+    if (row.some(value => value.trim() !== "")) {
+      rows.push(row);
+    }
+
+    return rows;
+  }
+
+  function getPapers(text) {
+    const rows = parseCSV(text);
+    if (rows.length < 2) return [];
+
+    const headers = rows[0].map(
+      h => h.trim().toLowerCase()
+    );
+
+    if (!headers.includes("title")) {
+      throw new Error("CSV 中没有找到 title 字段");
+    }
+
+    return rows.slice(1).map(row => {
+      const item = {};
+
+      headers.forEach((key, index) => {
+        item[key] = (row[index] || "").trim();
+      });
+
+      return item;
+    }).filter(item => item.title);
+  }
+
+  fileInput.addEventListener("change", async function() {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      papers = getPapers(text);
+
+      keywordInput.value = "";
+      showPapers(papers);
+
+    } catch (error) {
+      papers = [];
+      results.replaceChildren();
+      status.textContent =
+        "读取失败：" + error.message;
+    }
+  });
+
+  function addText(parent, tag, className, value) {
+    const element = document.createElement(tag);
+    element.className = className;
+    element.textContent = value;
+    parent.appendChild(element);
+    return element;
+  }
+
+  function showPapers(list) {
+    results.replaceChildren();
+
+    if (list.length === 0) {
+      status.textContent = "没有找到符合条件的文献。";
+      return;
+    }
+
+    status.textContent =
+      "共找到 " + list.length + " 条文献记录。";
+
+    list.forEach((paper, index) => {
+      const card = document.createElement("article");
+      card.className = "paper";
+
+      addText(
+        card, "span", "tag",
+        "文献记录 " + (index + 1)
+      );
+
+      addText(
+        card, "h2", "",
+        paper.title || "无标题"
+      );
+
+      addText(
+        card, "p", "meta",
+        "发表年份：" + (paper.year || "未提供") +
+        "  |  PMID：" + (paper.pmid || "未提供")
+      );
+
+      addText(
+        card, "p", "abstract",
+        paper.abstract || "暂无摘要"
+      );
+
+      if (paper.doi) {
+        addText(
+          card, "p", "meta",
+          "DOI：" + paper.doi
+        );
+
+        if (/^10\.\d{4,9}\/\S+$/i.test(paper.doi)) {
+          const link = document.createElement("a");
+          link.className = "link";
+          link.href = "https://doi.org/" +
+            encodeURI(paper.doi);
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "查看论文来源 →";
+          card.appendChild(link);
+        }
+      }
+
+      results.appendChild(card);
+    });
+  }
+
+  function searchPapers() {
+    if (!fileInput.files.length) {
+      status.textContent = "请先导入 literature.csv";
+      return;
+    }
+
+    const keyword = keywordInput.value
+      .trim().toLowerCase();
+
+    const filtered = papers.filter(paper => {
+      return [
+        paper.title,
+        paper.abstract,
+        paper.doi,
+        paper.year
+      ].some(value =>
+        String(value || "").toLowerCase().includes(keyword)
+      );
+    });
+
+    showPapers(filtered);
+  }
+
+  searchButton.addEventListener("click", searchPapers);
+
+  keywordInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") searchPapers();
+  });
+
+</script>
+
+</body>
+</html>

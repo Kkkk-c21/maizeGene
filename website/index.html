@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>玉米全基因功能字典</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      background: #f5f8f4;
+      color: #24352a;
+    }
+
+    header {
+      background: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px #0000000d;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #287a48;
+    }
+
+    nav a {
+      margin-left: 24px;
+      color: #43534a;
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 95px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #e5f4e8, #f7f9ed);
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      color: #66766b;
+      font-size: 17px;
+    }
+
+    .search-box {
+      display: flex;
+      max-width: 680px;
+      margin: 38px auto 12px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px #00000012;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      padding: 20px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      border: none;
+      background: #287a48;
+      color: white;
+      padding: 0 28px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover { background: #1d5e36; }
+
+    #result {
+      margin-top: 18px;
+      color: #386447;
+      min-height: 24px;
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 65px auto;
+      padding: 0 20px;
+    }
+
+    .features h2 { text-align: center; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 35px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px #00000008;
+    }
+
+    .card h3 { color: #287a48; }
+
+    .card p {
+      color: #69776d;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: #819087;
+    }
+
+    @media (max-width: 600px) {
+      header { display: block; text-align: center; }
+      nav { margin-top: 15px; }
+      nav a { margin: 0 8px; font-size: 13px; }
+      h1 { font-size: 29px; }
+      .hero { padding: 65px 15px; }
+    }
+  
+.literature-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.literature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px #00000015;
+}
+
+.literature-card span {
+  color: #287a48;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+
+<body>
+
+
+<header>
+  <div class="logo">🌽 MaizeGene</div>
+
+  <nav>
+    <a href="#home">首页</a>
+    <a href="search.html">基因搜索</a>
+    <a href="literature.html">文献检索</a>
+    <a href="ai.html">AI科研助手</a>
+    <a href="#features">功能介绍</a>
+    <a href="#about">关于项目</a>
+    <a href="trait.html">候选基因排序</a>
+
+</nav>
+</header>
+
+
+<section class="hero" id="home">
+  <h1>玉米全基因功能字典</h1>
+  <p class="subtitle">
+    探索玉米基因、功能注释与科学研究证据
+  </p>
+
+  <div class="search-box">
+    <input
+      id="geneInput"
+      placeholder="输入基因ID、基因名称或性状关键词"
+    >
+    <button onclick="searchGene()">搜索</button>
+  </div>
+
+  <p id="result"></p>
+</section>
+
+<section class="features" id="features">
+  <h2>探索我们的功能</h2>
+
+  <div class="cards">
+    
+<a href="literature.html" class="card literature-card">
+  <h3>📚 科研文献检索</h3>
+  <p>
+    检索真实玉米科研文献，
+    查看论文标题、摘要、发表年份和 DOI 来源。
+  </p>
+  <span>进入文献检索 →</span>
+</a>
+
+    <a href="search.html" class="card literature-card">
+    <h3>🔍 基因搜索</h3>
+    <p>通过基因ID、名称或关键词查找玉米基因。</p>
+    <span>进入基因搜索 →</span>
+</a>
+
+    <div class="card">
+      <h3>🧬 功能注释</h3>
+      <p>查看基因功能、相关性状及证据来源。</p>
+    </div>
+
+    
+<a href="ai.html" class="card literature-card">
+  <h3>🤖 AI科研助手</h3>
+  <p>基于知识图谱与文献证据辅助科研问答。</p>
+  <span>进入AI科研助手 →</span>
+</a>
+
+
+   <a href="trait.html" class="card literature-card">
+  <h3>🌱 候选基因排序</h3>
+  <p>围绕目标性状探索潜在相关基因。</p>
+  <span>进入候选基因排序 →</span>
+</a> 
+  </div>
+</section>
+
+<section class="features" id="about">
+  <h2>关于项目</h2>
+  <p style="text-align:center;line-height:2">
+    本项目旨在构建可检索、可追溯、
+    具有自然语言交互能力的玉米全基因功能知识平台。
+  </p>
+</section>
+
+<footer>
+  MaizeGene · 玉米全基因功能字典
+</footer>
+
+<script>
+ 
+function searchGene() {
+  const keyword = document
+    .getElementById("geneInput").value.trim();
+
+  const result = document.getElementById("result");
+
+  if (!keyword) {
+    result.textContent = "请先输入基因ID或关键词";
+    return;
+  }
+
+  
+window.location.href =
+  "search.html?q=" + encodeURIComponent(keyword);
+
+}
+
+
+  document.getElementById("geneInput")
+    .addEventListener("keydown", function(event) {
+      if (event.key === "Enter") searchGene();
+    });
+</script>
+
+</body>
+</html>

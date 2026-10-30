@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候选基因排序 - MaizeGene</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  background: #f5f8f4;
+  color: #263a2c;
+}
+
+header {
+  background: white;
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 12px #0000000d;
+}
+
+a { color: #287a48; text-decoration: none; }
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1 { font-size: 32px; }
+
+.subtitle {
+  color: #718077;
+  line-height: 1.8;
+}
+
+.panel {
+  background: white;
+  padding: 28px;
+  border-radius: 14px;
+  margin-top: 25px;
+  box-shadow: 0 4px 18px #00000008;
+}
+
+.search-box {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  font-size: 16px;
+  border: 1px solid #d7e6db;
+  border-radius: 9px;
+}
+
+button {
+  border: none;
+  background: #287a48;
+  color: white;
+  padding: 0 25px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover { background: #1b6037; }
+
+.notice {
+  background: #fff5df;
+  color: #80622d;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 22px;
+  line-height: 1.9;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px #00000008;
+}
+
+.card h2 {
+  color: #287a48;
+  font-size: 20px;
+}
+
+.tag {
+  display: inline-block;
+  background: #e4f3e8;
+  color: #287a48;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.muted {
+  color: #718077;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  header { padding: 18px; }
+  h1 { font-size: 26px; }
+  .panel { padding: 18px; }
+  .search-box { flex-direction: column; }
+  button { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">🌽 MaizeGene</a>
+  <a href="index.html">返回首页</a>
+</header>
+
+<main>
+  <h1>🌱 性状候选基因排序</h1>
+
+  <p class="subtitle">
+    围绕目标性状探索候选基因，
+    并查看未来排序模型所需的证据类型。
+  </p>
+
+  <section class="panel">
+    <h2>输入目标性状</h2>
+
+    <div class="search-box">
+      <input id="traitInput"
+        placeholder="例如：抗旱性、开花时间、根系发育">
+      <button onclick="searchTrait()">查询</button>
+    </div>
+
+    <div class="notice">
+      ⚠ 当前为功能原型，尚未接入经过核验的
+      基因—性状关系数据库和排序模型。
+      因此不会生成未经验证的候选基因排名。
+    </div>
+  </section>
+
+  <div id="results"></div>
+
+</main>
+
+<script>
+function searchTrait() {
+  const trait = document.getElementById("traitInput")
+    .value.trim();
+
+  const results = document.getElementById("results");
+  results.replaceChildren();
+
+  if (!trait) {
+    const message = document.createElement("p");
+    message.textContent = "请先输入目标性状。";
+    results.appendChild(message);
+    return;
+  }
+
+  const card = document.createElement("section");
+  card.className = "card";
+
+  const tag = document.createElement("span");
+  tag.className = "tag";
+  tag.textContent = "候选排序 · 待接入真实数据";
+
+  const title = document.createElement("h2");
+  title.textContent = "目标性状：" + trait;
+
+  const description = document.createElement("p");
+  description.className = "muted";
+  description.textContent =
+    "已接收目标性状。目前缺少经过核验的基因关联数据和排序模型，暂不生成基因排名。";
+
+  const evidenceTitle = document.createElement("h3");
+  evidenceTitle.textContent = "后续计划使用的排序依据";
+
+  const evidence = document.createElement("p");
+  evidence.className = "muted";
+  evidence.textContent =
+    "① 已验证的基因功能证据\n" +
+    "② 基因与目标性状的遗传关联证据\n" +
+    "③ 文献来源及证据等级\n" +
+    "④ 同源基因和功能注释信息";
+
+  evidence.style.whiteSpace = "pre-line";
+
+  const link = document.createElement("a");
+  link.href = "literature.html";
+  link.textContent = "前往真实文献检索 →";
+
+  card.append(
+    tag, title, description,
+    evidenceTitle, evidence, link
+  );
+
+  results.appendChild(card);
+}
+
+document.getElementById("traitInput")
+  .addEventListener("keydown", event => {
+    if (event.key === "Enter") searchTrait();
+  });
+</script>
+
+</body>
+</html>
