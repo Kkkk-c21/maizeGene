@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gene Search | MaizeGene</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      background: #f5f8f4;
+      color: #25382b;
+    }
+
+    header {
+      background: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px #0000000d;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #287a48;
+      text-decoration: none;
+    }
+
+    a { color: #287a48; text-decoration: none; }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 { font-size: 30px; }
+
+    .subtitle { color: #718076; }
+
+    .search-box {
+      display: flex;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 25px 0;
+      box-shadow: 0 4px 16px #0000000a;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      padding: 18px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      background: #287a48;
+      color: white;
+      border: none;
+      padding: 0 28px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #1b6037; }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      margin-top: 20px;
+      box-shadow: 0 4px 16px #00000008;
+    }
+
+    .card h2 {
+      color: #287a48;
+      margin-top: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #e6f3e9;
+      color: #287a48;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .button-link {
+      display: inline-block;
+      margin-top: 15px;
+      background: #287a48;
+      color: white;
+      padding: 11px 20px;
+      border-radius: 8px;
+    }
+
+    .notice {
+      background: #fff5df;
+      border-left: 4px solid #d6a14b;
+      padding: 15px;
+      border-radius: 8px;
+      line-height: 1.8;
+    }
+
+    .muted {
+      color: #718076;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 16px; }
+      h1 { font-size: 25px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">🌽 MaizeGene</a>
+  <a href="index.html">	Back to Home</a>
+</header>
+
+<main class="container">
+
+  <h1>🔍 Gene Search Results</h1>
+  <p class="subtitle">Search maize genes and associated functional information.</p>
+
+  <div class="search-box">
+    <input id="searchInput"
+      placeholder="Enter a gene ID or keyword">
+    <button onclick="doSearch()">Searh</button>
+  </div>
+
+  <p id="searchSummary" class="muted"></p>
+
+<div class="notice">
+  Connected to MaizeGene's real gene annotation database.
+  Gene ID search is available. Keyword and trait-based
+  searching will be integrated separately.
+</div>
+
+
+  <div id="results"></div>
+
+</main>
+
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const keyword = params.get("q") || "";
+
+const input = document.getElementById("searchInput");
+const summary = document.getElementById("searchSummary");
+const results = document.getElementById("results");
+
+input.value = keyword;
+
+function doSearch() {
+  const value = input.value.trim();
+  if (!value) {
+    summary.textContent = "Please enter a gene ID.";
+    results.replaceChildren();
+    return;
+  }
+
+  window.location.href =
+    "search.html?q=" + encodeURIComponent(value);
+}
+
+function showMessage(titleText, description) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const title = document.createElement("h2");
+  title.textContent = titleText;
+
+  const message = document.createElement("p");
+  message.className = "muted";
+  message.textContent = description;
+
+  card.append(title, message);
+  results.replaceChildren(card);
+}
+
+async function showResults() {
+  if (!keyword.trim()) {
+    summary.textContent = "Enter a gene ID to search.";
+    return;
+  }
+
+  summary.textContent = "Searching...";
+  results.replaceChildren();
+
+  try {
+    const response = await fetch(
+      "/genes/" + encodeURIComponent(keyword.trim())
+    );
+
+    if (response.status === 404) {
+      summary.textContent = "No matching gene found.";
+      showMessage(
+        "Gene Not Found",
+        "No matching gene ID was found. Please check the ID."
+      );
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    const gene = data.gene;
+
+    summary.textContent = "1 gene record found.";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = "Real database record";
+
+    const title = document.createElement("h2");
+    title.textContent =
+      (gene.symbol || gene.gene_id) + " · " + gene.gene_id;
+
+    const description = document.createElement("p");
+    description.className = "muted";
+    description.textContent =
+      gene.function_description || "No function description available.";
+
+    const counts = document.createElement("p");
+    counts.className = "muted";
+    counts.textContent =
+      "GO: " + (data.go || []).length +
+      " · Domains: " + (data.protein_domains || []).length +
+      " · Transcripts: " + (data.transcripts || []).length;
+
+    const link = document.createElement("a");
+    link.className = "button-link";
+    link.href = "gene.html?id=" + encodeURIComponent(gene.gene_id);
+    link.textContent = "View Gene Details →";
+
+    card.append(tag, title, description, counts, link);
+    results.appendChild(card);
+
+  } catch (error) {
+    summary.textContent = "Search failed.";
+    showMessage(
+      "Unable to query database",
+      "Please check the backend service. " + error.message
+    );
+  }
+}
+
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") doSearch();
+});
+
+showResults();
+</script>
+
+
+</body>
+</html>

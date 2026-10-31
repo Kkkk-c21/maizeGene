@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candidate Gene Ranking | MaizeGene</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  background: #f5f8f4;
+  color: #263a2c;
+}
+
+header {
+  background: white;
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 12px #0000000d;
+}
+
+a { color: #287a48; text-decoration: none; }
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1 { font-size: 32px; }
+
+.subtitle {
+  color: #718077;
+  line-height: 1.8;
+}
+
+.panel {
+  background: white;
+  padding: 28px;
+  border-radius: 14px;
+  margin-top: 25px;
+  box-shadow: 0 4px 18px #00000008;
+}
+
+.search-box {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  font-size: 16px;
+  border: 1px solid #d7e6db;
+  border-radius: 9px;
+}
+
+button {
+  border: none;
+  background: #287a48;
+  color: white;
+  padding: 0 25px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover { background: #1b6037; }
+
+.notice {
+  background: #fff5df;
+  color: #80622d;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 22px;
+  line-height: 1.9;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px #00000008;
+}
+
+.card h2 {
+  color: #287a48;
+  font-size: 20px;
+}
+
+.tag {
+  display: inline-block;
+  background: #e4f3e8;
+  color: #287a48;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.muted {
+  color: #718077;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  header { padding: 18px; }
+  h1 { font-size: 26px; }
+  .panel { padding: 18px; }
+  .search-box { flex-direction: column; }
+  button { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">🌽 MaizeGene</a>
+  <a href="index.html">Back to Home</a>
+</header>
+
+<main>
+  <h1>🌱 Trait-Based Candidate Gene Ranking</h1>
+
+  <p class="subtitle">
+    Explore candidate genes associated with target traits and examine the evidence required for future ranking models.
+  </p>
+
+  <section class="panel">
+    <h2>Enter a Target Trait</h2>
+
+    <div class="search-box">
+      <input id="traitInput"
+        placeholder="e.g., drought tolerance, flowering time, root development">
+      <button onclick="searchTrait()">Searh</button>
+    </div>
+
+    
+<div class="notice">
+  ⚠️ This page is currently a functional prototype.
+  A validated gene–trait association database and
+  candidate gene ranking model have not yet been integrated.
+  Therefore, no unverified candidate gene rankings
+  are generated.
+</div>
+
+  </section>
+
+  <div id="results"></div>
+
+</main>
+
+<script>
+function searchTrait() {
+  const trait = document.getElementById("traitInput")
+    .value.trim();
+
+  const results = document.getElementById("results");
+  results.replaceChildren();
+
+  if (!trait) {
+    const message = document.createElement("p");
+    message.textContent = "Please enter a target trait.";
+    results.appendChild(message);
+    return;
+  }
+
+  const card = document.createElement("section");
+  card.className = "card";
+
+  const tag = document.createElement("span");
+  tag.className = "tag";
+  tag.textContent = "Candidate Ranking · Awaiting Data Integration";
+
+  const title = document.createElement("h2");
+  title.textContent = "Target Trait:" + trait;
+
+  const description = document.createElement("p");
+  description.className = "muted";
+  description.textContent =
+    "	The target trait has been received. Validated gene–trait association data and a ranking model are not yet available; therefore, no candidate gene rankings are generated.";
+
+  const evidenceTitle = document.createElement("h3");
+  evidenceTitle.textContent = "Planned Ranking Evidence";
+
+  const evidence = document.createElement("p");
+  evidence.className = "muted";
+  evidence.textContent =
+  "1. Experimentally validated gene function evidence\n" +
+  "2. Genetic association evidence between genes and target traits\n" +
+  "3. Literature sources and evidence classifications\n" +
+  "4. Homologous gene information and functional annotations";
+
+
+  evidence.style.whiteSpace = "pre-line";
+
+  const link = document.createElement("a");
+  link.href = "literature.html";
+  link.textContent = "Explore Scientific Literature →";
+
+  card.append(
+    tag, title, description,
+    evidenceTitle, evidence, link
+  );
+
+  results.appendChild(card);
+}
+
+document.getElementById("traitInput")
+  .addEventListener("keydown", event => {
+    if (event.key === "Enter") searchTrait();
+  });
+</script>
+
+</body>
+</html>

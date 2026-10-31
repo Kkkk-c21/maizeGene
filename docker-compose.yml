@@ -1,0 +1,35 @@
+name: maizegene
+
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: maizegene-neo4j
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:7475:7474"
+      - "127.0.0.1:7688:7687"
+    environment:
+      NEO4J_AUTH: "${NEO4J_AUTH:?Set NEO4J_AUTH in the project .env before starting}"
+      NEO4J_server_http_advertised__address: "127.0.0.1:7475"
+      NEO4J_server_bolt_advertised__address: "127.0.0.1:7688"
+      NEO4J_server_directories_import: "/import"
+      NEO4J_server_memory_heap_initial__size: "256m"
+      NEO4J_server_memory_heap_max__size: "512m"
+      NEO4J_server_memory_pagecache_size: "256m"
+    mem_limit: 2g
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/import:/import:ro
+      - ./neo4j/logs:/logs
+      - ./neo4j/plugins:/plugins
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          export NEO4J_USERNAME="$${NEO4J_AUTH%%/*}";
+          export NEO4J_PASSWORD="$${NEO4J_AUTH#*/}";
+          exec cypher-shell -a bolt://127.0.0.1:7687 -d neo4j --format plain 'RETURN 1 AS ok;'
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 60s

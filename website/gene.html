@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+	<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gene Details - MaizeGene</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      background: #f5f8f4;
+      color: #25382b;
+    }
+
+    header {
+      background: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px #0000000d;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #287a48;
+    }
+
+    a {
+      color: #287a48;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px #00000008;
+    }
+
+    h1 { margin: 12px 0; }
+    h2 { font-size: 20px; color: #287a48; }
+
+    .tag {
+      display: inline-block;
+      background: #e4f3e8;
+      color: #287a48;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .warning {
+      background: #fff5df;
+      border-left: 4px solid #d6a14b;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      line-height: 1.8;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .label {
+      color: #859188;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    .value {
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #e9eee9;
+    }
+
+    th { background: #f0f7f1; }
+
+    .empty {
+      color: #7b8a80;
+      line-height: 1.9;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 18px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+      th, td { padding: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌽 MaizeGene</div>
+  <a href="index.html">Back to Home</a>
+</header>
+
+<main class="container">
+
+  <a href="index.html" class="back">← Back to Gene Search</a>
+
+  <section class="card">
+    <span class="tag">Gene Details · Demonstration</span>
+    <h1 id="geneTitle">	Gene Details</h1>
+    <p>Maize Gene Functional Dictionary / Gene Profile</p>
+ 
+<div class="warning">
+  This page demonstrates the structure and layout of a gene
+  profile. A validated gene annotation database has not yet
+  been integrated. Therefore, no experimentally verified
+  gene function is reported at this stage.
+</div>
+
+  </section>
+
+  <section class="card">
+    <h2>🧬 	Basic Information</h2>
+
+    <div class="info-grid">
+      <div>
+        <div class="label">Gene ID</div>
+        <div class="value" id="geneId">—</div>
+      </div>
+
+      <div>
+        <div class="label">Species</div>
+        <div class="value">Maize（Zea mays）</div>
+      </div>
+
+      <div>
+        <div class="label">Gene Symbol / Aliases</div>
+        <div class="value">Not yet available</div>
+      </div>
+
+      <div>
+        <div class="label">Reference Genome</div>
+        <div class="value">To be confirmed</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🔬 Functional Annotations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Annotation Type</th>
+          <th>Annotation Details</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gene Ontology (GO) Annotation</td>
+          <td>Not yet imported</td>
+          <td>	Pending validation</td>
+        </tr>
+        <tr>
+          <td>Protein Domains</td>
+          <td>Not yet imported</td>
+          <td>Pending validation</td>
+        </tr>
+        <tr>
+          <td>Biological Function</td>
+          <td>Not yet imported</td>
+          <td>Pending validation</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>🌱 Associated Traits</h2>
+    <p class="empty">
+  Gene–trait association data have not yet been integrated.
+  Associated traits and supporting evidence will be displayed
+  here once validated data become available.
+</p>
+
+  </section>
+
+  <section class="card">
+    <h2>📚 Literature and Evidence Sources</h2>
+   <p class="empty">
+  No validated literature evidence is currently available.
+  Article titles, DOIs, evidence classifications,
+  and source links will be displayed after data integration
+  and verification.
+</p>
+
+  </section>
+
+</main>
+
+
+<script>
+const geneId = new URLSearchParams(window.location.search).get("id");
+const title = document.getElementById("geneTitle");
+const geneIdElement = document.getElementById("geneId");
+
+function addRow(tbody, type, detail, source) {
+  const tr = document.createElement("tr");
+
+  for (const value of [type, detail, source]) {
+    const td = document.createElement("td");
+    td.textContent = value || "—";
+    tr.appendChild(td);
+  }
+
+  tbody.appendChild(tr);
+}
+
+async function loadGene() {
+  if (!geneId) {
+    title.textContent = "Gene ID not provided";
+    return;
+  }
+
+  title.textContent = "Loading " + geneId + "...";
+
+  try {
+    const response = await fetch(
+      "/genes/" + encodeURIComponent(geneId)
+    );
+
+    if (response.status === 404) {
+      throw new Error("Gene not found.");
+    }
+
+    if (!response.ok) {
+      throw new Error("Query failed: HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    const gene = data.gene;
+
+    // 基因基本信息
+    title.textContent = gene.symbol
+      ? gene.symbol + " (" + gene.gene_id + ")"
+      : gene.gene_id;
+
+    geneIdElement.textContent = gene.gene_id;
+    document.title = gene.gene_id + " | MaizeGene";
+
+    const values = document.querySelectorAll(".info-grid .value");
+    values[1].textContent = gene.species || "—";
+    values[2].textContent = gene.symbol || gene.aliases || "—";
+    values[3].textContent = gene.assembly || "—";
+
+    // 注释来源说明
+    document.querySelector(".warning").textContent =
+      "Real annotations from MaizeGDB. " +
+      "Database annotations do not necessarily represent " +
+      "experimentally validated gene functions.";
+
+    // GO 和蛋白结构域
+    const tbody = document.querySelector("table tbody");
+    tbody.replaceChildren();
+
+    addRow(
+      tbody,
+      "Function description",
+      gene.function_description,
+      gene.source_id
+    );
+
+    for (const go of data.go || []) {
+      addRow(tbody, go.go_id, go.name, go.source_id);
+    }
+
+    for (const domain of data.protein_domains || []) {
+      addRow(
+        tbody,
+        "Protein domain: " + domain.domain_id,
+        domain.name + " (" + (domain.signature_id || "—") + ")",
+        domain.source_id
+      );
+    }
+
+    // 转录本信息
+    const section = document.createElement("section");
+    section.className = "card";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "🧬 Transcripts";
+    section.appendChild(heading);
+
+    if (!data.transcripts?.length) {
+      const p = document.createElement("p");
+      p.textContent = "No transcript annotation available.";
+      section.appendChild(p);
+    } else {
+      for (const transcript of data.transcripts) {
+        const p = document.createElement("p");
+        p.textContent =
+          transcript.transcript_id + " · " +
+          (transcript.chromosome || "—") + ":" +
+          transcript.start + "-" + transcript.end;
+
+        section.appendChild(p);
+      }
+    }
+
+    document.querySelector("main").appendChild(section);
+
+  } catch (error) {
+    title.textContent = "Unable to load gene";
+    document.querySelector(".warning").textContent = error.message;
+  }
+}
+
+loadGene();
+</script>
+
+
+</body>
+</html>

@@ -1,1 +1,48 @@
-/maize_literature/01_数据/
+# Python generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+
+# Large literature data (keep Markdown documentation visible to Git)
+/maize_literature/01_数据.zip
+/maize_literature/01_数据/**/*
+!/maize_literature/01_数据/**/
+!/maize_literature/01_数据/**/*.md
+
+# Whole-genome reference data (keep the directory guide)
+/data/*
+!/data/README.md
+
+# Embedding/model artifacts (keep examples, manifests, and documentation)
+/embeddings/*
+!/embeddings/*/
+/embeddings/**/*
+!/embeddings/**/
+!/embeddings/**/*.py
+!/embeddings/**/*.md
+!/embeddings/**/manifest.json
+
+# Neo4j persistent/runtime content; configuration and documentation stay tracked
+/neo4j/data/
+/neo4j/logs/
+/neo4j/import/
+/neo4j/plugins/
+
+# Large model and local database artifacts outside the standard directories
+*.gguf
+*.npy
+*.db
+*.sqlite
+*.sqlite-*
+
+# Safety copy made before editing this file
+/.gitignore.backup-*
+
+# Project Python environment
+/.venv/
