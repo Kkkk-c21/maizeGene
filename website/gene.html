@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
+	<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>基因详情 - MaizeGene</title>
+  <title>Gene Details - MaizeGene</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -124,94 +123,102 @@
 
 <header>
   <div class="logo">🌽 MaizeGene</div>
-  <a href="index.html">返回首页</a>
+  <a href="index.html">Back to Home</a>
 </header>
 
 <main class="container">
 
-  <a href="index.html" class="back">← 返回基因搜索</a>
+  <a href="index.html" class="back">← Back to Gene Search</a>
 
   <section class="card">
-    <span class="tag">基因详情 · 演示版本</span>
-    <h1 id="geneTitle">基因详情</h1>
-    <p>玉米全基因功能字典 / Gene Profile</p>
+    <span class="tag">Gene Details · Demonstration</span>
+    <h1 id="geneTitle">	Gene Details</h1>
+    <p>Maize Gene Functional Dictionary / Gene Profile</p>
+ 
+<div class="warning">
+  This page demonstrates the structure and layout of a gene
+  profile. A validated gene annotation database has not yet
+  been integrated. Therefore, no experimentally verified
+  gene function is reported at this stage.
+</div>
 
-    <div class="warning">
-      当前页面用于展示网站功能和布局。
-      尚未接入真实基因数据库，因此不提供未经验证的基因功能结论。
-    </div>
   </section>
 
   <section class="card">
-    <h2>🧬 基本信息</h2>
+    <h2>🧬 	Basic Information</h2>
 
     <div class="info-grid">
       <div>
-        <div class="label">基因 ID</div>
+        <div class="label">Gene ID</div>
         <div class="value" id="geneId">—</div>
       </div>
 
       <div>
-        <div class="label">物种</div>
-        <div class="value">玉米（Zea mays）</div>
+        <div class="label">Species</div>
+        <div class="value">Maize（Zea mays）</div>
       </div>
 
       <div>
-        <div class="label">基因名称 / 别名</div>
-        <div class="value">待数据库查询</div>
+        <div class="label">Gene Symbol / Aliases</div>
+        <div class="value">Not yet available</div>
       </div>
 
       <div>
-        <div class="label">参考基因组</div>
-        <div class="value">待确认</div>
+        <div class="label">Reference Genome</div>
+        <div class="value">To be confirmed</div>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2>🔬 功能注释</h2>
+    <h2>🔬 Functional Annotations</h2>
     <table>
       <thead>
         <tr>
-          <th>注释类型</th>
-          <th>注释内容</th>
-          <th>状态</th>
+          <th>Annotation Type</th>
+          <th>Annotation Details</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>GO 功能注释</td>
-          <td>尚未导入</td>
-          <td>待验证</td>
+          <td>Gene Ontology (GO) Annotation</td>
+          <td>Not yet imported</td>
+          <td>	Pending validation</td>
         </tr>
         <tr>
-          <td>蛋白结构域</td>
-          <td>尚未导入</td>
-          <td>待验证</td>
+          <td>Protein Domains</td>
+          <td>Not yet imported</td>
+          <td>Pending validation</td>
         </tr>
         <tr>
-          <td>生物学功能</td>
-          <td>尚未导入</td>
-          <td>待验证</td>
+          <td>Biological Function</td>
+          <td>Not yet imported</td>
+          <td>Pending validation</td>
         </tr>
       </tbody>
     </table>
   </section>
 
   <section class="card">
-    <h2>🌱 关联性状</h2>
+    <h2>🌱 Associated Traits</h2>
     <p class="empty">
-      尚未接入基因与性状的关联数据。
-      后续将在此展示相关性状及关联证据。
-    </p>
+  Gene–trait association data have not yet been integrated.
+  Associated traits and supporting evidence will be displayed
+  here once validated data become available.
+</p>
+
   </section>
 
   <section class="card">
-    <h2>📚 文献与证据来源</h2>
-    <p class="empty">
-      暂无已核验的文献证据。
-      后续将在此展示文献标题、DOI、证据等级与来源链接。
-    </p>
+    <h2>📚 Literature and Evidence Sources</h2>
+   <p class="empty">
+  No validated literature evidence is currently available.
+  Article titles, DOIs, evidence classifications,
+  and source links will be displayed after data integration
+  and verification.
+</p>
+
   </section>
 
 </main>
@@ -220,13 +227,15 @@
   const params = new URLSearchParams(window.location.search);
   const gene = params.get("id") || "";
 
-  document.getElementById("geneTitle").textContent =
-    gene || "未指定基因";
+  
+document.getElementById("geneTitle").textContent =
+  gene || "Gene Not Specified";
 
-  document.getElementById("geneId").textContent =
-    gene || "—";
+document.getElementById("geneId").textContent =
+  gene || "—";
 
-  document.title = (gene || "基因详情") + " - MaizeGene";
+document.title = (gene || "Gene Details") + " | MaizeGene";
+
 </script>
 
 </body>

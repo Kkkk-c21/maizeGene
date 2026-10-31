@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>基因搜索 - MaizeGene</title>
+  <title>Gene Search | MaizeGene</title>
 
   <style>
     * { box-sizing: border-box; }
@@ -128,26 +129,30 @@
 
 <header>
   <a class="logo" href="index.html">🌽 MaizeGene</a>
-  <a href="index.html">返回首页</a>
+  <a href="index.html">	Back to Home</a>
 </header>
 
 <main class="container">
 
-  <h1>🔍 基因搜索结果</h1>
-  <p class="subtitle">搜索玉米基因及相关功能信息</p>
+  <h1>🔍 Gene Search Results</h1>
+  <p class="subtitle">Search maize genes and associated functional information.</p>
 
   <div class="search-box">
     <input id="searchInput"
-      placeholder="输入基因 ID 或关键词">
-    <button onclick="doSearch()">搜索</button>
+      placeholder="Enter a gene ID or keyword">
+    <button onclick="doSearch()">Searh</button>
   </div>
 
   <p id="searchSummary" class="muted"></p>
 
   <div class="notice">
-    当前为界面演示版本，尚未接入真实数据库。
-    搜索结果仅用于测试页面跳转，不代表数据库匹配或科研结论。
-  </div>
+  This page is a prototype and is not yet connected to
+  a gene annotation database.
+  Search results are provided for navigation testing only
+  and should not be interpreted as validated gene annotations
+  or scientific conclusions.
+</div>
+
 
   <div id="results"></div>
 
@@ -167,7 +172,7 @@
     const value = input.value.trim();
 
     if (!value) {
-      summary.textContent = "请先输入搜索关键词";
+      summary.textContent = "Enter a keyword to begin searching.";
       results.replaceChildren();
       return;
     }
@@ -178,11 +183,11 @@
 
   function showResults() {
     if (!keyword.trim()) {
-      summary.textContent = "请输入关键词开始搜索";
+      summary.textContent = "Please enter a search term.";
       return;
     }
 
-    summary.textContent = "当前搜索内容：" + keyword;
+    summary.textContent = "Search query:" + keyword;
 
     // 本阶段只为指定示例基因提供演示卡片
     if (keyword.toLowerCase() === "zm00001eb081920") {
@@ -191,7 +196,7 @@
 
       const tag = document.createElement("span");
       tag.className = "tag";
-      tag.textContent = "演示记录";
+      tag.textContent = "	Demonstration Record";
 
       const title = document.createElement("h2");
       title.textContent = "Zm00001eb081920";
@@ -199,13 +204,13 @@
       const description = document.createElement("p");
       description.className = "muted";
       description.textContent =
-        "示例基因 ID。点击查看详情页布局，功能注释尚未接入。";
+        "Example gene ID. Open the gene details page to preview the layout. Functional annotations are not yet available.";
 
       const link = document.createElement("a");
       link.className = "button-link";
       link.href = "gene.html?id=" +
         encodeURIComponent("Zm00001eb081920");
-      link.textContent = "查看基因详情 →";
+      link.textContent = "View Gene Details →";
 
       card.append(tag, title, description, link);
       results.appendChild(card);
@@ -214,12 +219,12 @@
       card.className = "card";
 
       const title = document.createElement("h2");
-      title.textContent = "暂无可展示的演示记录";
+      title.textContent = "No Demonstration Record Available";
 
       const description = document.createElement("p");
       description.className = "muted";
       description.textContent =
-        "真实数据库尚未接入，因此目前无法判断该关键词是否存在对应基因。可以输入 Zm00001eb081920 测试完整页面流程。";
+        "The gene database has not yet been integrated. Therefore, the presence or absence of matching genes cannot be determined. Enter Zm00001eb081920 to test the page navigation workflow.";
 
       card.append(title, description);
       results.appendChild(card);

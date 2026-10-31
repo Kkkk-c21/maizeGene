@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>候选基因排序 - MaizeGene</title>
+<title>Candidate Gene Ranking | MaizeGene</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -130,31 +130,34 @@ button:hover { background: #1b6037; }
 
 <header>
   <a class="logo" href="index.html">🌽 MaizeGene</a>
-  <a href="index.html">返回首页</a>
+  <a href="index.html">Back to Home</a>
 </header>
 
 <main>
-  <h1>🌱 性状候选基因排序</h1>
+  <h1>🌱 Trait-Based Candidate Gene Ranking</h1>
 
   <p class="subtitle">
-    围绕目标性状探索候选基因，
-    并查看未来排序模型所需的证据类型。
+    Explore candidate genes associated with target traits and examine the evidence required for future ranking models.
   </p>
 
   <section class="panel">
-    <h2>输入目标性状</h2>
+    <h2>Enter a Target Trait</h2>
 
     <div class="search-box">
       <input id="traitInput"
-        placeholder="例如：抗旱性、开花时间、根系发育">
-      <button onclick="searchTrait()">查询</button>
+        placeholder="e.g., drought tolerance, flowering time, root development">
+      <button onclick="searchTrait()">Searh</button>
     </div>
 
-    <div class="notice">
-      ⚠ 当前为功能原型，尚未接入经过核验的
-      基因—性状关系数据库和排序模型。
-      因此不会生成未经验证的候选基因排名。
-    </div>
+    
+<div class="notice">
+  ⚠️ This page is currently a functional prototype.
+  A validated gene–trait association database and
+  candidate gene ranking model have not yet been integrated.
+  Therefore, no unverified candidate gene rankings
+  are generated.
+</div>
+
   </section>
 
   <div id="results"></div>
@@ -171,7 +174,7 @@ function searchTrait() {
 
   if (!trait) {
     const message = document.createElement("p");
-    message.textContent = "请先输入目标性状。";
+    message.textContent = "Please enter a target trait.";
     results.appendChild(message);
     return;
   }
@@ -181,32 +184,33 @@ function searchTrait() {
 
   const tag = document.createElement("span");
   tag.className = "tag";
-  tag.textContent = "候选排序 · 待接入真实数据";
+  tag.textContent = "Candidate Ranking · Awaiting Data Integration";
 
   const title = document.createElement("h2");
-  title.textContent = "目标性状：" + trait;
+  title.textContent = "Target Trait:" + trait;
 
   const description = document.createElement("p");
   description.className = "muted";
   description.textContent =
-    "已接收目标性状。目前缺少经过核验的基因关联数据和排序模型，暂不生成基因排名。";
+    "	The target trait has been received. Validated gene–trait association data and a ranking model are not yet available; therefore, no candidate gene rankings are generated.";
 
   const evidenceTitle = document.createElement("h3");
-  evidenceTitle.textContent = "后续计划使用的排序依据";
+  evidenceTitle.textContent = "Planned Ranking Evidence";
 
   const evidence = document.createElement("p");
   evidence.className = "muted";
   evidence.textContent =
-    "① 已验证的基因功能证据\n" +
-    "② 基因与目标性状的遗传关联证据\n" +
-    "③ 文献来源及证据等级\n" +
-    "④ 同源基因和功能注释信息";
+  "1. Experimentally validated gene function evidence\n" +
+  "2. Genetic association evidence between genes and target traits\n" +
+  "3. Literature sources and evidence classifications\n" +
+  "4. Homologous gene information and functional annotations";
+
 
   evidence.style.whiteSpace = "pre-line";
 
   const link = document.createElement("a");
   link.href = "literature.html";
-  link.textContent = "前往真实文献检索 →";
+  link.textContent = "Explore Scientific Literature →";
 
   card.append(
     tag, title, description,

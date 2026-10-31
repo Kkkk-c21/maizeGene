@@ -1,11 +1,10 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>文献检索 - MaizeGene</title>
-
+  <title>Literature Search | MaizeGene</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -156,44 +155,48 @@
 
 <header>
   <a class="logo" href="index.html">🌽 MaizeGene</a>
-  <a href="index.html">返回首页</a>
+  <a href="index.html">Back to Home</a>
 </header>
 
 <main>
 
-  <h1>📚 玉米科研文献检索</h1>
+  <h1>📚 Maize Scientific Literature Search</h1>
   <p class="subtitle">
-    检索玉米相关科研文献，查看标题、摘要与原始论文来源。
+    Search maize-related scientific literature and examine article titles, abstracts, and original publication sources.
   </p>
 
   <section class="panel">
 
     <div class="upload">
-      <strong>第一步：导入项目文献</strong>
-      <p>请选择 website 文件夹里的 literature.csv</p>
+      <strong>Step 1: Import Literature Data</strong>
+      <p>Select the literature.csv file from the website folder.</p>
       <input type="file" id="csvFile" accept=".csv,text/csv">
     </div>
 
-    <strong>第二步：搜索文献</strong>
+    <strong>Step 2: Search Publications</strong>
 
     <div class="search" style="margin-top:15px">
       <input
         id="keyword"
-        placeholder="输入 drought、root、gene 等关键词"
+        placeholder="Enter keywords such as drought, root, or gene"
       >
-      <button id="searchButton">搜索</button>
+      <button id="searchButton">Searh</button>
     </div>
 
-    <p class="note">
-      本页面展示 CSV 中的真实文献记录。
-      文献出现某个基因名称，不代表已证实该基因的功能。
-      具体科研结论仍需核查原文与证据。
-    </p>
+    
+<p class="note">
+  This page displays bibliographic records from the imported
+  CSV dataset. The mention of a gene in a publication does not
+  establish its experimentally validated function.
+  Scientific conclusions should be evaluated against
+  the original publication and supporting evidence.
+</p>
+
 
   </section>
 
   <p id="status" class="status">
-    尚未导入 CSV 文件。
+    No CSV file has been imported.
   </p>
 
   <div id="results"></div>
@@ -209,7 +212,7 @@
   const status = document.getElementById("status");
   const results = document.getElementById("results");
 
-  // 支持英文逗号、双引号和多行摘要的 CSV 解析
+  // CSV parser supporting commas, quotation marks, and multiline abstracts
   function parseCSV(text) {
     text = text.replace(/^\uFEFF/, "");
 
@@ -261,7 +264,7 @@
     );
 
     if (!headers.includes("title")) {
-      throw new Error("CSV 中没有找到 title 字段");
+      throw new Error("Required column 'title' was not found in the CSV file.");
     }
 
     return rows.slice(1).map(row => {
@@ -290,7 +293,7 @@
       papers = [];
       results.replaceChildren();
       status.textContent =
-        "读取失败：" + error.message;
+        "Failed to import CSV: " + error.message;
     }
   });
 
@@ -306,36 +309,38 @@
     results.replaceChildren();
 
     if (list.length === 0) {
-      status.textContent = "没有找到符合条件的文献。";
+      status.textContent = "No matching publications were found.";
       return;
     }
 
     status.textContent =
-      "共找到 " + list.length + " 条文献记录。";
+  "Found " + list.length + " publication record(s).";
+
 
     list.forEach((paper, index) => {
       const card = document.createElement("article");
       card.className = "paper";
 
       addText(
-        card, "span", "tag",
-        "文献记录 " + (index + 1)
-      );
+  card, "span", "tag",
+  "Publication " + (index + 1)
+);
+
 
       addText(
         card, "h2", "",
-        paper.title || "无标题"
+        paper.title || "Untitled Publication"
       );
 
       addText(
         card, "p", "meta",
-        "发表年份：" + (paper.year || "未提供") +
-        "  |  PMID：" + (paper.pmid || "未提供")
+        "Publication Year:" + (paper.year || "Not Available") +
+        "  |  PMID：" + (paper.pmid || "Not Available")
       );
 
       addText(
         card, "p", "abstract",
-        paper.abstract || "暂无摘要"
+        paper.abstract || "Abstract Not Available"
       );
 
       if (paper.doi) {
@@ -351,7 +356,7 @@
             encodeURI(paper.doi);
           link.target = "_blank";
           link.rel = "noopener noreferrer";
-          link.textContent = "查看论文来源 →";
+          link.textContent = "View Original Publication →";
           card.appendChild(link);
         }
       }
@@ -362,7 +367,7 @@
 
   function searchPapers() {
     if (!fileInput.files.length) {
-      status.textContent = "请先导入 literature.csv";
+      status.textContent = "Please import literature.csv before searching.";
       return;
     }
 

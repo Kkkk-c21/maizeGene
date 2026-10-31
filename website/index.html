@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>玉米全基因功能字典</title>
+  <title>MaizeGene | Maize Gene Functional Dictionary</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -157,87 +157,117 @@
   <div class="logo">🌽 MaizeGene</div>
 
   <nav>
-    <a href="#home">首页</a>
-    <a href="search.html">基因搜索</a>
-    <a href="literature.html">文献检索</a>
-    <a href="ai.html">AI科研助手</a>
-    <a href="#features">功能介绍</a>
-    <a href="#about">关于项目</a>
-    <a href="trait.html">候选基因排序</a>
+    <a href="#home">Home</a>
+    <a href="search.html">Gene Search</a>
+    <a href="literature.html">Literature Search</a>
+    <a href="ai.html">AI Research Assistant</a>
+    <a href="#features">	Features</a>
+    <a href="#about">	About</a>
+    <a href="trait.html">	Candidate Gene Ranking</a>
 
 </nav>
 </header>
 
 
 <section class="hero" id="home">
-  <h1>玉米全基因功能字典</h1>
+  <h1>Maize Gene Functional Dictionary</h1>
   <p class="subtitle">
-    探索玉米基因、功能注释与科学研究证据
+    Explore maize genes, functional annotations, and supporting scientific evidence.
   </p>
 
   <div class="search-box">
     <input
       id="geneInput"
-      placeholder="输入基因ID、基因名称或性状关键词"
+      placeholder="Enter a gene ID, gene name, or trait-related keyword"
     >
-    <button onclick="searchGene()">搜索</button>
+    <button onclick="searchGene()">Search</button>
   </div>
 
   <p id="result"></p>
 </section>
 
 <section class="features" id="features">
-  <h2>探索我们的功能</h2>
+  <h2>Explore Our Features</h2>
 
   <div class="cards">
     
+
 <a href="literature.html" class="card literature-card">
-  <h3>📚 科研文献检索</h3>
+  <h3>📚 Literature Search</h3>
   <p>
-    检索真实玉米科研文献，
-    查看论文标题、摘要、发表年份和 DOI 来源。
+    Explore maize-related scientific publications,
+    including article titles, abstracts, publication years,
+    and DOI references.
   </p>
-  <span>进入文献检索 →</span>
+  <span>Explore Literature →</span>
 </a>
 
-    <a href="search.html" class="card literature-card">
-    <h3>🔍 基因搜索</h3>
-    <p>通过基因ID、名称或关键词查找玉米基因。</p>
-    <span>进入基因搜索 →</span>
-</a>
-
-    <div class="card">
-      <h3>🧬 功能注释</h3>
-      <p>查看基因功能、相关性状及证据来源。</p>
-    </div>
 
     
-<a href="ai.html" class="card literature-card">
-  <h3>🤖 AI科研助手</h3>
-  <p>基于知识图谱与文献证据辅助科研问答。</p>
-  <span>进入AI科研助手 →</span>
+<a href="search.html" class="card literature-card">
+  <h3>🔍 Gene Search</h3>
+  <p>
+    Search and explore maize genes by gene ID,
+    gene symbol, or functional keyword.
+  </p>
+  <span>Explore Genes →</span>
 </a>
 
 
-   <a href="trait.html" class="card literature-card">
-  <h3>🌱 候选基因排序</h3>
-  <p>围绕目标性状探索潜在相关基因。</p>
-  <span>进入候选基因排序 →</span>
-</a> 
+    
+<div class="card">
+  <h3>🧬 Functional Annotation</h3>
+  <p>
+    Explore gene functions, associated traits,
+    and supporting scientific evidence.
+  </p>
+</div>
+
+
+    
+
+<a href="ai.html" class="card literature-card">
+  <h3>🤖 AI Research Assistant</h3>
+  <p>
+    Explore scientific questions through
+    evidence-based gene and literature analysis.
+  </p>
+  <span>Open AI Assistant →</span>
+</a>
+
+
+
+   
+<a href="trait.html" class="card literature-card">
+  <h3>🌱 Candidate Gene Ranking</h3>
+  <p>
+    Explore potential candidate genes associated
+    with target traits and their supporting evidence.
+  </p>
+  <span>Explore Candidate Genes →</span>
+</a>
+
   </div>
 </section>
 
+
 <section class="features" id="about">
-  <h2>关于项目</h2>
+  <h2>About the Project</h2>
   <p style="text-align:center;line-height:2">
-    本项目旨在构建可检索、可追溯、
-    具有自然语言交互能力的玉米全基因功能知识平台。
+    MaizeGene is being developed as an integrated platform
+    for exploring maize gene functions, functional annotations,
+    trait associations, and supporting scientific literature.
+    The project aims to provide searchable information,
+    traceable evidence, and natural language research assistance.
   </p>
 </section>
 
+
+
 <footer>
-  MaizeGene · 玉米全基因功能字典
+  MaizeGene · Maize Gene Functional Dictionary
 </footer>
+
 
 <script>
  
@@ -248,7 +278,7 @@ function searchGene() {
   const result = document.getElementById("result");
 
   if (!keyword) {
-    result.textContent = "请先输入基因ID或关键词";
+    result.textContent = "Please enter a gene ID, gene symbol, or keyword.";
     return;
   }
 
