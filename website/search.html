@@ -123,6 +123,9 @@
       .card { padding: 20px; }
     }
   </style>
+
+<link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -139,18 +142,29 @@
 
   <div class="search-box">
     <input id="searchInput"
-      placeholder="Enter a gene ID or keyword">
+       placeholder="Enter a gene ID or keyword"
+       onkeydown="if(event.key === 'Enter') doSearch()">
     <button onclick="doSearch()">Searh</button>
-  </div>
+  </div> 
+
+<p class="muted">
+  Example:
+  <button
+    type="button"
+    style="background: transparent; color: #287a48; border: none; padding: 0; font: inherit; font-weight: 600; cursor: pointer;"
+    onclick="document.getElementById('searchInput').value='Zm00001eb081920'">
+    Zm00001eb081920
+  </button>
+</p>
+
+
 
   <p id="searchSummary" class="muted"></p>
 
-  <div class="notice">
-  This page is a prototype and is not yet connected to
-  a gene annotation database.
-  Search results are provided for navigation testing only
-  and should not be interpreted as validated gene annotations
-  or scientific conclusions.
+<div class="notice">
+  Connected to MaizeGene's real gene annotation database.
+  Gene ID search is available. Keyword and trait-based
+  searching will be integrated separately.
 </div>
 
 
@@ -158,85 +172,123 @@
 
 </main>
 
+
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const keyword = params.get("q") || "";
+const params = new URLSearchParams(window.location.search);
+const keyword = params.get("q") || "";
 
-  const input = document.getElementById("searchInput");
-  const summary = document.getElementById("searchSummary");
-  const results = document.getElementById("results");
+const input = document.getElementById("searchInput");
+const summary = document.getElementById("searchSummary");
+const results = document.getElementById("results");
 
-  input.value = keyword;
+input.value = keyword;
 
-  function doSearch() {
-    const value = input.value.trim();
+function doSearch() {
+  const value = input.value.trim();
+  if (!value) {
+    summary.textContent = "Please enter a gene ID.";
+    results.replaceChildren();
+    return;
+  }
 
-    if (!value) {
-      summary.textContent = "Enter a keyword to begin searching.";
-      results.replaceChildren();
+  window.location.href =
+    "search.html?q=" + encodeURIComponent(value);
+}
+
+function showMessage(titleText, description) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const title = document.createElement("h2");
+  title.textContent = titleText;
+
+  const message = document.createElement("p");
+  message.className = "muted";
+  message.textContent = description;
+
+  card.append(title, message);
+  results.replaceChildren(card);
+}
+
+async function showResults() {
+  if (!keyword.trim()) {
+    summary.textContent = "Enter a gene ID to search.";
+    return;
+  }
+
+  summary.textContent = "Searching...";
+  results.replaceChildren();
+
+  try {
+    const response = await fetch(
+      "/genes/" + encodeURIComponent(keyword.trim())
+    );
+
+    if (response.status === 404) {
+      summary.textContent = "No matching gene found.";
+      showMessage(
+        "Gene Not Found",
+        "No matching gene ID was found. Please check the ID."
+      );
       return;
     }
 
-    window.location.href =
-      "search.html?q=" + encodeURIComponent(value);
-  }
-
-  function showResults() {
-    if (!keyword.trim()) {
-      summary.textContent = "Please enter a search term.";
-      return;
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
     }
 
-    summary.textContent = "Search query:" + keyword;
+    const data = await response.json();
+    const gene = data.gene;
 
-    // 本阶段只为指定示例基因提供演示卡片
-    if (keyword.toLowerCase() === "zm00001eb081920") {
-      const card = document.createElement("div");
-      card.className = "card";
+    summary.textContent = "1 gene record found.";
 
-      const tag = document.createElement("span");
-      tag.className = "tag";
-      tag.textContent = "	Demonstration Record";
+    const card = document.createElement("div");
+    card.className = "card";
 
-      const title = document.createElement("h2");
-      title.textContent = "Zm00001eb081920";
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = "Real database record";
 
-      const description = document.createElement("p");
-      description.className = "muted";
-      description.textContent =
-        "Example gene ID. Open the gene details page to preview the layout. Functional annotations are not yet available.";
+    const title = document.createElement("h2");
+    title.textContent =
+      (gene.symbol || gene.gene_id) + " · " + gene.gene_id;
 
-      const link = document.createElement("a");
-      link.className = "button-link";
-      link.href = "gene.html?id=" +
-        encodeURIComponent("Zm00001eb081920");
-      link.textContent = "View Gene Details →";
+    const description = document.createElement("p");
+    description.className = "muted";
+    description.textContent =
+      gene.function_description || "No function description available.";
 
-      card.append(tag, title, description, link);
-      results.appendChild(card);
-    } else {
-      const card = document.createElement("div");
-      card.className = "card";
+    const counts = document.createElement("p");
+    counts.className = "muted";
+    counts.textContent =
+      "GO: " + (data.go || []).length +
+      " · Domains: " + (data.protein_domains || []).length +
+      " · Transcripts: " + (data.transcripts || []).length;
 
-      const title = document.createElement("h2");
-      title.textContent = "No Demonstration Record Available";
+    const link = document.createElement("a");
+    link.className = "button-link";
+    link.href = "gene.html?id=" + encodeURIComponent(gene.gene_id);
+    link.textContent = "View Gene Details →";
 
-      const description = document.createElement("p");
-      description.className = "muted";
-      description.textContent =
-        "The gene database has not yet been integrated. Therefore, the presence or absence of matching genes cannot be determined. Enter Zm00001eb081920 to test the page navigation workflow.";
+    card.append(tag, title, description, counts, link);
+    results.appendChild(card);
 
-      card.append(title, description);
-      results.appendChild(card);
-    }
+  } catch (error) {
+    summary.textContent = "Search failed.";
+    showMessage(
+      "Unable to query database",
+      "Please check the backend service. " + error.message
+    );
   }
+}
 
-  input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") doSearch();
-  });
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") doSearch();
+});
 
-  showResults();
+showResults();
 </script>
 
+<script src="voice-input.js"></script>
 </body>
 </html>

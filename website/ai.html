@@ -153,6 +153,9 @@ button:hover { background: #1f623a; }
   button { padding: 0 15px; }
 }
 </style>
+
+<link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -201,6 +204,28 @@ button:hover { background: #1f623a; }
     ></textarea>
     <button onclick="sendMessage()">Send</button>
   </div>
+  
+<p class="muted">
+  Example:
+  <button type="button"
+    style="background:transparent;color:#287a48;border:none;padding:0;font:inherit;font-weight:600;cursor:pointer;"
+    onclick="document.getElementById('question').value='Which maize genes may be associated with drought tolerance?'">
+    Drought tolerance
+  </button>
+  ·
+  <button type="button"
+    style="background:transparent;color:#287a48;border:none;padding:0;font:inherit;font-weight:600;cursor:pointer;"
+    onclick="document.getElementById('question').value='What is the role of maize genes in flowering time regulation?'">
+    Flowering time
+  </button>
+  ·
+  <button type="button"
+    style="background:transparent;color:#287a48;border:none;padding:0;font:inherit;font-weight:600;cursor:pointer;"
+    onclick="document.getElementById('question').value='Which genes are involved in maize root development?'">
+    Root development
+  </button>
+</p>
+
 
 </div>
 
@@ -257,6 +282,6 @@ question.addEventListener("keydown", function(event) {
   }
 });
 </script>
-
+<script src="voice-input.js"></script>
 </body>
 </html>

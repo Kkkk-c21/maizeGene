@@ -124,6 +124,9 @@ button:hover { background: #1b6037; }
   button { padding: 15px; }
 }
 </style>
+
+<link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -145,9 +148,33 @@ button:hover { background: #1b6037; }
 
     <div class="search-box">
       <input id="traitInput"
-        placeholder="e.g., drought tolerance, flowering time, root development">
-      <button onclick="searchTrait()">Searh</button>
+       placeholder="e.g., drought tolerance, flowering time, root developmen"
+       onkeydown="if(event.key === 'Enter') searchTrait()">
+<button onclick="searchTrait()">查询</button>
+
     </div>
+    
+<p class="muted">
+  Example:
+  <button type="button"
+    style="background:transparent; color:#287a48; border:none; padding:0; font:inherit; font-weight:600; cursor:pointer;"
+    onclick="document.getElementById('traitInput').value='drought tolerance'">
+    drought tolerance
+  </button>
+  ·
+  <button type="button"
+    style="background:transparent; color:#287a48; border:none; padding:0; font:inherit; font-weight:600; cursor:pointer;"
+    onclick="document.getElementById('traitInput').value='flowering time'">
+    flowering time
+  </button>
+  ·
+  <button type="button"
+    style="background:transparent; color:#287a48; border:none; padding:0; font:inherit; font-weight:600; cursor:pointer;"
+    onclick="document.getElementById('traitInput').value='root development'">
+    root development
+  </button>
+</p>
+
 
     
 <div class="notice">
@@ -225,6 +252,6 @@ document.getElementById("traitInput")
     if (event.key === "Enter") searchTrait();
   });
 </script>
-
+<script src="voice-input.js"></script>
 </body>
 </html>

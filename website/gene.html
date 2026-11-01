@@ -117,6 +117,9 @@
       th, td { padding: 10px; }
     }
   </style>
+
+<link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -223,20 +226,126 @@
 
 </main>
 
+
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const gene = params.get("id") || "";
+const geneId = new URLSearchParams(window.location.search).get("id");
+const title = document.getElementById("geneTitle");
+const geneIdElement = document.getElementById("geneId");
 
-  
-document.getElementById("geneTitle").textContent =
-  gene || "Gene Not Specified";
+function addRow(tbody, type, detail, source) {
+  const tr = document.createElement("tr");
 
-document.getElementById("geneId").textContent =
-  gene || "—";
+  for (const value of [type, detail, source]) {
+    const td = document.createElement("td");
+    td.textContent = value || "—";
+    tr.appendChild(td);
+  }
 
-document.title = (gene || "Gene Details") + " | MaizeGene";
+  tbody.appendChild(tr);
+}
 
+async function loadGene() {
+  if (!geneId) {
+    title.textContent = "Gene ID not provided";
+    return;
+  }
+
+  title.textContent = "Loading " + geneId + "...";
+
+  try {
+    const response = await fetch(
+      "/genes/" + encodeURIComponent(geneId)
+    );
+
+    if (response.status === 404) {
+      throw new Error("Gene not found.");
+    }
+
+    if (!response.ok) {
+      throw new Error("Query failed: HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    const gene = data.gene;
+
+    // 基因基本信息
+    title.textContent = gene.symbol
+      ? gene.symbol + " (" + gene.gene_id + ")"
+      : gene.gene_id;
+
+    geneIdElement.textContent = gene.gene_id;
+    document.title = gene.gene_id + " | MaizeGene";
+
+    const values = document.querySelectorAll(".info-grid .value");
+    values[1].textContent = gene.species || "—";
+    values[2].textContent = gene.symbol || gene.aliases || "—";
+    values[3].textContent = gene.assembly || "—";
+
+    // 注释来源说明
+    document.querySelector(".warning").textContent =
+      "Real annotations from MaizeGDB. " +
+      "Database annotations do not necessarily represent " +
+      "experimentally validated gene functions.";
+
+    // GO 和蛋白结构域
+    const tbody = document.querySelector("table tbody");
+    tbody.replaceChildren();
+
+    addRow(
+      tbody,
+      "Function description",
+      gene.function_description,
+      gene.source_id
+    );
+
+    for (const go of data.go || []) {
+      addRow(tbody, go.go_id, go.name, go.source_id);
+    }
+
+    for (const domain of data.protein_domains || []) {
+      addRow(
+        tbody,
+        "Protein domain: " + domain.domain_id,
+        domain.name + " (" + (domain.signature_id || "—") + ")",
+        domain.source_id
+      );
+    }
+
+    // 转录本信息
+    const section = document.createElement("section");
+    section.className = "card";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "🧬 Transcripts";
+    section.appendChild(heading);
+
+    if (!data.transcripts?.length) {
+      const p = document.createElement("p");
+      p.textContent = "No transcript annotation available.";
+      section.appendChild(p);
+    } else {
+      for (const transcript of data.transcripts) {
+        const p = document.createElement("p");
+        p.textContent =
+          transcript.transcript_id + " · " +
+          (transcript.chromosome || "—") + ":" +
+          transcript.start + "-" + transcript.end;
+
+        section.appendChild(p);
+      }
+    }
+
+    document.querySelector("main").appendChild(section);
+
+  } catch (error) {
+    title.textContent = "Unable to load gene";
+    document.querySelector(".warning").textContent = error.message;
+  }
+}
+
+loadGene();
 </script>
+
 
 </body>
 </html>
