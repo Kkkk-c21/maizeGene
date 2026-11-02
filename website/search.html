@@ -219,6 +219,11 @@ async function showResults() {
   summary.textContent = "Searching...";
   results.replaceChildren();
 
+if (!/^Zm\d{5}eb\d{6}$/i.test(keyword.trim())) {
+  await showSemanticResults(keyword.trim());
+  return;
+
+}
   try {
     const response = await fetch(
       "/genes/" + encodeURIComponent(keyword.trim())
@@ -278,6 +283,79 @@ async function showResults() {
     showMessage(
       "Unable to query database",
       "Please check the backend service. " + error.message
+    );
+  }
+}
+
+async function showSemanticResults(query) {
+  summary.textContent = "Searching maize genes by semantic similarity...";
+  results.replaceChildren();
+
+  try {
+    const response = await fetch("/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        query: query,
+        top_k: 10
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+    const genes = data.results || [];
+
+    summary.textContent =
+      genes.length + " semantic candidates found among " +
+      data.total_genes + " maize genes.";
+
+    if (genes.length === 0) {
+      showMessage("No candidates", "No semantic matches were returned.");
+      return;
+    }
+
+    genes.forEach((gene, index) => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = "Semantic candidate · Rank " + (index + 1);
+
+      const title = document.createElement("h2");
+      title.textContent = gene.gene_id;
+
+      const score = document.createElement("p");
+      score.className = "muted";
+      score.textContent =
+        "Embedding similarity: " + Number(gene.similarity).toFixed(6);
+
+      const link = document.createElement("a");
+      link.className = "button-link";
+      link.href = "gene.html?id=" + encodeURIComponent(gene.gene_id);
+      link.textContent = "View Gene Details →";
+
+      card.append(tag, title, score, link);
+      results.appendChild(card);
+    });
+
+    const notice = document.createElement("p");
+    notice.className = "muted";
+    notice.textContent =
+      "Similarity scores indicate retrieval relevance, not validated gene–trait associations or probabilities.";
+
+    results.prepend(notice);
+
+  } catch (error) {
+    summary.textContent = "Semantic search failed.";
+    showMessage(
+      "Unable to perform semantic search",
+      "Please check the Embedding service. " + error.message
     );
   }
 }
