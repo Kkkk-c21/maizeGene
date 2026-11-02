@@ -123,6 +123,9 @@
       .card { padding: 20px; }
     }
   </style>
+
+<link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -139,9 +142,22 @@
 
   <div class="search-box">
     <input id="searchInput"
-      placeholder="Enter a gene ID or keyword">
+       placeholder="Enter a gene ID or keyword"
+       onkeydown="if(event.key === 'Enter') doSearch()">
     <button onclick="doSearch()">Searh</button>
-  </div>
+  </div> 
+
+<p class="muted">
+  Example:
+  <button
+    type="button"
+    style="background: transparent; color: #287a48; border: none; padding: 0; font: inherit; font-weight: 600; cursor: pointer;"
+    onclick="document.getElementById('searchInput').value='Zm00001eb081920'">
+    Zm00001eb081920
+  </button>
+</p>
+
+
 
   <p id="searchSummary" class="muted"></p>
 
@@ -273,6 +289,6 @@ input.addEventListener("keydown", function(event) {
 showResults();
 </script>
 
-
+<script src="voice-input.js"></script>
 </body>
 </html>

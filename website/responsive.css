@@ -1,0 +1,285 @@
+
+/* =====================================
+   MaizeGene - Mobile Responsive Styles
+   Only affects tablet and mobile screens.
+   Desktop appearance remains unchanged.
+===================================== */
+
+/* Tablet and smaller screens */
+@media screen and (max-width: 768px) {
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Header and navigation */
+    header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        height: auto;
+    }
+
+    header nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+    }
+
+    header nav a {
+        margin: 0;
+    }
+
+    /* Main content */
+    main,
+    .container,
+    .features {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Prevent content from overflowing */
+    .card,
+    .panel,
+    .paper,
+    .notice,
+    .warning {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Tables can scroll horizontally */
+    table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    /* Voice input */
+    .voice-input-wrapper {
+        min-width: 0;
+    }
+
+    .voice-input-button {
+        flex-shrink: 0;
+        touch-action: manipulation;
+    }
+}
+
+
+/* Mobile phones */
+@media screen and (max-width: 600px) {
+
+    /* Header */
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        height: auto;
+        min-height: 0;
+        padding: 15px 16px !important;
+        text-align: left;
+        gap: 10px;
+    }
+
+    header nav {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+    }
+
+    header nav a {
+        margin: 0 !important;
+        font-size: 14px;
+    }
+
+    /* Main content */
+    main,
+    .container {
+        width: 100%;
+        margin: 25px auto !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    /* Homepage */
+    .hero {
+        padding: 55px 14px !important;
+    }
+
+    .hero h1,
+    h1 {
+        font-size: clamp(24px, 7vw, 30px);
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+
+    .subtitle {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .features {
+        margin: 40px auto;
+        padding: 0 14px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card,
+    .panel,
+    .paper {
+        padding: 18px !important;
+    }
+
+    /* Search areas */
+    .search-box,
+    .search {
+        min-width: 0;
+        gap: 8px;
+    }
+
+    .voice-input-wrapper {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .search-box input,
+    .search input,
+    #keyword {
+        font-size: 16px;
+        min-width: 0;
+    }
+
+    .search-box > button,
+    .search > button {
+        min-height: 46px;
+        padding-left: 16px;
+        padding-right: 16px;
+        flex-shrink: 0;
+    }
+
+    /* Trait and literature search buttons */
+    .search-box {
+        align-items: stretch;
+    }
+
+    /* Gene details */
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Literature upload */
+    .upload {
+        padding: 16px;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .abstract {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    /* AI Research Assistant */
+    .messages {
+        height: 55vh;
+        min-height: 260px;
+        max-height: 420px;
+        padding: 14px;
+    }
+
+    .message {
+        max-width: 100%;
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .input-area {
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .input-area .voice-input-wrapper {
+        width: 100%;
+        flex: 1 1 auto;
+    }
+
+    .input-area textarea {
+        width: 100%;
+        min-height: 90px;
+        font-size: 16px;
+    }
+
+    .input-area > button {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    /* General spacing */
+    .notice,
+    .warning,
+    .note {
+        padding: 14px;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    footer {
+        padding: 22px 14px;
+        font-size: 13px;
+    }
+}
+
+
+/* Extra small phones */
+@media screen and (max-width: 380px) {
+
+    header nav {
+        gap: 8px 11px;
+    }
+
+    header nav a {
+        font-size: 13px;
+    }
+
+    .hero h1,
+    h1 {
+        font-size: 24px;
+    }
+
+    .search-box input,
+    .search input {
+        padding: 13px;
+    }
+
+    .search-box > button,
+    .search > button {
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 14px;
+    }
+}
