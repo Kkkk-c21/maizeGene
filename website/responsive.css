@@ -283,3 +283,82 @@
         font-size: 14px;
     }
 }
+
+
+/* =====================================
+   Mobile hamburger navigation
+   Only applies to the homepage and AI page.
+===================================== */
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    header.has-mobile-menu {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        min-height: 64px;
+        gap: 12px;
+        padding: 14px 16px !important;
+        text-align: left;
+    }
+
+    header.has-mobile-menu .mobile-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        border: 1px solid #dce8df;
+        border-radius: 9px;
+        background: #f3f8f4;
+        color: #287a48;
+        font-size: 25px;
+        line-height: 1;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    header.has-mobile-menu .mobile-menu-toggle:hover {
+        background: #e8f2ea;
+    }
+
+    header.has-mobile-menu .site-nav {
+        display: none;
+        flex: 0 0 100%;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin: 0;
+        padding: 6px 0 0;
+        gap: 0;
+    }
+
+    header.has-mobile-menu .site-nav.is-open {
+        display: flex;
+    }
+
+    header.has-mobile-menu .site-nav a {
+        display: block;
+        width: 100%;
+        margin: 0 !important;
+        padding: 12px 4px;
+        border-top: 1px solid #edf2ee;
+        color: #43534a;
+        font-size: 15px;
+        line-height: 1.4;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    header.has-mobile-menu .site-nav a:active {
+        color: #287a48;
+    }
+}

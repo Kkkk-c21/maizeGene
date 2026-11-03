@@ -156,18 +156,28 @@
 <body>
 
 
-<header>
+<header class="has-mobile-menu">
   <div class="logo">🌽 MaizeGene</div>
 
-  <nav>
+  <button
+    class="mobile-menu-toggle"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="primary-navigation"
+    data-menu-toggle
+  >
+    <span aria-hidden="true">☰</span>
+  </button>
+
+  <nav id="primary-navigation" class="site-nav">
     <a href="#home">Home</a>
     <a href="search.html">Gene Search</a>
     <a href="ai.html">AI Research Assistant</a>
-    <a href="#features">	Features</a>
-    <a href="#about">	About</a>
-    <a href="trait.html">	Candidate Gene Ranking</a>
-
-</nav>
+    <a href="#features">Features</a>
+    <a href="#about">About</a>
+    <a href="trait.html">Candidate Gene Ranking</a>
+  </nav>
 </header>
 
 
@@ -301,5 +311,6 @@ window.location.href =
     });
 </script>
 <script src="voice-input.js"></script>
+<script src="mobile-nav.js"></script>
 </body>
 </html>

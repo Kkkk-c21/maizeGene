@@ -160,9 +160,21 @@ button:hover { background: #1f623a; }
 
 <body>
 
-<header>
+<header class="has-mobile-menu">
   <a class="logo" href="index.html">🌽 MaizeGene</a>
-  <nav>
+
+  <button
+    class="mobile-menu-toggle"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="ai-navigation"
+    data-menu-toggle
+  >
+    <span aria-hidden="true">☰</span>
+  </button>
+
+  <nav id="ai-navigation" class="site-nav">
     <a href="index.html">Home</a>
     <a href="literature.html">Literature Search</a>
   </nav>
@@ -283,5 +295,6 @@ question.addEventListener("keydown", function(event) {
 });
 </script>
 <script src="voice-input.js"></script>
+<script src="mobile-nav.js"></script>
 </body>
 </html>
