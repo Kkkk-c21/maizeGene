@@ -1,0 +1,8 @@
+resource,required,available,remaining,affects
+完整NAM-5.0 Gene参考,44303 unique genes with symbol/aliases/source/version,5000 unique genes,39303 reference genes; export provenance/version; no connection config found,Task4
+历史ID转换表,traceable GRMZM/Zm00001d to NAM5 mappings,only aliases present in partial export,reliable versioned conversion table,Task4
+Embedding/EmbeddingGemma,gene-keyed values plus version/source and target-paper/label contamination audit,not found,actual feature data and provenance,Task5/6
+GO,gene-keyed values plus version/source and target-paper/label contamination audit,not found,actual feature data and provenance,Task5/6
+ProteinDomain,gene-keyed values plus version/source and target-paper/label contamination audit,not found,actual feature data and provenance,Task5/6
+KEGG,gene-keyed values plus version/source and target-paper/label contamination audit,not found,actual feature data and provenance,Task5/6
+Expression,gene-keyed values plus version/source and target-paper/label contamination audit,not found,actual feature data and provenance,Task5/6

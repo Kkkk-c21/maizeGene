@@ -1,0 +1,174 @@
+{
+  "base_commit": "052d1816f8ec20583d8b59ed208b3d9e614060a7",
+  "branch": "codex/task3-7-no-api-20261103",
+  "scope": "new code, documentation, rules and aggregate reports only; inherited main files unchanged except .gitignore and directory index",
+  "hash_scope": "staged Git blobs; manifest itself excluded",
+  "file_count_excluding_manifest": 33,
+  "files": [
+    {
+      "file": ".github/workflows/continuation-checks.yml",
+      "bytes": 622,
+      "sha256": "346486185a14d0ddc288a48f76e620701f7197f0ea8f9eb7e1cb76aaee25d428"
+    },
+    {
+      "file": ".gitignore",
+      "bytes": 687,
+      "sha256": "30c6b4710464fa346c37d538c6bc696742ad3f9bd0126e830d24ed16b91a4536"
+    },
+    {
+      "file": "README.md",
+      "bytes": 1527,
+      "sha256": "a13ba25bd6987847ed3b5d36374a15dd8f46dd0bca10797c041d4c874baf0a28"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/2026-11-03_接续批次/README.md",
+      "bytes": 4985,
+      "sha256": "e57f8c47f8946eae37f42c7c7097da593bd5ec3472a8a2fce6663bd57f3d752a"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/2026-11-03_接续批次/classification_rules_v1_3.md",
+      "bytes": 4425,
+      "sha256": "b927d799e6d3ed4361dd1f63d7f3bde57d0423ef5a15801b0f92261ca22d7fb0"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/2026-11-03_接续批次/classification_rules_v1_4.md",
+      "bytes": 2771,
+      "sha256": "4d50f01cb3f258195db3b0b9c604cad7a6c45bed6512da85a46013fe01dd28bc"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/2026-11-03_接续批次/supplement_rules_v1.0.json",
+      "bytes": 6734,
+      "sha256": "3beff0f155ebcad1f119f9f8795b8793ea13f4ad063f1e29d0850b14559beb3d"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/2026-11-03_接续批次/人工复核口径_V1.2.md",
+      "bytes": 2150,
+      "sha256": "018dc6071b1e859f72886bbc38137c74e7591e630b7289f8add4df0552added6"
+    },
+    {
+      "file": "maize_literature/00_项目说明与规则/目录结构说明.md",
+      "bytes": 2737,
+      "sha256": "cb5ebdf15d46193b573a76706cc33bc5b881783543a6d297a606dc16a2f3f20e"
+    },
+    {
+      "file": "maize_literature/02_抽样与复核/04_2026-11-03_批次索引/README.md",
+      "bytes": 1259,
+      "sha256": "ec00c71c84875bde2e03d20a7000b98217fc813a3e3113cd78c41052f3705715"
+    },
+    {
+      "file": "maize_literature/03_脚本/05_无API初筛与分类/01_初版/augment_maizegene_no_api.py",
+      "bytes": 6853,
+      "sha256": "23305824d788cba085e304d1e6f66102b6830099a375bf8a775a05fea699c21a"
+    },
+    {
+      "file": "maize_literature/03_脚本/05_无API初筛与分类/01_初版/maizegene_task1_2.py",
+      "bytes": 14105,
+      "sha256": "6bf5e4295ed694dbd2a13c2764d2a577570976f76ad9c7dd19e2ba362c271e68"
+    },
+    {
+      "file": "maize_literature/03_脚本/05_无API初筛与分类/02_v1.3/maizegene_task1_2_v1_3.py",
+      "bytes": 15150,
+      "sha256": "0e9e56170b9a0c2aafc3645fd00d240d91897c61b4c9adaf39b05badd79513ae"
+    },
+    {
+      "file": "maize_literature/03_脚本/05_无API初筛与分类/03_v1.4/extract_gene_trait_candidates_v1_0.py",
+      "bytes": 4759,
+      "sha256": "d26d821080bbe82226ccce5e75f37ffc3de7d2288cb75385a76d3f8ee8adb79f"
+    },
+    {
+      "file": "maize_literature/03_脚本/05_无API初筛与分类/03_v1.4/maizegene_task1_2_v1_4.py",
+      "bytes": 16092,
+      "sha256": "67cd4c6f246cb73d5e8ef299686099e8905d5da338bd79e4dc26636578e8dccf"
+    },
+    {
+      "file": "maize_literature/03_脚本/06_候选证据优化/v1.3/optimize_candidates.py",
+      "bytes": 13786,
+      "sha256": "8f921c1dfafe9c6f565f7bdc311839b8e6cf339e8d57bf915925738ea111ee51"
+    },
+    {
+      "file": "maize_literature/03_脚本/07_增量补查映射与标签/finalize_delivery.py",
+      "bytes": 16103,
+      "sha256": "903592e948f512d075f99fc576f6023cb88e2c89ade89f0234178eb189324ca5"
+    },
+    {
+      "file": "maize_literature/03_脚本/07_增量补查映射与标签/requirements.txt",
+      "bytes": 24,
+      "sha256": "cdf18940421af43ab838bd7b2c9335d1e72c678e38536497f6ab5ca328b7ca5d"
+    },
+    {
+      "file": "maize_literature/03_脚本/07_增量补查映射与标签/run_continuation.py",
+      "bytes": 41476,
+      "sha256": "b811db47a9acc4a785a3a95a218438152ac433d44a343b398f7b5bf658d17329"
+    },
+    {
+      "file": "maize_literature/03_脚本/07_增量补查映射与标签/run_pipeline.py",
+      "bytes": 669,
+      "sha256": "b7b1769655bb6496e2175741fd940f5b91068056fa06afa21fe95f6e1360921e"
+    },
+    {
+      "file": "maize_literature/03_脚本/07_增量补查映射与标签/test_rules.py",
+      "bytes": 3272,
+      "sha256": "e2545554a1b0b2e91d67ef014b236e20fdee03c22fc7aea0493e51c3c7155fa5"
+    },
+    {
+      "file": "maize_literature/03_脚本/08_本地文件整理/organize_data_folder.ps1",
+      "bytes": 8226,
+      "sha256": "dbd5cb4a30d8502e974b6c57d738faeba14452b29f5542b5520a4a30df1abc2a"
+    },
+    {
+      "file": "maize_literature/03_脚本/09_仓库检查/check_publication.py",
+      "bytes": 2472,
+      "sha256": "61dac93c8c7630ca9f4647cfe642d951be8b58bee6ae36e478a2e165d8562301"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/baseline_status.csv",
+      "bytes": 1504,
+      "sha256": "38fdb3e280e007f5c9849164d872a59013ed27a546c38a9d9a5aff94b96a45e9"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/data_dictionary.json",
+      "bytes": 1889,
+      "sha256": "4914b5c7c801ac969d3fde533222448c23a90043c6b984dc473c997fbbc39f36"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/feature_source_leakage_audit.csv",
+      "bytes": 713,
+      "sha256": "5ace83829f5e2bb8c6d4569fa3fc95b7bf2237809626f4b456b580535fefde5b"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/missing_resources.csv",
+      "bytes": 1095,
+      "sha256": "021f46bebd7778449e5336f3ee5220d8c6072209f35ef34619af93e31e952686"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/original_category_statistics.csv",
+      "bytes": 1060,
+      "sha256": "e6205e3c7df53e504a52bf840d6f8b7a1ecec6d02da210d55ddb8e2b42f2ed41"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/phase_statistics.csv",
+      "bytes": 468,
+      "sha256": "76989562a617f8f1b5b5e588fc4501ac7ae4c0732b2ef237a5f97692c6bfa5bc"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/quality_report.md",
+      "bytes": 6978,
+      "sha256": "4e467c65eebe545bbee8bd6b1ff649004064d47a30dba0442660b220376a0b1d"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/stage_statistics.csv",
+      "bytes": 230,
+      "sha256": "384922ddd7f69410b813d4fa30e465bca0131323ba3f6f82f4e3889648dd3b57"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/statistics.json",
+      "bytes": 1462,
+      "sha256": "a8b43198e6bbad35e8bbc91b505254e2300190a76b2ce60cfc56e895f1f678d5"
+    },
+    {
+      "file": "maize_literature/04_运行状态/2026-11-03_接续批次/候选优化_v1.3_statistics.json",
+      "bytes": 1062,
+      "sha256": "b2c454100bfd89fa546e9e4fc44abcdeb83fc65231033bf23c76992c3c60879c"
+    }
+  ]
+}

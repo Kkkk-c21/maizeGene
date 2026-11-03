@@ -1,0 +1,43 @@
+{
+  "input_rows": 3214,
+  "paper_count": 1197,
+  "reference_rows": 5000,
+  "reference_unique_genes": 5000,
+  "source_match": 3214,
+  "quality_groups": {
+    "人工保留": 26,
+    "人工待定": 8,
+    "身份待定": 1136,
+    "关联探索候选": 612,
+    "规则支持候选": 307,
+    "关系待定": 589,
+    "规则排除": 114,
+    "异源宿主候选": 395,
+    "背景证据": 24,
+    "排除": 3
+  },
+  "mapping_status": {
+    "导出表精确唯一名称": 128,
+    "旧映射缺少名称支持": 7,
+    "部分参考表未匹配": 3075,
+    "名称存在歧义": 4
+  },
+  "duplicate_rows": 33,
+  "usable_rows": 329,
+  "usable_papers": 221,
+  "usable_gene_mentions": 235,
+  "mapped_usable_rows": 39,
+  "mapped_usable_genes": 23,
+  "usable_evidence_suggestions": {
+    "B候选": 18,
+    "unknown": 107,
+    "C候选": 2,
+    "A候选": 202
+  },
+  "input_sha256": "797016e528f9ab93cf60a082a40336fff8eb9badbca609799b7918929fdaa6fe",
+  "usable_groups": {
+    "人工保留": 26,
+    "规则支持候选": 303
+  },
+  "preserved_original_fields": true
+}

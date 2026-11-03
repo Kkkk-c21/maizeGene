@@ -1,0 +1,15 @@
+name: Continuation source checks
+on: [push, pull_request]
+jobs:
+  source-and-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r "maize_literature/03_脚本/07_增量补查映射与标签/requirements.txt"
+      - run: python -m unittest discover -s "maize_literature/03_脚本/07_增量补查映射与标签" -p "test_*.py" -v
+      - run: python "maize_literature/03_脚本/09_仓库检查/check_publication.py" --base origin/main

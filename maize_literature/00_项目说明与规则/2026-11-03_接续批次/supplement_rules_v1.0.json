@@ -1,0 +1,310 @@
+{
+  "rule_version": "supplement_v1.0",
+  "traits": {
+    "耐旱性": [
+      "drought tolerance",
+      "drought resistance",
+      "drought survival",
+      "water deficit tolerance"
+    ],
+    "耐盐性": [
+      "salt tolerance",
+      "salinity tolerance",
+      "salt resistance"
+    ],
+    "耐冷性": [
+      "cold tolerance",
+      "chilling tolerance",
+      "freezing tolerance"
+    ],
+    "耐热性": [
+      "heat tolerance",
+      "thermotolerance"
+    ],
+    "抗病性": [
+      "disease resistance",
+      "pathogen resistance",
+      "southern leaf blight resistance",
+      "smut resistance"
+    ],
+    "抗虫性": [
+      "insect resistance",
+      "herbivore resistance"
+    ],
+    "干旱响应": [
+      "drought stress",
+      "water deficit"
+    ],
+    "盐胁迫响应": [
+      "salt stress",
+      "salinity stress"
+    ],
+    "低温响应": [
+      "cold stress",
+      "chilling stress"
+    ],
+    "高温响应": [
+      "heat stress"
+    ],
+    "氧化胁迫响应": [
+      "oxidative stress"
+    ],
+    "淹水响应": [
+      "waterlogging",
+      "flooding tolerance",
+      "submergence tolerance"
+    ],
+    "营养胁迫响应": [
+      "phosphate starvation",
+      "phosphate deficiency",
+      "nitrogen deficiency",
+      "low nitrogen tolerance"
+    ],
+    "金属胁迫响应": [
+      "cadmium tolerance",
+      "aluminum tolerance",
+      "aluminium tolerance"
+    ],
+    "开花时间": [
+      "flowering time",
+      "flowering transition",
+      "floral transition"
+    ],
+    "株高": [
+      "plant height",
+      "plant stature"
+    ],
+    "叶角": [
+      "leaf angle"
+    ],
+    "根系构型": [
+      "root architecture",
+      "root system architecture"
+    ],
+    "根长": [
+      "root length"
+    ],
+    "根系发育": [
+      "root development",
+      "root growth",
+      "lateral root formation",
+      "crown root development"
+    ],
+    "叶片发育": [
+      "leaf development",
+      "leaf morphology",
+      "leaf senescence"
+    ],
+    "分蘖": [
+      "tillering",
+      "tiller number"
+    ],
+    "穗发育": [
+      "ear development",
+      "inflorescence development",
+      "tassel development"
+    ],
+    "花发育": [
+      "floral development",
+      "flower development"
+    ],
+    "雄性育性": [
+      "male fertility",
+      "male sterility",
+      "pollen development",
+      "anther development"
+    ],
+    "胚发育": [
+      "embryo development",
+      "embryogenesis"
+    ],
+    "胚乳发育": [
+      "endosperm development"
+    ],
+    "种子发育": [
+      "seed development",
+      "kernel development"
+    ],
+    "种子萌发": [
+      "seed germination",
+      "germination rate",
+      "seed dormancy"
+    ],
+    "籽粒重量": [
+      "kernel weight",
+      "grain weight",
+      "100-kernel weight",
+      "hundred-kernel weight"
+    ],
+    "籽粒大小": [
+      "kernel size",
+      "grain size",
+      "kernel thickness",
+      "kernel length",
+      "kernel width"
+    ],
+    "籽粒数量": [
+      "kernel number",
+      "grain number"
+    ],
+    "产量": [
+      "grain yield",
+      "yield traits",
+      "yield improvement"
+    ],
+    "生物量": [
+      "biomass accumulation",
+      "biomass production",
+      "shoot biomass",
+      "root biomass"
+    ],
+    "植株生长": [
+      "plant growth",
+      "vegetative growth",
+      "seedling growth"
+    ],
+    "籽粒品质": [
+      "grain quality",
+      "kernel quality"
+    ],
+    "含油量": [
+      "oil content",
+      "lipid content"
+    ],
+    "淀粉含量": [
+      "starch content",
+      "starch accumulation"
+    ],
+    "蛋白含量": [
+      "protein content"
+    ],
+    "糖含量": [
+      "sugar content",
+      "sucrose content"
+    ],
+    "木质素含量": [
+      "lignin content"
+    ],
+    "氮利用效率": [
+      "nitrogen use efficiency"
+    ],
+    "磷吸收": [
+      "phosphate uptake",
+      "phosphorus uptake"
+    ],
+    "光合作用": [
+      "photosynthetic efficiency",
+      "photosynthesis",
+      "chlorophyll content"
+    ],
+    "细胞壁形成": [
+      "cell wall formation",
+      "cell wall biosynthesis"
+    ],
+    "气孔调节": [
+      "stomatal closure",
+      "stomatal opening",
+      "stomatal development"
+    ],
+    "抗倒伏": [
+      "lodging resistance",
+      "stalk strength"
+    ],
+    "F:转录调控": [
+      "transcriptional regulation",
+      "transcriptional activation",
+      "transcriptional repression",
+      "transcription factor activity"
+    ],
+    "F:DNA结合": [
+      "DNA binding",
+      "DNA-binding",
+      "binds to the promoter",
+      "binding to the promoter"
+    ],
+    "F:蛋白互作": [
+      "protein interaction",
+      "protein-protein interaction",
+      "interacts with",
+      "interacted with"
+    ],
+    "F:磷酸化": [
+      "phosphorylation",
+      "kinase activity",
+      "phosphatase activity"
+    ],
+    "F:泛素化": [
+      "ubiquitination",
+      "ubiquitylation",
+      "ubiquitin ligase activity"
+    ],
+    "F:转运": [
+      "transporter activity",
+      "ion transport",
+      "auxin transport",
+      "nitrate transport",
+      "sugar transport"
+    ],
+    "F:激素信号": [
+      "auxin signaling",
+      "abscisic acid signaling",
+      "ABA signaling",
+      "gibberellin signaling",
+      "ethylene signaling",
+      "brassinosteroid signaling",
+      "jasmonate signaling"
+    ],
+    "F:激素合成": [
+      "auxin biosynthesis",
+      "gibberellin biosynthesis",
+      "ABA biosynthesis",
+      "ethylene biosynthesis"
+    ],
+    "F:代谢": [
+      "starch biosynthesis",
+      "lipid biosynthesis",
+      "lignin biosynthesis",
+      "anthocyanin biosynthesis",
+      "carotenoid biosynthesis",
+      "benzoxazinoid biosynthesis",
+      "flavonoid biosynthesis",
+      "sucrose metabolism"
+    ],
+    "F:染色质调控": [
+      "histone modification",
+      "DNA methylation",
+      "chromatin remodeling"
+    ],
+    "F:RNA加工": [
+      "RNA splicing",
+      "RNA editing",
+      "RNA processing"
+    ],
+    "F:细胞过程": [
+      "cell division",
+      "cell proliferation",
+      "cell elongation",
+      "programmed cell death",
+      "autophagy"
+    ],
+    "F:亚细胞定位": [
+      "localized to the nucleus",
+      "localized in the nucleus",
+      "localized to the plasma membrane",
+      "localized in chloroplasts"
+    ],
+    "F:酶活性": [
+      "enzyme activity",
+      "enzymatic activity",
+      "catalytic activity"
+    ]
+  },
+  "source_text": "abstract_verbatim",
+  "multi_gene_policy": "unresolved_set_assertion_no_cartesian_product",
+  "mapping_priority": [
+    "reference_NAM5_ID",
+    "unique_source_supported_alias",
+    "verified_historical_ID",
+    "unresolved_or_ambiguous"
+  ]
+}

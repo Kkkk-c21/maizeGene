@@ -1,0 +1,5 @@
+stage,status,scanned_papers,new_evidence,duplicate_events,usable_review_candidates,strict_training_relations,pending_records,unique_reference_verified_genes
+Task3,completed_rule_supplement_not_manual_validation,72467,4166,480,253,2,3173,94
+Task4,partial_reference_5000_of_44303,72467,4166,480,378,2,7002,124
+Task5,labels_built_features_metadata_only,72467,4166,480,582,2,7378,124
+Task6,not_run_missing_auditable_biological_features,72467,4166,480,0,2,not_applicable,0

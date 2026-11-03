@@ -1,0 +1,19 @@
+{
+  "evidence_record_id": "旧E编号原样保留；新N+SHA256前20位内容ID。",
+  "gene_mention": "原提及或分句中多个提及的分号集合；集合不展开成独立关系。",
+  "gene_id": "旧证据表保留旧值，新证据记录本轮解析ID；训练请使用resolved_gene_id及mapping_reference_verified。",
+  "resolved_gene_id": "本轮来源支持映射，或参考外NAM5语法ID；必须结合mapping_status解释。",
+  "mapping_reference_verified": "仅当前5000参考精确ID或唯一受支持别名为True；家族/描述名不强行映射。",
+  "trait_normalized": "性状或F:分子功能；分号表示多个目标仍待消歧。旧字段原样保留，auto_trait_normalized为既有标准化。",
+  "supporting_text": "新证据为对应摘要的连续原文，旧证据沿用原字段；source_verified另列。",
+  "evidence_type": "旧原类型保留；不能直接用作训练证据等级。",
+  "relation_evidence_type": "本轮关系级保守规则建议A/B/C/D/unknown，依据见evidence_type_basis，非人工确认。",
+  "review_status": "旧人工决定不改；新增为未人工复核。",
+  "auto_quality_group": "仅旧证据v1.3质量分组原样保留。",
+  "supplemental_quality_group": "新增规则状态；旧值沿用v1.3。规则支持仅为可审阅候选。",
+  "supplemental_effect_direction": "新关系目标邻接措辞；旧关系另作保守派生。increase不等于基因正调控。",
+  "experimental_host": "摘要分句明确宿主，否则unknown；异源实验不当作玉米植株验证。",
+  "training_usable": "严格规则门槛而非人工确认：需映射、原文、关系级A/B、单基因、宿主和明确非无效应方向。",
+  "label": "positive_relation或unlabeled；没有自动阴性。",
+  "gene_features.parquet": "5000行身份元数据及真实缺失标记，模型特征全部缺失。"
+}

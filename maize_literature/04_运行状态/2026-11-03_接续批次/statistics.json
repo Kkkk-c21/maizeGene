@@ -1,0 +1,63 @@
+{
+  "scanned_papers": 72467,
+  "scan_errors": 0,
+  "old_records": 3214,
+  "new_records": 4166,
+  "merged_records": 7380,
+  "duplicate_old": 479,
+  "duplicate_new": 1,
+  "old_priority_candidates": 329,
+  "old_manual_pending": 8,
+  "new_quality_groups": {
+    "规则支持": 253,
+    "关联探索": 590,
+    "待定": 3173,
+    "异源宿主": 128,
+    "背景": 22
+  },
+  "new_relation_types": {
+    "A": 840,
+    "B": 252,
+    "unknown": 2421,
+    "C": 530,
+    "D": 123
+  },
+  "mapping_status": {
+    "resolved": 378,
+    "unresolved": 6925,
+    "ambiguous": 75,
+    "unresolved_reference_membership": 2
+  },
+  "unique_resolved_genes": 124,
+  "new_unique_resolved_genes": 94,
+  "strict_positive_relations": 2,
+  "reference_unique_genes": 5000,
+  "target_reference_genes": 44303,
+  "feature_rows": 5000,
+  "model_feature_genes": 0,
+  "baseline_metrics_computed": 0,
+  "strata": [
+    {
+      "stratum": "A-D",
+      "scanned_papers": 9142,
+      "papers_without_prior_candidates": 7945,
+      "new_records": 2820,
+      "new_papers": 1708,
+      "duplicate_old": 479,
+      "rule_supported": 178,
+      "pending": 2128,
+      "unique_reference_genes": 60
+    },
+    {
+      "stratum": "X/E/R/U_or_other",
+      "scanned_papers": 63325,
+      "papers_without_prior_candidates": 63325,
+      "new_records": 1346,
+      "new_papers": 1016,
+      "duplicate_old": 0,
+      "rule_supported": 75,
+      "pending": 1045,
+      "unique_reference_genes": 52
+    }
+  ]
+}
