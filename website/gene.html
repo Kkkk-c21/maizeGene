@@ -264,19 +264,68 @@
 
   </section>
 
-  <section class="card">
-    <h2>📚 Literature and Evidence Sources</h2>
-   <p class="empty">
-  No validated literature evidence is currently available.
-  Article titles, DOIs, evidence classifications,
-  and source links will be displayed after data integration
-  and verification.
-</p>
+  
+<section class="card" aria-labelledby="literatureHeading">
+  <h2 id="literatureHeading">📚 Literature and Evidence Sources</h2>
+
+  <p id="literatureStatus" role="status">
+    Waiting for gene details…
+  </p>
+
+  <div id="literatureGroups" hidden>
+
+    <div class="literature-group">
+      <h3>Verified evidence</h3>
+      <p>Reviewed gene identity, experimental context and findings.</p>
+
+      <p id="verifiedEmpty" class="empty">
+        No verified evidence has been recorded for this gene.
+      </p>
+
+      <ul id="verifiedPapers" class="paper-list" hidden></ul>
+    </div>
+
+    <div class="literature-group">
+      <h3>Candidate literature</h3>
+      <p>
+        Title or abstract mentions need review before they can
+        support a gene function claim.
+      </p>
+
+      <p id="candidateStatus" role="status"></p>
+      <ul id="candidatePapers" class="paper-list" hidden></ul>
+
+      <button id="literatureMore" type="button" hidden>
+        Load more
+      </button>
+    </div>
+
+    <div class="literature-group">
+      <h3>Semantic suggestions</h3>
+      <p>Similar topics may include papers about other genes.</p>
+
+      <button id="literatureSemantic" type="button">
+        Find semantic suggestions
+      </button>
+
+      <p id="semanticStatus" role="status"></p>
+      <ul id="semanticPapers" class="paper-list" hidden></ul>
+    </div>
+
+  </div>
+
+  <div class="literature-group">
+    <button id="literatureRetry" type="button" hidden>
+      Retry literature
+    </button>
+  </div>
+</section>
+
 
   </section>
 
 </main>
-
+<script src="gene-literature.js"></script>
 
 <script>
 const geneId = new URLSearchParams(window.location.search).get("id");
@@ -630,7 +679,8 @@ async function loadGene() {
     }
 
     document.querySelector("main").appendChild(section);
-
+    loadGeneLiterature(gene.gene_id);
+    
   } catch (error) {
     title.textContent = "Unable to load gene";
     document.querySelector(".warning").textContent = error.message;
