@@ -1,1 +1,8 @@
 /maize_literature/01_数据/
+.env
+.venv/
+__pycache__/
+**/__pycache__/
+neo4j/
+maize_literature.zip
+website/index-backup.html

@@ -254,7 +254,7 @@ async function loadGene() {
 
   try {
     const response = await fetch(
-      "/genes/" + encodeURIComponent(geneId)
+      "http://127.0.0.1:8000/genes/" + encodeURIComponent(geneId)
     );
 
     if (response.status === 404) {
