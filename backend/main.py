@@ -2,7 +2,7 @@ import json
 import os
 import urllib.request
 from pathlib import Path
-
+from .literature_api import router as literature_router
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from typing import Any
@@ -48,7 +48,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="MaizeGene API", lifespan=lifespan)
-
+app.include_router(literature_router)
 
 class GeneDetail(BaseModel):
     gene: dict[str, Any]
@@ -263,3 +263,107 @@ app.mount(
     StaticFiles(directory=WEBSITE_DIR, html=True),
     name="site",
 )
+# Unified gene and literature search
+from pydantic import BaseModel, Field
+from .literature_api import (
+    SearchRequest as LiteratureSearchRequest,
+    search_literature,
+)
+
+
+class UnifiedSearchRequest(BaseModel):
+    query: str = Field(min_length=1, max_length=2000)
+    top_k_genes: int = Field(default=10, ge=1, le=20)
+    top_k_papers: int = Field(default=10, ge=1, le=50)
+
+
+@app.post("/api/search")
+def unified_search(request: UnifiedSearchRequest):
+    import re
+
+    query = request.query.strip()
+    if not query:
+        raise HTTPException(status_code=422, detail="Empty query")
+
+    is_gene_id = bool(
+        re.fullmatch(r"Zm\d{5}eb\d{6}", query, flags=re.IGNORECASE)
+    )
+
+    status = {"genes": "ok", "papers": "ok"}
+    warnings = {}
+
+    gene_data = {"results": [], "total_genes": len(gene_ids)}
+    literature_data = {"papers": []}
+
+    if is_gene_id:
+        exact_id = next(
+            (gid for gid in gene_ids if gid.lower() == query.lower()),
+            None
+        )
+
+        if exact_id:
+            gene_data["results"] = [{
+                "gene_id": exact_id,
+                "similarity": None,
+                "match_type": "exact_id"
+            }]
+
+        status["papers"] = "skipped_for_gene_id"
+
+    else:
+        try:
+            gene_data = search_genes(
+                SearchRequest(
+                    query=query,
+                    top_k=request.top_k_genes
+                )
+            )
+        except HTTPException:
+            status["genes"] = "unavailable"
+            warnings["genes"] = "Gene search temporarily unavailable"
+        except (OSError, RuntimeError, ValueError):
+            status["genes"] = "unavailable"
+            warnings["genes"] = "Gene search resources unavailable"
+
+        try:
+            literature_data = search_literature(
+                LiteratureSearchRequest(
+                    query=query,
+                    top_k=request.top_k_papers
+                )
+            )
+        except HTTPException:
+            status["papers"] = "unavailable"
+            warnings["papers"] = "Literature search temporarily unavailable"
+        except (OSError, RuntimeError, ValueError):
+            status["papers"] = "unavailable"
+            warnings["papers"] = "Literature search resources unavailable"
+
+        if status["genes"] == "unavailable" and status["papers"] == "unavailable":
+            raise HTTPException(
+                status_code=503,
+                detail="Gene and literature search are both unavailable"
+            )
+
+    genes = [
+        {
+            **gene,
+            "detail_url": f"/genes/{gene['gene_id']}"
+        }
+        for gene in gene_data["results"]
+    ]
+
+    papers = literature_data["papers"]
+
+    return {
+        "query": query,
+        "status": "partial" if warnings else "ok",
+        "component_status": status,
+        "warnings": warnings,
+        "genes": genes,
+        "papers": papers,
+        "total_genes_indexed": gene_data["total_genes"],
+        "returned_genes": len(genes),
+        "returned_papers": len(papers)
+    }
+
