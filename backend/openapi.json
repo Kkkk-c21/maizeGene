@@ -117,6 +117,90 @@
         }
       }
     },
+    "/genes/{gene_id}/literature": {
+      "get": {
+        "tags": [
+          "Literature"
+        ],
+        "summary": "按基因 ID 查询候选文献与已核验证据",
+        "operationId": "gene_literature_detail_genes__gene_id__literature_get",
+        "parameters": [
+          {
+            "name": "gene_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,99}$",
+              "title": "Gene Id"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 25,
+              "minimum": 1,
+              "default": 5,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "include_semantic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Semantic"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneLiterature"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "基因不存在"
+          },
+          "503": {
+            "description": "资源不可用"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "summary": "Home",
@@ -208,6 +292,90 @@
   },
   "components": {
     "schemas": {
+      "Candidate": {
+        "properties": {
+          "source_record_key": {
+            "type": "string",
+            "title": "Source Record Key"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doi"
+          },
+          "pmid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmid"
+          },
+          "abstract": {
+            "type": "string",
+            "title": "Abstract"
+          },
+          "match_type": {
+            "type": "string",
+            "enum": [
+              "gene_id",
+              "legacy_id",
+              "symbol_or_alias",
+              "semantic"
+            ],
+            "title": "Match Type"
+          },
+          "matched_term": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Term"
+          },
+          "matched_in": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "title",
+                  "abstract"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched In"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_record_key",
+          "title",
+          "doi",
+          "pmid",
+          "abstract",
+          "match_type"
+        ],
+        "title": "Candidate"
+      },
       "GeneDetail": {
         "properties": {
           "gene": {
@@ -256,6 +424,70 @@
           "counts"
         ],
         "title": "GeneDetail"
+      },
+      "GeneLiterature": {
+        "properties": {
+          "gene_id": {
+            "type": "string",
+            "title": "Gene Id"
+          },
+          "candidate_total": {
+            "type": "integer",
+            "title": "Candidate Total"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "verified_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/VerifiedEvidence"
+            },
+            "type": "array",
+            "title": "Verified Evidence"
+          },
+          "semantic_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "type": "array",
+            "title": "Semantic Candidates"
+          },
+          "semantic_status": {
+            "type": "string",
+            "enum": [
+              "not_requested",
+              "ok",
+              "unavailable"
+            ],
+            "title": "Semantic Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "gene_id",
+          "candidate_total",
+          "candidates",
+          "next_offset",
+          "verified_evidence",
+          "semantic_candidates",
+          "semantic_status"
+        ],
+        "title": "GeneLiterature"
       },
       "HTTPValidationError": {
         "properties": {
@@ -338,6 +570,77 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "VerifiedEvidence": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title"
+          },
+          "doi": {
+            "type": "string",
+            "pattern": "^10\\.[0-9]{4,9}/\\S+$",
+            "title": "Doi"
+          },
+          "pmid": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmid"
+          },
+          "study_context": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Study Context"
+          },
+          "finding": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Finding"
+          },
+          "source_locator": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Locator"
+          },
+          "identity_source": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Identity Source"
+          },
+          "reviewed_by": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Reviewed By"
+          },
+          "reviewed_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Reviewed On"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "doi",
+          "study_context",
+          "finding",
+          "source_locator",
+          "identity_source",
+          "reviewed_by",
+          "reviewed_on"
+        ],
+        "title": "VerifiedEvidence"
       },
       "backend__literature_api__SearchRequest": {
         "properties": {

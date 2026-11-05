@@ -11,8 +11,10 @@ import logging
 from dotenv import load_dotenv
 from neo4j import GraphDatabase, READ_ACCESS, unit_of_work
 from neo4j.exceptions import AuthError, Neo4jError, ServiceUnavailable, SessionExpired
-from fastapi import FastAPI, HTTPException, Path as ApiPath, Request
+from fastapi import FastAPI, HTTPException, Path as ApiPath, Query, Request
 from pydantic import BaseModel, Field
+
+from .gene_literature import GENE_ID_PATTERN, GeneLiterature, gene_literature
 
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env", override=False)
@@ -133,7 +135,7 @@ def gene_detail(
     request: Request,
     gene_id: str = ApiPath(
         ..., min_length=1, max_length=100,
-        pattern=r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,99}$",
+        pattern=GENE_ID_PATTERN,
         examples=["Zm00001eb081920"],
     ),
 ):
@@ -144,6 +146,36 @@ def gene_detail(
         key: len(result[key]) for key in ("go", "protein_domains", "transcripts")
     }
     return result
+
+
+@unit_of_work(timeout=10)
+def fetch_gene_identity(tx, gene_id):
+    record = tx.run(
+        "MATCH (g:Gene {gene_id: $gene_id}) "
+        "RETURN g{.gene_id, .symbol, .aliases} AS gene",
+        gene_id=gene_id,
+    ).single()
+    return record["gene"] if record is not None else None
+
+
+@app.get(
+    "/genes/{gene_id}/literature",
+    response_model=GeneLiterature,
+    tags=["Literature"],
+    summary="按基因 ID 查询候选文献与已核验证据",
+    responses={404: {"description": "基因不存在"}, 503: {"description": "资源不可用"}},
+)
+def gene_literature_detail(
+    request: Request,
+    gene_id: str = ApiPath(..., min_length=1, max_length=100, pattern=GENE_ID_PATTERN),
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=5, ge=1, le=25),
+    include_semantic: bool = False,
+):
+    gene = read_neo4j(request, fetch_gene_identity, gene_id)
+    if gene is None:
+        raise HTTPException(404, "未找到该基因 ID")
+    return gene_literature(gene["gene_id"], gene, offset, limit, include_semantic)
 
 
 DATA_DIR = (

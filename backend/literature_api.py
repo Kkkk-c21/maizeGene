@@ -5,6 +5,7 @@ import urllib.error
 import urllib.request
 from functools import lru_cache
 from pathlib import Path
+from threading import Lock
 
 import faiss
 import numpy as np
@@ -30,6 +31,7 @@ EMBEDDING_MODEL = os.getenv(
     "MAIZE_EMBEDDING_MODEL",
     "embeddinggemma-300m"
 )
+_metadata_lock = Lock()
 
 
 class SearchRequest(BaseModel):
@@ -38,30 +40,48 @@ class SearchRequest(BaseModel):
 
 
 @lru_cache(maxsize=1)
-def load_resources():
-    index = faiss.read_index(str(INDEX_DIR / "index.faiss"))
-
+def _load_paper_metadata():
     with (INDEX_DIR / "papers_index.csv").open(
         encoding="utf-8-sig", newline=""
     ) as f:
-        papers = list(csv.DictReader(f))
-
-    if index.ntotal != len(papers) or index.d != 768:
-        raise RuntimeError("FAISS index and metadata mismatch")
+        reader = csv.DictReader(f)
+        required = {"row_id", "source_record_key", "title", "doi", "pmid"}
+        if not required.issubset(reader.fieldnames or ()):
+            raise ValueError("Invalid literature index metadata columns")
+        papers = list(reader)
 
     abstracts = {}
     with PAPERS_CSV.open(encoding="utf-8-sig", newline="") as f:
-        for paper in csv.DictReader(f):
+        reader = csv.DictReader(f)
+        required = {"source_record_key", "abstract", "screen_decision", "is_duplicate_representative"}
+        if not required.issubset(reader.fieldnames or ()):
+            raise ValueError("Invalid literature master CSV columns")
+        for paper in reader:
             if paper["is_duplicate_representative"].strip() != "1":
                 continue
             if paper["screen_decision"].strip() != "\u4fdd\u7559":
                 continue
             abstracts[paper["source_record_key"]] = paper["abstract"]
 
+    return papers, abstracts
+
+
+def load_paper_metadata():
+    # Share one metadata snapshot across both APIs, including on a cold start.
+    with _metadata_lock:
+        return _load_paper_metadata()
+
+
+@lru_cache(maxsize=1)
+def load_resources():
+    papers, abstracts = load_paper_metadata()
+    index = faiss.read_index(str(INDEX_DIR / "index.faiss"))
+    if index.ntotal != len(papers) or index.d != 768:
+        raise RuntimeError("FAISS index and metadata mismatch")
     return index, papers, abstracts
 
 
-def encode_query(query):
+def encode_query(query, *, timeout=60):
     payload = json.dumps({
         "model": EMBEDDING_MODEL,
         "input": query
@@ -74,7 +94,7 @@ def encode_query(query):
     )
 
     try:
-        with urllib.request.urlopen(request, timeout=60) as response:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
             data = json.load(response)
     except (urllib.error.URLError, TimeoutError, ValueError) as exc:
         raise HTTPException(
@@ -106,6 +126,15 @@ def search_literature(request: SearchRequest):
     if not query:
         raise HTTPException(status_code=422, detail="Empty query")
 
+    results = find_similar_papers(query, request.top_k)
+    return {
+        "query": query,
+        "total": len(results),
+        "papers": results
+    }
+
+
+def find_similar_papers(query, top_k, *, timeout=60):
     try:
         index, papers, abstracts = load_resources()
     except (OSError, RuntimeError, KeyError, ValueError) as exc:
@@ -114,8 +143,8 @@ def search_literature(request: SearchRequest):
             detail="Literature index unavailable"
         ) from exc
 
-    vector = encode_query(query)
-    scores, indices = index.search(vector, request.top_k)
+    vector = encode_query(query, timeout=timeout)
+    scores, indices = index.search(vector, top_k)
 
     results = []
     for score, idx in zip(scores[0], indices[0]):
@@ -138,8 +167,4 @@ def search_literature(request: SearchRequest):
             "score": float(score)
         })
 
-    return {
-        "query": query,
-        "total": len(results),
-        "papers": results
-    }
+    return results
