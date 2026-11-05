@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 	<html lang="en">
+<script src="https://unpkg.com/cytoscape@3.31.0/dist/cytoscape.min.js"></script>   
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -202,6 +203,56 @@
       </tbody>
     </table>
   </section>
+    <section class="card" id="networkCard">
+    <h2>🕸️ Gene Relationship Network</h2>
+    <p>
+      Interactive visualization of gene-associated annotations.
+    </p>
+
+    <div
+      id="geneNetwork"
+      style="width: 100%; height: 520px; background: #f8fbf8; border-radius: 12px;"
+    ></div>
+    
+<div style="
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  padding: 20px 12px;
+  margin-top: 12px;
+  color: #46584c;
+  font-size: 14px;
+  border-top: 1px solid #e5ece6;
+">
+
+  <div style="display:flex; align-items:center; gap:9px;">
+    <span style="width:15px;height:15px;background:#247a4b;border-radius:4px;"></span>
+    <span>Target Gene</span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:9px;">
+    <span style="width:15px;height:15px;background:#e5f1ff;border:2px solid #78a6d5;border-radius:50%;"></span>
+    <span>GO Annotation</span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:9px;">
+    <span style="width:13px;height:13px;background:#fff0d6;border:2px solid #d6a04c;transform:rotate(45deg);"></span>
+    <span>Protein Domain</span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:9px;">
+    <span style="width:17px;height:13px;background:#eee8fa;border:2px solid #a18acb;border-radius:4px;"></span>
+    <span>Transcript</span>
+  </div>
+
+</div>
+
+
+    <p id="geneNetworkStatus" class="empty">
+      Loading network data...
+    </p>
+  </section>
 
   <section class="card">
     <h2>🌱 Associated Traits</h2>
@@ -244,6 +295,248 @@ function addRow(tbody, type, detail, source) {
   tbody.appendChild(tr);
 }
 
+
+function renderGeneNetwork(gene, data) {
+  const container = document.getElementById("geneNetwork");
+  const status = document.getElementById("geneNetworkStatus");
+
+  if (!container || typeof cytoscape === "undefined") {
+    status.textContent = "Network visualization library unavailable.";
+    return;
+  }
+
+  const elements = [];
+
+  // Central gene node
+  elements.push({
+    data: {
+      id: "gene-node",
+      label: gene.symbol || gene.gene_id,
+      type: "gene"
+    }
+  });
+
+  // GO annotation nodes and edges
+  (data.go || []).forEach((go, i) => {
+    const id = "go-" + i;
+
+    elements.push({
+      data: {
+        id,
+        label: go.go_id + "\n" + (go.name || ""),
+        type: "go"
+      }
+    });
+
+    elements.push({
+      data: {
+        id: "edge-go-" + i,
+        source: "gene-node",
+        target: id,
+        label: "GO annotation"
+      }
+    });
+  });
+
+  // Protein domain nodes and edges
+  (data.protein_domains || []).forEach((domain, i) => {
+    const id = "domain-" + i;
+
+    elements.push({
+      data: {
+        id,
+        label: domain.name || domain.domain_id,
+        type: "domain"
+      }
+    });
+
+    elements.push({
+      data: {
+        id: "edge-domain-" + i,
+        source: "gene-node",
+        target: id,
+        label: "Protein domain"
+      }
+    });
+  });
+
+  // Transcript nodes and edges
+  (data.transcripts || []).forEach((transcript, i) => {
+    const id = "transcript-" + i;
+
+    elements.push({
+      data: {
+        id,
+        label: transcript.transcript_id,
+        type: "transcript"
+      }
+    });
+
+    elements.push({
+      data: {
+        id: "edge-transcript-" + i,
+        source: "gene-node",
+        target: id,
+        label: "Transcript"
+      }
+    });
+  });
+
+  
+  // Arrange annotation nodes into separate visual groups
+  const graphGroups = [
+    { type: "go", label: "GO ANNOTATIONS", x: 400 },
+    { type: "domain", label: "PROTEIN DOMAINS", x: 720 },
+    { type: "transcript", label: "TRANSCRIPTS", x: 1000 }
+  ];
+
+  // Place the target gene on the left
+  const geneNode = elements.find(
+    item => item.data.id === "gene-node"
+  );
+
+  geneNode.position = { x: 100, y: 360 };
+
+  // Place annotation nodes in separate columns
+  graphGroups.forEach(group => {
+    const nodes = elements.filter(
+      item => item.data.type === group.type
+    );
+
+    const spacing = 85;
+    const startY = 360 - ((nodes.length - 1) * spacing) / 2;
+
+    nodes.forEach((node, index) => {
+      node.position = {
+        x: group.x,
+        y: startY + index * spacing
+      };
+    });
+
+    // Add a visual heading for each group
+    elements.push({
+      data: {
+        id: "heading-" + group.type,
+        label: group.label,
+        type: "group-label"
+      },
+      position: {
+        x: group.x,
+        y: 40
+      }
+    });
+  });
+
+  cytoscape({
+    container: container,
+    elements: elements,
+
+
+style: [
+  {
+    selector: "node",
+    style: {
+      "label": "data(label)",
+      "text-wrap": "wrap",
+      "text-max-width": "125px",
+      "font-family": "Arial, sans-serif",
+      "font-size": 12,
+      "font-weight": 500,
+      "text-valign": "center",
+      "text-halign": "center",
+      "color": "#34483b",
+      "background-color": "#eaf2ed",
+      "border-width": 2,
+      "border-color": "#a8c5b2",
+      "width": 100,
+      "height": 75
+    }
+  },
+  {
+    selector: 'node[type="gene"]',
+    style: {
+      "shape": "round-rectangle",
+      "background-color": "#247a4b",
+      "border-color": "#175c36",
+      "border-width": 3,
+      "color": "#ffffff",
+      "width": 155,
+      "height": 85,
+      "font-size": 17,
+      "font-weight": "bold"
+    }
+  },
+  {
+    selector: 'node[type="go"]',
+    style: {
+      "shape": "ellipse",
+      "background-color": "#e5f1ff",
+      "border-color": "#78a6d5",
+      "width": 115,
+      "height": 85
+    }
+  },
+  {
+    selector: 'node[type="domain"]',
+    style: {
+      "shape": "diamond",
+      "background-color": "#fff0d6",
+      "border-color": "#d6a04c",
+      "width": 135,
+      "height": 85
+    }
+  },
+  {
+    selector: 'node[type="transcript"]',
+    style: {
+      "shape": "round-rectangle",
+      "background-color": "#eee8fa",
+      "border-color": "#a18acb",
+      "width": 155,
+      "height": 75
+    }
+  },
+  {
+    selector: "edge",
+    style: {
+      "width": 2.5,
+      "line-color": "#a2b9a9",
+      "target-arrow-color": "#789b83",
+      "target-arrow-shape": "triangle",
+      "curve-style": "bezier",
+      "opacity": 0.85
+    }
+  },
+  {
+    selector: ":selected",
+    style: {
+      "border-width": 4,
+      "border-color": "#e0a23d"
+    }
+  }
+],
+
+
+    layout: {
+  name: "concentric",
+  concentric: node =>
+    node.data("type") === "gene" ? 10 : 1,
+  levelWidth: () => 1,
+  minNodeSpacing: 85,
+  avoidOverlap: true,
+  nodeDimensionsIncludeLabels: true,
+  padding: 65,
+  animate: true,
+  animationDuration: 500
+}
+  });
+
+  status.textContent =
+    "Network loaded: " + elements.filter(e => !e.data.source).length +
+    " nodes and " + elements.filter(e => e.data.source).length +
+    " relationships.";
+}
+
 async function loadGene() {
   if (!geneId) {
     title.textContent = "Gene ID not provided";
@@ -267,6 +560,7 @@ async function loadGene() {
 
     const data = await response.json();
     const gene = data.gene;
+    renderGeneNetwork(gene, data);
 
     // 基因基本信息
     title.textContent = gene.symbol
