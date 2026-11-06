@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 	<html lang="en">
-<script src="https://unpkg.com/cytoscape@3.31.0/dist/cytoscape.min.js"></script>   
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gene Details - MaizeGene</title>
+
   <style>
     * { box-sizing: border-box; }
 
@@ -117,9 +117,177 @@
       .card { padding: 20px; }
       th, td { padding: 10px; }
     }
+  
+/* Gene Functional Overview */
+.gene-overview-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background: #eaf3ec;
+  border: 1px solid #d4e5d8;
+  border-left: 5px solid #247a4b;
+  border-radius: 10px;
+  padding: 14px 22px;
+  text-align: left;
+  margin: 16px 0 20px;
+}
+
+.gene-overview-label {
+  color: #528064;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.gene-overview-header h3 {
+  color: #247a4b;
+  font-size: 23px;
+  margin: 4px 0;
+}
+
+.gene-overview-header p {
+  color: #617568;
+  margin: 0;
+  font-size: 13px;
+}
+
+.gene-annotation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.annotation-panel {
+  position: relative;
+  min-width: 0;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e3e9e4;
+  background: #ffffff;
+}
+
+.annotation-panel h3 {
+  font-size: 17px;
+  margin: 0 0 6px;
+  color: #34483b;
+}
+
+.annotation-description {
+  color: #849188;
+  font-size: 12px;
+  margin: 0 0 16px;
+}
+
+.annotation-count {
+  display: inline-block;
+  color: #617568;
+  background: #f0f4f1;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.domain-panel {
+  border-top: 4px solid #d6a04c;
+}
+
+.go-panel {
+  border-top: 4px solid #78a6d5;
+}
+
+.transcript-panel {
+  border-top: 4px solid #a18acb;
+}
+
+.go-category {
+  padding: 12px 0;
+  border-top: 1px solid #edf0ed;
+}
+
+.go-category h4 {
+  color: #426e96;
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.annotation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.go-panel .annotation-list {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.annotation-list li {
+  background: #f7f9f7;
+  border-radius: 7px;
+  padding: 10px;
+  margin: 7px 0;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  color: #405247;
+}
+
+.annotation-term-id {
+  display: block;
+  color: #829087;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.annotation-empty {
+  color: #9aa49d !important;
+  font-style: italic;
+  background: transparent !important;
+}
+
+@media (max-width: 760px) {
+  .gene-annotation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fixed-height annotation cards with independent scrolling */
+.gene-annotation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.gene-annotation-grid .annotation-panel {
+  height: 420px;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd9cf transparent;
+}
+
+.gene-annotation-grid .go-panel .annotation-list {
+  max-height: none;
+  overflow: visible;
+}
+
+@media (max-width: 760px) {
+  .gene-annotation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gene-annotation-grid .annotation-panel {
+    height: auto;
+    max-height: 420px;
+  }
+}
   </style>
 
 <link rel="stylesheet" href="responsive.css">
+<script src="https://unpkg.com/cytoscape@3.31.0/dist/cytoscape.min.js"></script>   
 
 </head>
 
@@ -203,57 +371,124 @@
       </tbody>
     </table>
   </section>
-    <section class="card" id="networkCard">
-    <h2>🕸️ Gene Relationship Network</h2>
-    <p>
-      Interactive visualization of gene-associated annotations.
-    </p>
-
-    <div
-      id="geneNetwork"
-      style="width: 100%; height: 520px; background: #f8fbf8; border-radius: 12px;"
-    ></div>
     
-<div style="
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 28px;
-  padding: 20px 12px;
-  margin-top: 12px;
-  color: #46584c;
-  font-size: 14px;
-  border-top: 1px solid #e5ece6;
-">
+<section class="card" id="networkCard">
+  <h2>🧬 Gene Functional Overview</h2>
 
-  <div style="display:flex; align-items:center; gap:9px;">
-    <span style="width:15px;height:15px;background:#247a4b;border-radius:4px;"></span>
-    <span>Target Gene</span>
+  <p class="network-intro">
+    Functional annotations associated with the target maize gene.
+  </p>
+
+  <!-- Target Gene -->
+  <div class="gene-overview-header">
+    <span class="gene-overview-label">TARGET GENE</span>
+    <h3 id="networkGeneName">Loading...</h3>
+    <p id="networkGeneId"></p>
   </div>
 
-  <div style="display:flex; align-items:center; gap:9px;">
-    <span style="width:15px;height:15px;background:#e5f1ff;border:2px solid #78a6d5;border-radius:50%;"></span>
-    <span>GO Annotation</span>
+  <!-- Three annotation groups -->
+  <div class="gene-annotation-grid">
+
+    <!-- Protein Domains -->
+    <div class="annotation-panel domain-panel">
+      <h3>Protein Domains</h3>
+      <p class="annotation-description">Protein structure annotations</p>
+      <span class="annotation-count" id="domainCount">0</span>
+      <ul class="annotation-list" id="domainList"></ul>
+    </div>
+
+    <!-- GO Terms -->
+    <div class="annotation-panel go-panel">
+      <h3>Gene Ontology (GO)</h3>
+      <p class="annotation-description">Functional annotations</p>
+      <span class="annotation-count" id="goCount">0</span>
+
+      <div class="go-category">
+        <h4>Molecular Function</h4>
+        <ul class="annotation-list" id="goMolecularFunction"></ul>
+      </div>
+
+      <div class="go-category">
+        <h4>Cellular Component</h4>
+        <ul class="annotation-list" id="goCellularComponent"></ul>
+      </div>
+
+      <div class="go-category">
+        <h4>Biological Process</h4>
+        <ul class="annotation-list" id="goBiologicalProcess"></ul>
+      </div>
+
+      <div class="go-category" id="goUnclassifiedPanel" hidden>
+        <h4>Unclassified GO Terms</h4>
+        <ul class="annotation-list" id="goUnclassified"></ul>
+      </div>
+    </div>
+
+    <!-- Transcripts -->
+    <div class="annotation-panel transcript-panel">
+      <h3>Transcripts</h3>
+      <p class="annotation-description">Transcript annotations</p>
+      <span class="annotation-count" id="transcriptCount">0</span>
+      <ul class="annotation-list" id="transcriptList"></ul>
+    </div>
+
   </div>
 
-  <div style="display:flex; align-items:center; gap:9px;">
-    <span style="width:13px;height:13px;background:#fff0d6;border:2px solid #d6a04c;transform:rotate(45deg);"></span>
-    <span>Protein Domain</span>
+  <p id="geneNetworkStatus" class="empty" role="status">
+    Loading gene annotations...
+  </p>
+</section>
+
+ <!-- BLAST Sequence Alignment -->
+<section class="card" id="blastCard">
+  <h2>🧬 BLAST Sequence Alignment</h2>
+
+  <p>
+    Sequence similarity analysis for the selected maize gene.
+  </p >
+
+  <h3>BLAST Summary</h3>
+
+  <div class="info-grid">
+    <div>
+      <strong>Query ID</strong>
+      <p id="blastQueryId">—</p >
+    </div>
+
+    <div>
+      <strong>Database</strong>
+      <p id="blastDatabase">—</p >
+    </div>
+
+    <div>
+      <strong>Molecule Type</strong>
+      <p id="blastMoleculeType">—</p >
+    </div>
+
+    <div>
+      <strong>Program</strong>
+      <p id="blastProgram">—</p >
+    </div>
+
+    <div>
+      <strong>Query Length</strong>
+      <p id="blastQueryLength">—</p >
+    </div>
   </div>
 
-  <div style="display:flex; align-items:center; gap:9px;">
-    <span style="width:17px;height:13px;background:#eee8fa;border:2px solid #a18acb;border-radius:4px;"></span>
-    <span>Transcript</span>
+  <h3>Graphic Summary</h3>
+
+  <div id="blastGraphic"
+       style="width:100%; min-height:180px;">
+    <p class="empty">
+      No BLAST alignment results are available yet.
+    </p >
   </div>
 
-</div>
-
-
-    <p id="geneNetworkStatus" class="empty">
-      Loading network data...
-    </p>
-  </section>
-
+  <p id="blastStatus" class="empty" role="status">
+    BLAST results have not yet been integrated.
+  </p >
+</section>
   <section class="card">
     <h2>🌱 Associated Traits</h2>
     <p class="empty">
@@ -325,6 +560,7 @@
   </section>
 
 </main>
+<script src="gene-blast.js"></script>
 <script src="gene-literature.js"></script>
 
 <script>
@@ -345,246 +581,264 @@ function addRow(tbody, type, detail, source) {
 }
 
 
-function renderGeneNetwork(gene, data) {
-  const container = document.getElementById("geneNetwork");
+
+async function renderGeneNetwork(gene, data) {
   const status = document.getElementById("geneNetworkStatus");
 
-  if (!container || typeof cytoscape === "undefined") {
-    status.textContent = "Network visualization library unavailable.";
-    return;
+  const goTerms = data.go || [];
+  const domains = data.protein_domains || [];
+  const transcripts = data.transcripts || [];
+
+  // Display target gene information
+  document.getElementById("networkGeneName").textContent =
+    gene.symbol || gene.gene_id;
+
+  document.getElementById("networkGeneId").textContent =
+    gene.gene_id || "";
+
+  // Load official GO classification data
+  let namespaceMap = {};
+  let namespaceLoaded = false;
+
+  try {
+    const response = await fetch("go-namespace.json");
+
+    if (!response.ok) {
+      throw new Error("Unable to load GO classification data");
+    }
+
+    namespaceMap = await response.json();
+    namespaceLoaded = true;
+
+  } catch (error) {
+    console.error("GO classification error:", error);
   }
 
-  const elements = [];
+  // Divide GO terms into three official categories
+  const goGroups = {
+    molecular_function: [],
+    cellular_component: [],
+    biological_process: [],
+    unclassified: []
+  };
 
-  // Central gene node
-  elements.push({
-    data: {
-      id: "gene-node",
-      label: gene.symbol || gene.gene_id,
-      type: "gene"
+  goTerms.forEach(go => {
+    const id = go.go_id || go.id;
+    const namespace = namespaceMap[id];
+
+    if (namespace && goGroups[namespace]) {
+      goGroups[namespace].push(go);
+    } else {
+      goGroups.unclassified.push(go);
     }
   });
 
-  // GO annotation nodes and edges
-  (data.go || []).forEach((go, i) => {
-    const id = "go-" + i;
+  // Render annotation lists
+  function renderList(elementId, items, getName, getId) {
+    const list = document.getElementById(elementId);
+    list.replaceChildren();
 
-    elements.push({
-      data: {
-        id,
-        label: go.go_id + "\n" + (go.name || ""),
-        type: "go"
-      }
-    });
+    if (!items.length) {
+      const li = document.createElement("li");
+      li.className = "annotation-empty";
+      li.textContent = "No annotations available.";
+      list.appendChild(li);
+      return;
+    }
 
-    elements.push({
-      data: {
-        id: "edge-go-" + i,
-        source: "gene-node",
-        target: id,
-        label: "GO annotation"
-      }
-    });
-  });
+    items.forEach(item => {
+      const li = document.createElement("li");
 
-  // Protein domain nodes and edges
-  (data.protein_domains || []).forEach((domain, i) => {
-    const id = "domain-" + i;
+      const name = document.createElement("span");
+      name.textContent = getName(item);
+      li.appendChild(name);
 
-    elements.push({
-      data: {
-        id,
-        label: domain.name || domain.domain_id,
-        type: "domain"
-      }
-    });
+      const id = getId(item);
 
-    elements.push({
-      data: {
-        id: "edge-domain-" + i,
-        source: "gene-node",
-        target: id,
-        label: "Protein domain"
-      }
-    });
-  });
+      if (id) {
+  const isGO = /^GO:\d{7}$/.test(id);
 
-  // Transcript nodes and edges
-  (data.transcripts || []).forEach((transcript, i) => {
-    const id = "transcript-" + i;
-
-    elements.push({
-      data: {
-        id,
-        label: transcript.transcript_id,
-        type: "transcript"
-      }
-    });
-
-    elements.push({
-      data: {
-        id: "edge-transcript-" + i,
-        source: "gene-node",
-        target: id,
-        label: "Transcript"
-      }
-    });
-  });
-
-  
-  // Arrange annotation nodes into separate visual groups
-  const graphGroups = [
-    { type: "go", label: "GO ANNOTATIONS", x: 400 },
-    { type: "domain", label: "PROTEIN DOMAINS", x: 720 },
-    { type: "transcript", label: "TRANSCRIPTS", x: 1000 }
-  ];
-
-  // Place the target gene on the left
-  const geneNode = elements.find(
-    item => item.data.id === "gene-node"
+  const detail = document.createElement(
+    isGO ? "a" : "span"
   );
 
-  geneNode.position = { x: 100, y: 360 };
+  detail.className = "annotation-term-id";
+  detail.textContent = id;
 
-  // Place annotation nodes in separate columns
-  graphGroups.forEach(group => {
-    const nodes = elements.filter(
-      item => item.data.type === group.type
-    );
+  if (isGO) {
+    const targetId = id === "GO:0016021"
+  ? "GO:0016020"
+  : id;
 
-    const spacing = 85;
-    const startY = 360 - ((nodes.length - 1) * spacing) / 2;
-
-    nodes.forEach((node, index) => {
-      node.position = {
-        x: group.x,
-        y: startY + index * spacing
-      };
-    });
-
-    // Add a visual heading for each group
-    elements.push({
-      data: {
-        id: "heading-" + group.type,
-        label: group.label,
-        type: "group-label"
-      },
-      position: {
-        x: group.x,
-        y: 40
-      }
-    });
-  });
-
-  cytoscape({
-    container: container,
-    elements: elements,
-
-
-style: [
-  {
-    selector: "node",
-    style: {
-      "label": "data(label)",
-      "text-wrap": "wrap",
-      "text-max-width": "125px",
-      "font-family": "Arial, sans-serif",
-      "font-size": 12,
-      "font-weight": 500,
-      "text-valign": "center",
-      "text-halign": "center",
-      "color": "#34483b",
-      "background-color": "#eaf2ed",
-      "border-width": 2,
-      "border-color": "#a8c5b2",
-      "width": 100,
-      "height": 75
-    }
-  },
-  {
-    selector: 'node[type="gene"]',
-    style: {
-      "shape": "round-rectangle",
-      "background-color": "#247a4b",
-      "border-color": "#175c36",
-      "border-width": 3,
-      "color": "#ffffff",
-      "width": 155,
-      "height": 85,
-      "font-size": 17,
-      "font-weight": "bold"
-    }
-  },
-  {
-    selector: 'node[type="go"]',
-    style: {
-      "shape": "ellipse",
-      "background-color": "#e5f1ff",
-      "border-color": "#78a6d5",
-      "width": 115,
-      "height": 85
-    }
-  },
-  {
-    selector: 'node[type="domain"]',
-    style: {
-      "shape": "diamond",
-      "background-color": "#fff0d6",
-      "border-color": "#d6a04c",
-      "width": 135,
-      "height": 85
-    }
-  },
-  {
-    selector: 'node[type="transcript"]',
-    style: {
-      "shape": "round-rectangle",
-      "background-color": "#eee8fa",
-      "border-color": "#a18acb",
-      "width": 155,
-      "height": 75
-    }
-  },
-  {
-    selector: "edge",
-    style: {
-      "width": 2.5,
-      "line-color": "#a2b9a9",
-      "target-arrow-color": "#789b83",
-      "target-arrow-shape": "triangle",
-      "curve-style": "bezier",
-      "opacity": 0.85
-    }
-  },
-  {
-    selector: ":selected",
-    style: {
-      "border-width": 4,
-      "border-color": "#e0a23d"
-    }
+detail.href =
+  "https://amigo.geneontology.org/amigo/term/" + targetId;
+    detail.target = "_blank";
+    detail.rel = "noopener noreferrer";
+    detail.style.color = "#287a48";
+    detail.style.textDecoration = "underline";
   }
-],
 
-
-    layout: {
-  name: "concentric",
-  concentric: node =>
-    node.data("type") === "gene" ? 10 : 1,
-  levelWidth: () => 1,
-  minNodeSpacing: 85,
-  avoidOverlap: true,
-  nodeDimensionsIncludeLabels: true,
-  padding: 65,
-  animate: true,
-  animationDuration: 500
+  li.appendChild(detail);
 }
-  });
 
+      list.appendChild(li);
+    });
+  }
+
+  // Protein domains
+  renderList(
+    "domainList",
+    domains,
+    item => item.name || item.domain_id || item.id || "Protein domain",
+    item => item.domain_id || ""
+  );
+
+  // GO categories
+  renderList(
+    "goMolecularFunction",
+    goGroups.molecular_function,
+    item => item.name || item.go_id || "GO annotation",
+    item => item.go_id || item.id || ""
+  );
+
+  renderList(
+    "goCellularComponent",
+    goGroups.cellular_component,
+    item => item.name || item.go_id || "GO annotation",
+    item => item.go_id || item.id || ""
+  );
+
+  renderList(
+    "goBiologicalProcess",
+    goGroups.biological_process,
+    item => item.name || item.go_id || "GO annotation",
+    item => item.go_id || item.id || ""
+  );
+
+  // Unclassified GO terms
+  renderList(
+    "goUnclassified",
+    goGroups.unclassified,
+    item => item.name || item.go_id || "GO annotation",
+    item => item.go_id || item.id || ""
+  );
+
+  document.getElementById("goUnclassifiedPanel").hidden =
+    goGroups.unclassified.length === 0;
+
+  // Transcripts
+renderList(
+  "transcriptList",
+  transcripts,
+  item => item.transcript_id || item.name || item.id || "Transcript",
+  item => ""
+);
+
+  // Update annotation counts
+  document.getElementById("domainCount").textContent =
+    domains.length;
+
+  document.getElementById("goCount").textContent =
+    goTerms.length;
+
+  document.getElementById("transcriptCount").textContent =
+    transcripts.length;
+
+  // Update loading status
   status.textContent =
-    "Network loaded: " + elements.filter(e => !e.data.source).length +
-    " nodes and " + elements.filter(e => e.data.source).length +
-    " relationships.";
+    "Annotations loaded: " +
+    domains.length + " protein domains, " +
+    goTerms.length + " GO terms, and " +
+    transcripts.length + " transcripts." +
+    (!namespaceLoaded
+      ? " GO classification file could not be loaded."
+      : goGroups.unclassified.length
+        ? " Some GO terms remain unclassified."
+        : "");
+// Improve GO annotation display
+
+// 1. Move the legacy membrane GO ID to Cellular Component
+const unclassifiedList = document.getElementById("goUnclassified");
+const cellularList = document.getElementById("goCellularComponent");
+
+const membraneItem = Array.from(
+  unclassifiedList.querySelectorAll("li")
+).find(li => li.textContent.includes("GO:0016021"));
+
+if (membraneItem) {
+  cellularList.appendChild(membraneItem);
+
+  const termId = membraneItem.querySelector(".annotation-term-id");
+  if (termId) {
+    termId.textContent = "GO:0016021 (legacy ID of GO:0016020)";
+  }
 }
+
+// 2. Clearly mark obsolete and historical GO annotations
+const unclassifiedPanel = document.getElementById("goUnclassifiedPanel");
+const remainingItems = unclassifiedList.querySelectorAll("li");
+
+if (remainingItems.length > 0) {
+  const heading = unclassifiedPanel.querySelector("h4");
+
+  if (heading) {
+    heading.textContent = "Historical / Unclassified GO Terms";
+  }
+
+  unclassifiedPanel.hidden = false;
+} else {
+  unclassifiedPanel.hidden = true;
+}
+
+// 3. Add official GO links to annotation IDs
+document.querySelectorAll(
+  ".go-panel .annotation-term-id"
+).forEach(element => {
+  const text = element.textContent;
+  const match = text.match(/GO:\d{7}/);
+
+  if (!match) return;
+
+  const id = match[0];
+
+  element.textContent = "";
+
+  const link = document.createElement("a");
+  link.href = "https://amigo.geneontology.org/amigo/term/" +
+    encodeURIComponent(id);
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = id;
+  link.title = "View this GO term in AmiGO";
+
+  element.appendChild(link);
+
+  const extraText = text.replace(id, "");
+  if (extraText) {
+    element.appendChild(document.createTextNode(extraText));
+  }
+});
+
+// 4. Improve annotation count grammar and status message
+const plural = (count, singular, pluralForm) =>
+  count + " " + (count === 1 ? singular : pluralForm);
+
+status.textContent =
+  "Annotations loaded: " +
+  plural(domains.length, "protein domain", "protein domains") +
+  ", " +
+  plural(goTerms.length, "GO term", "GO terms") +
+  ", and " +
+  plural(transcripts.length, "transcript", "transcripts") +
+  "." +
+  (!namespaceLoaded
+    ? " GO classification reference could not be loaded."
+    : remainingItems.length
+      ? " Historical or unclassified GO annotations are listed separately."
+      : "");
+}
+
+  
 
 async function loadGene() {
   if (!geneId) {
@@ -609,7 +863,7 @@ async function loadGene() {
 
     const data = await response.json();
     const gene = data.gene;
-    renderGeneNetwork(gene, data);
+    await renderGeneNetwork(gene, data);
 
     // 基因基本信息
     title.textContent = gene.symbol
@@ -680,7 +934,7 @@ async function loadGene() {
 
     document.querySelector("main").appendChild(section);
     loadGeneLiterature(gene.gene_id);
-    
+
   } catch (error) {
     title.textContent = "Unable to load gene";
     document.querySelector(".warning").textContent = error.message;
