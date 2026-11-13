@@ -21,7 +21,7 @@ function initBlast() {
   }
 
   // Draw the alignment graphic
-  function renderGraphic(hits, axisMax, notice) {
+  function renderGraphic(hits, axisMax, notice, unit = "bp") {
     graphic.replaceChildren();
 
     const message = document.createElement("p");
@@ -93,7 +93,7 @@ function initBlast() {
       });
 
       addText(
-        Math.round(bp) + " bp",
+        Math.round(bp) + " " + unit,
         x,
         20
       );
@@ -140,7 +140,7 @@ function initBlast() {
 
         tooltip.textContent =
           `${hit.name}\n` +
-          `Query: ${segment.start}-${segment.end} bp\n` +
+          `Query: ${segment.start}-${segment.end} ${unit}\n` +
           `Identity: ${segment.identity}%\n` +
           `E-value: ${segment.evalue}\n` +
           `Bit score: ${segment.bitscore}`;
@@ -186,6 +186,50 @@ function initBlast() {
   status.textContent =
     "Demo visualization only. Real BLAST results have not yet been integrated.";
 
+  const controls = document.createElement("div");
+  controls.innerHTML = '<p>NCBI BLAST：粘贴已确认来源的玉米序列。提交将发送序列至 NCBI，搜索玉米序列（不限 B73 v5）。</p><textarea aria-label="Sequence" rows="5" style="width:100%"></textarea><select aria-label="Program"><option>blastn</option><option>blastp</option></select><button type="button">获取基因序列</button><button type="button">运行 NCBI BLAST</button>';
+  graphic.before(controls);
+  const sequence = controls.querySelector("textarea");
+  const program = controls.querySelector("select");
+  const [load, run] = controls.querySelectorAll("button");
+  async function remote(path, options) {
+    const response = await fetch("http://127.0.0.1:8000/blast" + path, options);
+    const data = await response.json();
+    if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : "输入或请求无效");
+    return data;
+  }
+  load.onclick = async () => {
+    try {
+      const id = new URLSearchParams(location.search).get("id");
+      if (!id) throw new Error("缺少 Gene ID");
+      const data = await remote("/sequence/" + encodeURIComponent(id));
+      sequence.value = data.sequence;
+      program.value = data.molecule === "protein" ? "blastp" : "blastn";
+    } catch (error) { status.textContent = error.message; }
+  };
+  run.onclick = async () => {
+    run.disabled = true; fileInput.disabled = true;
+    graphic.replaceChildren();
+    status.textContent = "正在提交 NCBI…";
+    try {
+      const task = await remote("/jobs", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({sequence:sequence.value, program:program.value})});
+      updateSummary({blastQueryId:task.rid, blastProgram:program.value, blastDatabase:"NCBI Zea mays", blastQueryLength:"Pending", blastMoleculeType:program.value === "blastp" ? "Protein" : "Nucleotide"});
+      const poll = async () => {
+        try {
+          const data = await remote("/jobs/" + encodeURIComponent(task.rid));
+          if (data.status === "WAITING") { setTimeout(poll,60000); return; }
+          if (data.status !== "READY") throw new Error("NCBI status: " + data.status);
+          const unit = data.program === "blastp" ? "aa" : "bp";
+          updateSummary({blastQueryId:data.query_id, blastProgram:data.program, blastDatabase:data.database, blastQueryLength:data.query_length + " " + unit});
+          renderGraphic(data.hits,data.query_length,data.hits.length ? "NCBI BLAST results" : "No hits found",unit);
+          status.textContent = "完成；RID: " + task.rid + " | " + data.hits.length + " subjects";
+        } catch(error) { status.textContent = error.message; }
+        run.disabled = false; fileInput.disabled = false;
+      };
+      status.textContent = "NCBI 运行中；RID: " + task.rid + "，每 60 秒查询。";
+      setTimeout(poll,60000);
+    } catch(error) { status.textContent = error.message; run.disabled = false; fileInput.disabled = false; }
+  };
   // Import BLAST tabular results (standard outfmt 6)
   fileInput.addEventListener("change", async () => {
     const file = fileInput.files[0];

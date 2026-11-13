@@ -60,3 +60,27 @@ cd D:\cyq\maizeGene
 
 当前只验收基因 ID 详情 API。前端搜索框接入与展示仍待同学对接，本次未切换分支或修改前端。
 返回的 GO/结构域是现有数据库注释；关系中的 `evidence_id` 仅为原始引用字段，本次没有查询 Evidence 节点或文献，也未核实实验依据。
+
+## NCBI BLAST integration
+
+The BLAST card supports one pasted DNA/protein sequence and NCBI remote searches.
+POST /blast/jobs accepts {"sequence": "...", "program": "blastn"} (or blastp).
+GET /blast/jobs/{rid} returns WAITING, READY, FAILED, or UNKNOWN.
+Poll at intervals of at least 60 seconds. Requests are globally spaced by 10 seconds
+per server process. Run a single worker; jobs are in memory and expire on restart.
+Configure NCBI_EMAIL in the existing environment for NCBI operator contact.
+The target is NCBI nt/nr restricted to Zea mays taxid 4577, not a B73-v5-only database.
+NCBI may select its current nucleotide database automatically.
+No local BLAST install or gene database download is required.
+
+GET /blast/sequence/{gene_id} is the reserved sequence-provider boundary and currently
+returns HTTP 501. Replace its body when the gene-data team provides a provider.
+Expected response: sequence, sequence_id, molecule (DNA/protein), assembly,
+annotation_release. Do not infer nucleotide sequences from Gene IDs or orthologs.
+The user explicitly submits a sequence to NCBI using the run button.
+Original TSV import remains available after a job completes or fails.
+
+Validation: submit a known maize DNA/protein sequence, wait for the RID and result,
+compare hits with the NCBI result page; also check no hits, invalid input, unavailable
+NCBI service, and TSV import. Real remote execution still requires a working backend
+Python environment with requirements.txt installed and outbound HTTPS to NCBI.
