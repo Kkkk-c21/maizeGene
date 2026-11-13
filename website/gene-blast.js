@@ -1,161 +1,315 @@
 
 /* BLAST Graphic Summary
-   Front-end visualization demo only.
-   All alignment records below are simulated.
+   Supports demo data and imported BLAST tabular results.
 */
 
-document.addEventListener("DOMContentLoaded", () => {
+function initBlast() {
   const graphic = document.getElementById("blastGraphic");
-  if (!graphic) return;
+  const fileInput = document.getElementById("blastFile");
+  const status = document.getElementById("blastStatus");
 
-  // Simulated BLAST results (NOT scientific evidence)
-  const blastData = {
-    queryId: "DEMO_QUERY",
-    queryLength: 2013,
-    moleculeType: "Nucleotide",
-    database: "Demo maize sequences",
-    program: "blastn",
-    hits: [
-      {
-        name: "Demo hit A",
-        segments: [[15, 1850]]
-      },
-      {
-        name: "Demo hit B",
-        segments: [[280, 810], [1120, 1700]]
-      },
-      {
-        name: "Demo hit C",
-        segments: [[600, 720]]
-      }
-    ]
-  };
+  if (!graphic || !fileInput || !status) return;
 
-  // Update summary values
-  const summary = {
-    blastQueryId: blastData.queryId,
-    blastDatabase: blastData.database,
-    blastMoleculeType: blastData.moleculeType,
-    blastProgram: blastData.program,
-    blastQueryLength: blastData.queryLength + " nt"
-  };
+  const colors = ["#287a48", "#74ae89", "#b1d4bc"];
 
-  Object.entries(summary).forEach(([id, value]) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  });
-
-  graphic.replaceChildren();
-
-  const demoNotice = document.createElement("p");
-  demoNotice.textContent =
-    "DEMO DATA — Simulated alignments for layout testing only.";
-  demoNotice.style.cssText =
-    "color:#a35c2b;font-weight:600;font-size:13px;";
-  graphic.appendChild(demoNotice);
-
-  // Create responsive SVG alignment chart
-  const ns = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(ns, "svg");
-
-  const width = 900;
-  const left = 150;
-  const right = 30;
-  const plotWidth = width - left - right;
-  const chartHeight = 90 + blastData.hits.length * 70;
-
-  svg.setAttribute("viewBox", `0 0 ${width} ${chartHeight}`);
-  svg.setAttribute("width", "100%");
-  svg.setAttribute("role", "img");
-  svg.setAttribute(
-    "aria-label",
-    "Demonstration BLAST alignment graphic with simulated hits"
-  );
-
-  function addElement(tag, attributes, parent = svg) {
-    const element = document.createElementNS(ns, tag);
-
-    Object.entries(attributes).forEach(([key, value]) => {
-      element.setAttribute(key, String(value));
+  // Update BLAST summary
+  function updateSummary(data) {
+    Object.entries(data).forEach(([id, value]) => {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
     });
-
-    parent.appendChild(element);
-    return element;
   }
 
-  function addText(value, x, y, anchor = "start") {
-    const element = addElement("text", {
-      x, y,
-      "text-anchor": anchor,
-      "font-size": 13,
-      fill: "#405449"
-    });
+  // Draw the alignment graphic
+  function renderGraphic(hits, axisMax, notice) {
+    graphic.replaceChildren();
 
-    element.textContent = value;
-    return element;
-  }
+    const message = document.createElement("p");
+    message.textContent = notice;
+    message.style.cssText =
+      "font-size:13px;font-weight:600;color:#287a48;margin:10px 0 20px;";
+    graphic.appendChild(message);
 
-  function position(bp) {
-    return left + bp / blastData.queryLength * plotWidth;
-  }
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
 
-  // Draw axis and reference lines
-  const ticks = [0, 500, 1000, 1500, 2000];
+    const width = 1000;
+    const left = 230;
+    const right = 35;
+    const plotWidth = width - left - right;
+    const top = 55;
+    const rowGap = 65;
+    const height = top + hits.length * rowGap + 30;
 
-  ticks.forEach(bp => {
-    const x = position(bp);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("role", "img");
+    svg.setAttribute(
+      "aria-label",
+      "BLAST sequence alignment graphic"
+    );
+    svg.style.display = "block";
 
-    addElement("line", {
-      x1: x, y1: 43,
-      x2: x, y2: chartHeight - 20,
-      stroke: "#cbd8ce",
-      "stroke-dasharray": "4 5"
-    });
+    function add(tag, attrs, parent = svg) {
+      const el = document.createElementNS(ns, tag);
 
-    addText(bp + " bp", x, 28, "middle");
-  });
-
-  addElement("line", {
-    x1: left,
-    y1: 43,
-    x2: position(blastData.queryLength),
-    y2: 43,
-    stroke: "#5c7562",
-    "stroke-width": 1.5
-  });
-
-  // Draw individual alignment hits
-  blastData.hits.forEach((hit, index) => {
-    const y = 75 + index * 70;
-
-    addText(hit.name, 12, y + 6);
-
-    hit.segments.forEach(([start, end]) => {
-      const x1 = position(start);
-      const x2 = position(end);
-
-      const bar = addElement("rect", {
-        x: x1,
-        y: y - 10,
-        width: x2 - x1,
-        height: 20,
-        rx: 3,
-        fill: ["#287a48", "#74ae89", "#b1d4bc"][index % 3],
-stroke: "#377955",
-        "stroke-width": 1.5
+      Object.entries(attrs).forEach(([key, value]) => {
+        el.setAttribute(key, String(value));
       });
 
-      const tooltip = addElement("title", {}, bar);
-      tooltip.textContent =
-        `${hit.name}: ${start}–${end} bp (simulated)`;
+      parent.appendChild(el);
+      return el;
+    }
+
+    function addText(value, x, y, anchor = "middle") {
+      const el = add("text", {
+        x,
+        y,
+        "text-anchor": anchor,
+        "font-size": 14,
+        fill: "#405449"
+      });
+
+      el.textContent = value;
+      return el;
+    }
+
+    function position(bp) {
+      return left + (bp / axisMax) * plotWidth;
+    }
+
+    // Coordinate axis
+    for (let i = 0; i <= 4; i++) {
+      const bp = axisMax * i / 4;
+      const x = position(bp);
+
+      add("line", {
+        x1: x,
+        y1: 35,
+        x2: x,
+        y2: height - 15,
+        stroke: "#cbd8ce",
+        "stroke-dasharray": "4 5"
+      });
+
+      addText(
+        Math.round(bp) + " bp",
+        x,
+        20
+      );
+    }
+
+    add("line", {
+      x1: left,
+      y1: 35,
+      x2: position(axisMax),
+      y2: 35,
+      stroke: "#5c7562",
+      "stroke-width": 1.5
     });
+
+    // Draw each subject sequence and its HSP segments
+    hits.forEach((hit, index) => {
+      const y = top + index * rowGap + 15;
+
+      const label = hit.name.length > 27
+        ? hit.name.slice(0, 24) + "..."
+        : hit.name;
+
+      const labelElement = addText(label, left - 15, y + 5, "end");
+
+      const labelTitle = add("title", {}, labelElement);
+      labelTitle.textContent = hit.name;
+
+      hit.segments.forEach(segment => {
+        const x1 = position(segment.start);
+        const x2 = position(segment.end);
+
+        const rect = add("rect", {
+          x: x1,
+          y: y - 12,
+          width: Math.max(2, x2 - x1),
+          height: 24,
+          rx: 4,
+          fill: colors[index % colors.length],
+          stroke: "#377955",
+          "stroke-width": 1.5
+        });
+
+        const tooltip = add("title", {}, rect);
+
+        tooltip.textContent =
+          `${hit.name}\n` +
+          `Query: ${segment.start}-${segment.end} bp\n` +
+          `Identity: ${segment.identity}%\n` +
+          `E-value: ${segment.evalue}\n` +
+          `Bit score: ${segment.bitscore}`;
+      });
+    });
+
+    graphic.appendChild(svg);
+  }
+
+  // Initial demonstration data
+  const demoHits = [
+    {
+      name: "Demo hit A",
+      segments: [{start: 15, end: 1850, identity: 98.5, evalue: "1e-50", bitscore: 900}]
+    },
+    {
+      name: "Demo hit B",
+      segments: [
+        {start: 280, end: 810, identity: 95, evalue: "1e-30", bitscore: 500},
+        {start: 1120, end: 1700, identity: 93, evalue: "1e-25", bitscore: 450}
+      ]
+    },
+    {
+      name: "Demo hit C",
+      segments: [{start: 600, end: 720, identity: 90, evalue: "1e-10", bitscore: 150}]
+    }
+  ];
+
+  updateSummary({
+    blastQueryId: "DEMO_QUERY",
+    blastDatabase: "Demo maize sequences",
+    blastMoleculeType: "Nucleotide",
+    blastProgram: "blastn",
+    blastQueryLength: "2013 nt"
   });
 
-  graphic.appendChild(svg);
+  renderGraphic(
+    demoHits,
+    2013,
+    "DEMO DATA — Simulated alignments for layout testing only."
+  );
 
-  const status = document.getElementById("blastStatus");
-  if (status) {
-    status.textContent =
-      "Demo visualization only. Real BLAST results have not yet been integrated.";
-  }
-});
+  status.textContent =
+    "Demo visualization only. Real BLAST results have not yet been integrated.";
+
+  // Import BLAST tabular results (standard outfmt 6)
+  fileInput.addEventListener("change", async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    try {
+      status.textContent = "Reading BLAST results...";
+
+      const content = await file.text();
+
+      const lines = content.split(/\r?\n/)
+        .filter(line => line.trim() && !line.startsWith("#"));
+
+      if (!lines.length) {
+        throw new Error("The selected file contains no alignment records.");
+      }
+
+      const records = lines.map((line, index) => {
+        const columns = line.split("\t");
+
+        if (columns.length < 12) {
+          throw new Error(
+            `Invalid BLAST format at data row ${index + 1}.`
+          );
+        }
+
+        const identity = Number(columns[2]);
+        const qstart = Number(columns[6]);
+        const qend = Number(columns[7]);
+        const evalue = Number(columns[10]);
+        const bitscore = Number(columns[11]);
+
+        if (
+          !Number.isFinite(identity) ||
+          !Number.isFinite(qstart) ||
+          !Number.isFinite(qend) ||
+          !Number.isFinite(evalue) ||
+          !Number.isFinite(bitscore) ||
+          qstart <= 0 ||
+          qend <= 0
+        ) {
+          throw new Error(
+            `Invalid numerical data at row ${index + 1}.`
+          );
+        }
+
+        return {
+          queryId: columns[0],
+          subjectId: columns[1],
+          identity,
+          start: Math.min(qstart, qend),
+          end: Math.max(qstart, qend),
+          evalue: columns[10],
+          bitscore
+        };
+      });
+
+      // Group HSPs belonging to the same subject sequence
+      const hitMap = new Map();
+
+      records.forEach(record => {
+        if (!hitMap.has(record.subjectId)) {
+          hitMap.set(record.subjectId, {
+            name: record.subjectId,
+            bestBitscore: record.bitscore,
+            segments: []
+          });
+        }
+
+        const hit = hitMap.get(record.subjectId);
+
+        hit.bestBitscore = Math.max(
+          hit.bestBitscore,
+          record.bitscore
+        );
+
+        hit.segments.push({
+          start: record.start,
+          end: record.end,
+          identity: record.identity,
+          evalue: record.evalue,
+          bitscore: record.bitscore
+        });
+      });
+
+      const hits = Array.from(hitMap.values())
+        .sort((a, b) => b.bestBitscore - a.bestBitscore);
+
+      const maxPosition = Math.max(
+        ...records.map(record => record.end)
+      );
+
+      const axisMax = Math.ceil(maxPosition / 100) * 100 || 100;
+
+      updateSummary({
+        blastQueryId: records[0].queryId,
+        blastDatabase: "Imported BLAST results",
+        blastMoleculeType: "Not specified",
+        blastProgram: "Not specified",
+        blastQueryLength: "Not included in standard outfmt 6"
+      });
+
+      const isDemo = file.name.toLowerCase().includes("demo");
+
+      const notice = isDemo
+        ? "DEMO DATA — Imported test records, not scientific evidence."
+        : "IMPORTED BLAST RESULTS — Check the source and parameters.";
+
+      renderGraphic(hits, axisMax, notice);
+
+      status.textContent =
+        `File loaded: ${file.name} | ` +
+        `${records.length} alignment records | ` +
+        `${hits.length} subject sequences.`;
+
+    } catch (error) {
+      status.textContent = "Import failed: " + error.message;
+    }
+  });
+}
+
+// Initialize after the page is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBlast);
+} else {
+  initBlast();
+}

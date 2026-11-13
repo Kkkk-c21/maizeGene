@@ -447,6 +447,33 @@
     Sequence similarity analysis for the selected maize gene.
   </p >
 
+  <!-- NCBI BLAST Official Tool -->
+<div style="margin: 20px 0;">
+  <a
+    href="https://blast.ncbi.nlm.nih.gov/Blast.cgi"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="
+      display: inline-block;
+      background: #287a48;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    "
+  >
+    Run BLAST at NCBI ↗
+  </a >
+
+  <p style="
+    font-size: 13px;
+    color: #607568;
+    margin-top: 10px;
+  ">
+    Open the official NCBI BLAST tool to perform
+    nucleotide or protein sequence similarity searches.
+  </p >
   <h3>BLAST Summary</h3>
 
   <div class="info-grid">
@@ -477,6 +504,22 @@
   </div>
 
   <h3>Graphic Summary</h3>
+  <div style="margin: 16px 0;">
+  <label for="blastFile" style="font-weight: 600;">
+    Import BLAST Results
+  </label>
+
+  <input
+    type="file"
+    id="blastFile"
+    accept=".tsv,.txt"
+    style="display:block; margin-top:10px;"
+  >
+
+  <p style="font-size:13px; color:#607568;">
+    Upload BLAST tabular results (.tsv or .txt).
+  </p >
+</div>
 
   <div id="blastGraphic"
        style="width:100%; min-height:180px;">
