@@ -106,6 +106,79 @@
 
     th { background: #f0f7f1; }
 
+    /* BLAST controls only: keep the surrounding page styles unchanged. */
+    #blastCard .blast-controls,
+    #blastCard .blast-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    #blastCard [hidden] { display: none; }
+    #blastCard .blast-controls p,
+    #blastCard .blast-controls textarea { flex-basis: 100%; }
+    #blastCard .blast-filters label { display: grid; gap: 6px; }
+    #blastCard button,
+    #blastCard select,
+    #blastCard input,
+    #blastCard textarea {
+      box-sizing: border-box;
+      max-width: 100%;
+      min-width: 0;
+      font: inherit;
+      font-size: 14px;
+      border: 1px solid #cbd8ce;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: white;
+      color: #25382b;
+    }
+    #blastCard textarea { width: 100%; resize: vertical; }
+    #blastCard input[type="number"] { width: 180px; }
+    #blastCard input[type="file"] { width: 100%; }
+    .gene-action-button,
+    #blastCard button,
+    #blastCard input[type="file"]::file-selector-button {
+      background: #287a48;
+      color: white;
+      border: 1px solid #287a48;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #blastCard input[type="file"]::file-selector-button { margin-right: 12px; }
+    .gene-action-button:hover:not(:disabled),
+    #blastCard button:hover:not(:disabled),
+    #blastCard input[type="file"]:not(:disabled)::file-selector-button:hover { background: #20633a; }
+    .gene-action-button:focus-visible,
+    #blastCard :is(button, select, input, textarea):focus-visible {
+      outline: 2px solid #287a48;
+      outline-offset: 3px;
+    }
+    #blastCard :disabled { opacity: .6; cursor: not-allowed; }
+    #blastCard [role="status"],
+    #blastGraphic [aria-label="Alignment details"] { overflow-wrap: anywhere; }
+    .gene-detail-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .gene-detail-nav .gene-export-button { margin-left: auto; }
+    .gene-detail-nav [role="status"]:empty { display: none; }
+    .gene-detail-nav [role="status"] { flex-basis: 100%; overflow-wrap: anywhere; }
+    @media (max-width: 600px) {
+      .gene-detail-nav .gene-export-button { width: 100%; margin-left: 0; }
+      #blastCard .blast-controls > :is(button, select),
+      #blastCard .blast-filters > :is(label, button, span) { width: 100%; }
+      #blastCard input[type="number"] { width: 100%; }
+    }
+
     .empty {
       color: #7b8a80;
       line-height: 1.9;
@@ -567,7 +640,7 @@
   </div>
 
   <p id="blastStatus" class="empty" role="status">
-    BLAST results have not yet been integrated.
+    Run NCBI BLAST or import a results file to view alignments.
   </p >
 </section>
   <section class="card">
@@ -946,6 +1019,8 @@ async function loadGene() {
     const data = await response.json();
     const gene = data.gene;
     await renderGeneNetwork(gene, data);
+    window.maizeGeneAnnotations = data;
+    document.dispatchEvent(new CustomEvent("gene-annotations-loaded", {detail: data}));
 
     // 基因基本信息
     title.textContent = gene.symbol
@@ -1025,6 +1100,7 @@ async function loadGene() {
 
 loadGene();
 </script>
+<script src="gene-enhancements.js"></script>
 
 
 </body>
