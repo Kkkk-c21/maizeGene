@@ -70,84 +70,63 @@
         button.title = "开始语音输入";
         wrapper.appendChild(button);
 
-        let recognition = null;
-        let listening = false;
-
-        button.addEventListener("click", function () {
-
-            if (listening && recognition) {
-                recognition.stop();
-                return;
-            }
-
-            const SpeechRecognition =
-                window.SpeechRecognition ||
-                window.webkitSpeechRecognition;
-
-            if (!SpeechRecognition) {
-                alert("当前浏览器不支持语音识别，请使用最新版 Edge 或 Chrome。");
-                return;
-            }
-
-            recognition = new SpeechRecognition();
-
-            // Chinese speech recognition
-            recognition.lang = "en-US";
-            recognition.continuous = true;
-            recognition.interimResults = true;
-
-            const originalText = input.value.trim();
-
-            recognition.onstart = function () {
-                listening = true;
-                button.textContent = "⏹";
-                button.classList.add("is-listening");
-                button.title = "点击停止录音";
-            };
-
-            recognition.onresult = function (event) {
-                let transcript = "";
-
-                for (let i = 0; i < event.results.length; i++) {
-                    transcript += event.results[i][0].transcript;
-                }
-
-                input.value = [
-                    originalText,
-                    transcript.trim()
-                ].filter(Boolean).join(" ");
-
-                input.dispatchEvent(
-                    new Event("input", { bubbles: true })
-                );
-            };
-
-            recognition.onerror = function (event) {
-                if (event.error === "not-allowed") {
-                    alert("请允许浏览器使用麦克风。");
-                } else if (
-                    event.error !== "no-speech" &&
-                    event.error !== "aborted"
-                ) {
-                    alert("语音识别出现问题：" + event.error);
-                }
-            };
-
-            recognition.onend = function () {
-                listening = false;
-                button.textContent = "🎤";
-                button.classList.remove("is-listening");
-                button.title = "开始语音输入";
-            };
-
+        let recorder, stream, timer;
+        const status = document.createElement('span');
+        status.setAttribute('role', 'status');
+        status.style.cssText = 'position:absolute;top:100%;left:0;font-size:12px';
+        wrapper.appendChild(status);
+        button.title = 'Record English';
+        button.textContent = '🎤';
+        function reset() {
+            clearTimeout(timer);
+            if (stream) stream.getTracks().forEach(t => t.stop());
+            button.disabled = false;
+            button.classList.remove('is-listening');
+            button.textContent = '🎤';
+        }
+        button.onclick = async () => {
+            if (recorder && recorder.state === 'recording') { recorder.stop(); return; }
+            button.disabled = true;
             try {
-                recognition.start();
-            } catch (error) {
-                alert("无法启动语音识别，请稍后重试。");
-            }
-        });
+                if (!window.isSecureContext) throw Error('Microphone requires HTTPS or localhost.');
+                if (!window.MediaRecorder || !navigator.mediaDevices) throw Error('Audio recording unavailable.');
+                stream = await navigator.mediaDevices.getUserMedia({audio:true});
+                const mime = ['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus'].find(t => MediaRecorder.isTypeSupported(t));
+                recorder = new MediaRecorder(stream, mime ? {mimeType:mime} : undefined);
+                const chunks = [];
+                recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+                recorder.onerror = () => { reset(); status.textContent = 'Recording failed.'; };
+                recorder.onstop = () => {
+                    reset(); button.disabled = true;
+                    const data = new FormData();
+                    data.append('file',new Blob(chunks,{type:recorder.mimeType}),'recording');
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST','/api/v1/audio/transcriptions');
+                    xhr.timeout = 300000;
+                    status.textContent = 'Uploading…';
+                    xhr.upload.onload = () => { status.textContent = 'Transcribing English…'; };
+                    xhr.onload = () => {
+                        reset();
+                        try {
+                            const result = JSON.parse(xhr.responseText);
+                            if (xhr.status !== 200) throw Error(result.detail || 'Transcription failed.');
+                            input.value = result.text;
+                            input.dispatchEvent(new Event('input',{bubbles:true}));
+                            status.textContent = result.text ? 'Ready to edit and submit.' : 'No speech detected.';
+                        } catch(e) { status.textContent = e.message; }
+                    };
+                    xhr.onerror = xhr.ontimeout = () => { reset(); status.textContent = 'Service unavailable. Please retry.'; };
+                    xhr.send(data);
+                };
+                recorder.start();
+                button.disabled = false;
+                button.textContent = '■';
+                button.classList.add('is-listening');
+                status.textContent = 'Recording English… Click to stop (60 seconds maximum).';
+                timer = setTimeout(() => { if(recorder.state === 'recording') recorder.stop(); },60000);
+            } catch(e) { reset(); status.textContent = e.message; }
+        };
     }
-
     function initVoiceInputs() {
         INPUT_IDS.forEach(function (id) {
             setupVoiceInput(document.getElementById(id));

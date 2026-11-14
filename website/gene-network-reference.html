@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 	<html lang="en">
 <script src="https://unpkg.com/cytoscape@3.31.0/dist/cytoscape.min.js"></script>   
 <head>
@@ -595,7 +595,7 @@ async function loadGene() {
 
   try {
     const response = await fetch(
-      "http://127.0.0.1:8000/genes/" + encodeURIComponent(geneId)
+      "/genes/" + encodeURIComponent(geneId)
     );
 
     if (response.status === 404) {

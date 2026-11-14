@@ -1,0 +1,13 @@
+{$SITE_ADDRESS:http://localhost} {
+    request_body {
+        max_size 11MB
+    }
+    @api path /api/* /genes/* /search /blast/* /health
+    handle @api {
+        reverse_proxy api:8000
+    }
+    handle {
+        root * /srv
+        file_server
+    }
+}

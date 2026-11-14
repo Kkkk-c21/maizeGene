@@ -51,6 +51,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="MaizeGene API", lifespan=lifespan)
 from backend.blast_service import router as blast_router
 app.include_router(blast_router)
+from backend.audio_service import router as audio_router
+app.include_router(audio_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

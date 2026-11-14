@@ -193,7 +193,7 @@ function initBlast() {
   const program = controls.querySelector("select");
   const [load, run] = controls.querySelectorAll("button");
   async function remote(path, options) {
-    const response = await fetch("http://127.0.0.1:8000/blast" + path, options);
+    const response = await fetch("/blast" + path, options);
     const data = await response.json();
     if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : "输入或请求无效");
     return data;
