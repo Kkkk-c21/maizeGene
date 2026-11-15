@@ -148,9 +148,8 @@ button:hover { background: #1b6037; }
 
     <div class="search-box">
       <input id="traitInput"
-       placeholder="e.g., drought tolerance, flowering time, root developmen"
-       onkeydown="if(event.key === 'Enter') searchTrait()">
-<button onclick="searchTrait()">查询</button>
+       placeholder="e.g., drought tolerance, flowering time, root development">
+<button onclick="searchTrait()">Check Availability</button>
 
     </div>
     
@@ -178,7 +177,7 @@ button:hover { background: #1b6037; }
 
     
 <div class="notice">
-  ⚠️ This page is currently a functional prototype.
+  ⚠️ Candidate gene ranking is not available yet.
   A validated gene–trait association database and
   candidate gene ranking model have not yet been integrated.
   Therefore, no unverified candidate gene rankings
@@ -219,7 +218,7 @@ function searchTrait() {
   const description = document.createElement("p");
   description.className = "muted";
   description.textContent =
-    "	The target trait has been received. Validated gene–trait association data and a ranking model are not yet available; therefore, no candidate gene rankings are generated.";
+    "	The target trait is shown locally only. Validated gene–trait association data and a ranking model are not yet available; therefore, no candidate gene rankings are generated.";
 
   const evidenceTitle = document.createElement("h3");
   evidenceTitle.textContent = "Planned Ranking Evidence";

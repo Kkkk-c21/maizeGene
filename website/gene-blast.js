@@ -212,41 +212,46 @@ function initBlast() {
     graphic.appendChild(detail);
   }
 
-  // Initial demonstration data
-  const demoHits = [
-    {
-      name: "Demo hit A",
-      segments: [{start: 15, end: 1850, identity: 98.5, evalue: "1e-50", bitscore: 900}]
-    },
-    {
-      name: "Demo hit B",
-      segments: [
-        {start: 280, end: 810, identity: 95, evalue: "1e-30", bitscore: 500},
-        {start: 1120, end: 1700, identity: 93, evalue: "1e-25", bitscore: 450}
-      ]
-    },
-    {
-      name: "Demo hit C",
-      segments: [{start: 600, end: 720, identity: 90, evalue: "1e-10", bitscore: 150}]
-    }
-  ];
+  // Explicit test mode only; normal pages keep the empty state from gene.html.
+  const demoMode = new URLSearchParams(location.search).get("blast_demo") === "1";
+  if (demoMode) {
+    // Initial demonstration data
+    const demoHits = [
+      {
+        name: "Demo hit A",
+        segments: [{start: 15, end: 1850, identity: 98.5, evalue: "1e-50", bitscore: 900}]
+      },
+      {
+        name: "Demo hit B",
+        segments: [
+          {start: 280, end: 810, identity: 95, evalue: "1e-30", bitscore: 500},
+          {start: 1120, end: 1700, identity: 93, evalue: "1e-25", bitscore: 450}
+        ]
+      },
+      {
+        name: "Demo hit C",
+        segments: [{start: 600, end: 720, identity: 90, evalue: "1e-10", bitscore: 150}]
+      }
+    ];
 
-  updateSummary({
-    blastQueryId: "DEMO_QUERY",
-    blastDatabase: "Demo maize sequences",
-    blastMoleculeType: "Nucleotide",
-    blastProgram: "blastn",
-    blastQueryLength: "2013 nt"
-  });
+    updateSummary({
+      blastQueryId: "DEMO_QUERY",
+      blastDatabase: "Demo maize sequences",
+      blastMoleculeType: "Nucleotide",
+      blastProgram: "blastn",
+      blastQueryLength: "2013 nt"
+    });
 
-  renderGraphic(
-    demoHits,
-    2013,
-    "DEMO DATA — Simulated alignments for layout testing only."
-  );
+    renderGraphic(
+      demoHits,
+      2013,
+      "DEMO DATA — Simulated alignments for layout testing only."
+    );
 
-  status.textContent =
-    "DEMO DATA — Run NCBI BLAST or import results to view actual alignments.";
+    status.textContent =
+      "DEMO DATA — Run NCBI BLAST or import results to view actual alignments.";
+
+  }
 
   const controls = document.createElement("div");
   controls.className = "blast-controls";
@@ -282,6 +287,8 @@ function initBlast() {
   run.onclick = async () => {
     run.disabled = true; fileInput.disabled = true;
     graphic.replaceChildren();
+    currentResult = undefined;
+    filters.hidden = true;
     status.textContent = "Submitting to NCBI…";
     try {
       const task = await remote("/jobs", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({sequence:sequence.value, program:program.value})});

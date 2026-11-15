@@ -373,18 +373,15 @@
 
 <main class="container">
 
-  <a href="index.html" class="back">← Back to Gene Search</a>
+  <a href="search.html" class="back">← Back to Gene Search</a>
 
   <section class="card">
-    <span class="tag">Gene Details · Demonstration</span>
+    <span class="tag">Gene Details</span>
     <h1 id="geneTitle">	Gene Details</h1>
     <p>Maize Gene Functional Dictionary / Gene Profile</p>
  
 <div class="warning">
-  This page demonstrates the structure and layout of a gene
-  profile. A validated gene annotation database has not yet
-  been integrated. Therefore, no experimentally verified
-  gene function is reported at this stage.
+  Annotations are loaded from the gene data service. Database annotations do not necessarily establish experimentally validated gene functions.
 </div>
 
   </section>
@@ -426,21 +423,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Gene Ontology (GO) Annotation</td>
-          <td>Not yet imported</td>
-          <td>	Pending validation</td>
-        </tr>
-        <tr>
-          <td>Protein Domains</td>
-          <td>Not yet imported</td>
-          <td>Pending validation</td>
-        </tr>
-        <tr>
-          <td>Biological Function</td>
-          <td>Not yet imported</td>
-          <td>Pending validation</td>
-        </tr>
+        <tr><td colspan="3">No annotations loaded. Select a gene and connect to the gene data service to view annotations.</td></tr>
       </tbody>
     </table>
   </section>
@@ -635,7 +618,7 @@
   <div id="blastGraphic"
        style="width:100%; min-height:180px;">
     <p class="empty">
-      No BLAST alignment results are available yet.
+      No BLAST results yet. Enter a sequence and run BLAST to view alignments.
     </p >
   </div>
 
@@ -998,6 +981,8 @@ status.textContent =
 async function loadGene() {
   if (!geneId) {
     title.textContent = "Gene ID not provided";
+    document.getElementById("geneNetworkStatus").textContent = "No gene ID provided. Search for a gene to view annotations.";
+    document.getElementById("networkGeneName").textContent = "No gene selected";
     return;
   }
 
@@ -1094,6 +1079,8 @@ async function loadGene() {
 
   } catch (error) {
     title.textContent = "Unable to load gene";
+    document.getElementById("geneNetworkStatus").textContent = "Gene annotations are unavailable. Please try again later.";
+    document.getElementById("networkGeneName").textContent = "Gene unavailable";
     document.querySelector(".warning").textContent = error.message;
   }
 }

@@ -72,7 +72,8 @@ function loadGeneLiterature(geneId) {
     const response = await fetch(endpoint + "?" + new URLSearchParams(params), {
       cache: "no-store"
     });
-    if (!response.ok) throw new Error("Literature request failed");
+    if (response.status === 404 || response.status === 501) throw new Error("The literature data service is not available on this server. No publication results are displayed.");
+    if (!response.ok) throw new Error("Literature is temporarily unavailable.");
     return response.json();
   }
 
@@ -99,9 +100,9 @@ function loadGeneLiterature(geneId) {
         : "Showing " + candidateList.childElementCount + " of " + data.candidate_total + " candidates.";
       nextOffset = data.next_offset;
       more.hidden = nextOffset === null;
-    } catch {
+    } catch (error) {
       if (firstPage) {
-        status.textContent = "Literature is temporarily unavailable.";
+        status.textContent = error.message;
         retry.hidden = false;
       } else {
         candidateStatus.textContent = "Could not load more candidates. Try again.";
@@ -122,7 +123,7 @@ function loadGeneLiterature(geneId) {
       semanticList.hidden = semanticList.childElementCount === 0;
       semanticStatus.textContent = semanticList.hidden ? "No additional suggestions were found." : "";
       semanticButton.hidden = true;
-    } catch {
+    } catch (error) {
       semanticStatus.textContent = "Semantic suggestions are temporarily unavailable. Try again.";
     } finally {
       semanticButton.disabled = false;

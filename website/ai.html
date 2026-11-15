@@ -17,9 +17,9 @@ body {
 }
 
 header {
-  height: 76px;
+
   background: white;
-  padding: 0 8%;
+  padding: 20px 8%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,15 +27,15 @@ header {
 }
 
 .logo {
-  font-size: 23px;
+  font-size: 22px;
   font-weight: bold;
   color: #287a48;
   text-decoration: none;
 }
 
 nav a {
-  margin-left: 20px;
-  color: #526459;
+  margin-left: 24px;
+  color: #43534a;
   text-decoration: none;
 }
 
@@ -45,7 +45,12 @@ main {
   padding: 0 20px;
 }
 
-h1 { margin-bottom: 8px; }
+h1 { font-size: 32px; margin-bottom: 8px; }
+a { color: #287a48; }
+.muted { padding: 0 20px 16px; color: #718077; line-height: 1.8; }
+button, textarea { font: inherit; }
+:focus-visible { outline: 2px solid #287a48; outline-offset: 3px; }
+nav a[aria-current=page] { color: #287a48; font-weight: 600; }
 
 .subtitle {
   color: #728177;
@@ -54,8 +59,8 @@ h1 { margin-bottom: 8px; }
 
 .chat {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 5px 25px #0000000a;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px #00000008;
   overflow: hidden;
   margin-top: 25px;
 }
@@ -174,15 +179,19 @@ button:hover { background: #1f623a; }
     <span aria-hidden="true">☰</span>
   </button>
 
-  <nav id="ai-navigation" class="site-nav">
-    <a href="index.html">Home</a>
-    <a href="literature.html">Literature Search</a>
+  <nav id="ai-navigation" class="site-nav" aria-label="Primary navigation">
+    <a href="index.html#home">Home</a>
+    <a href="search.html">Gene Search</a>
+    <a href="ai.html" aria-current="page">AI Research Assistant</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#about">About</a>
+    <a href="trait.html">Candidate Gene Ranking</a>
   </nav>
 </header>
 
 <main>
 
-<h1>🤖 AI AI Research Assistant</h1>
+<h1>🤖 AI Research Assistant</h1>
 <p class="subtitle">
   Explore questions about maize genes, functional annotations, and supporting scientific evidence.
 </p>
@@ -191,30 +200,27 @@ button:hover { background: #1f623a; }
 
   <div class="chat-header">
     <strong>MaizeGene Research Assistant</strong>
-    <p>Research Chat Interface · Under Development</p>
+    <p>Service status: AI answers are not available</p>
   </div>
 
-  <div class="messages" id="messages">
+  <div class="messages" id="messages" role="log" aria-label="Conversation" aria-live="polite">
     
 <div class="message assistant">
-  Welcome to the MaizeGene Research Assistant.
+Welcome to the MaizeGene Research Assistant.
 
-  You can enter research questions related to maize genes,
-  functional annotations, and trait associations.
+AI answers and evidence retrieval are not connected. You can enter a question or use voice input to transcribe it. Sending displays a local service-status message only.
 
-  This chat interface is currently a prototype.
-  AI-powered responses and knowledge graph retrieval
-  have not yet been integrated.
+Use Gene Search for gene records or Literature Search to search an imported CSV dataset.
 </div>
 
   </div>
 
   <div class="input-area">
     <textarea
-      id="question"
+      id="question" aria-label="Research question" aria-describedby="ai-service-status"
       placeholder="e.g., Which maize genes may be associated with drought tolerance?"
     ></textarea>
-    <button onclick="sendMessage()">Send</button>
+    <button type="button" onclick="sendMessage()">Send</button>
   </div>
   
 <p class="muted">
@@ -242,14 +248,13 @@ button:hover { background: #1f623a; }
 </div>
 
 
-<div class="notice">
-  ⚠️ This interface is currently an interactive prototype.
-  The system does not generate scientific conclusions
-  without evidence retrieval and verification.
-  Once the AI model and evidence retrieval services
-  are integrated, responses will include literature
-  references, evidence classifications, and uncertainty
-  assessments.
+<div class="notice" id="ai-service-status">
+  <strong>AI service not connected.</strong>
+  Questions are not sent to an AI service. No scientific answers, evidence retrieval,
+  citations, or confidence assessments are generated. Voice input uses the transcription
+  service and requires microphone access.
+  <a href="search.html">Search genes</a> or
+  <a href="literature.html">search literature from an imported CSV</a>.
 </div>
 
 
@@ -276,12 +281,12 @@ function sendMessage() {
   question.value = "";
 
   addMessage(
-  "Your question has been received.\n\n" +
+  "This question is shown locally only; it was not sent to an AI service.\n\n" +
   "The AI model and knowledge graph retrieval services " +
   "have not yet been integrated. Therefore, the system " +
   "cannot currently provide evidence-supported scientific answers.\n\n" +
   "You may explore the Literature Search page to review " +
-  "available publication titles, abstracts, and DOI references.",
+  "publication titles, abstracts, and DOI references from an imported CSV dataset.",
   "assistant"
 );
 

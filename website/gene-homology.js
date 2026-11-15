@@ -38,6 +38,9 @@ async function loadGeneHomology() {
     if (!demoMode) {
       const response = await fetch(url);
 
+      if (response.status === 404 || response.status === 501) {
+        throw new Error("The data service is not available on this server. No records are displayed.");
+      }
       if (!response.ok) {
         throw new Error(`API returned HTTP ${response.status}`);
       }
@@ -288,7 +291,7 @@ async function loadGeneHomology() {
         !family.member_page?.has_more;
 
       panStatus.textContent =
-  (demoMode ? "EXAMPLE DATA — Test only. " : "") +
+  (demoMode ? "DEMO DATA — Simulated records for testing only. " : "") +
   `Showing ${members.length} members in the selected family.`;
 
     } catch (error) {
@@ -444,7 +447,7 @@ async function loadGeneHomology() {
       nextButton.disabled = !data.page?.has_more;
 
       orthoStatus.textContent =
-  (demoMode ? "EXAMPLE DATA — Test only. " : "") +
+  (demoMode ? "DEMO DATA — Simulated records for testing only. " : "") +
   `Showing ${records.length} ortholog records.` +
   (selectedSpecies ? ` Species: ${selectedSpecies}.` : "");
 
